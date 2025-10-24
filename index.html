@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Corner - Welcome</title>
+    <style>
+        /* Background Image Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('test3.jpg') no-repeat center center;
+            background-size: cover;
+            color: #333;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Admin Login Button in Top Right Corner */
+        .admin-login {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 8px 16px;
+            background: #333;
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .admin-login:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Light Overlay for Better Text Readability */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2); /* Slightly transparent overlay */
+            z-index: -1;
+        }
+
+        /* Oval Container with Frosted Glass Effect */
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.25); /* Semi-transparent background */
+            padding: 40px 20px;
+            border-radius: 50px; /* Fully rounded, oval shape */
+            max-width: 500px;
+            width: 90%;
+            color: #333;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px); /* Frosted glass effect */
+            border: 1px solid rgba(255, 255, 255, 0.3); /* Light border */
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Logo Styling */
+        .logo {
+            margin-bottom: 20px;
+        }
+        .logo img {
+            max-width: 80px;
+            border-radius: 50%; /* Circular logo style */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Heading Styling */
+        .container h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        /* Button Styling - Gradient and Rounded with Logos */
+        .login-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .login-buttons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #ffffff;
+            background: linear-gradient(135deg, #f9a825, #f76d47); /* Peach and Coral Gradient */
+            padding: 12px 0;
+            border-radius: 25px; /* Fully rounded buttons */
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+            gap: 10px;
+            padding-left: 20px;
+            padding-right: 20px;
+            animation: slideIn 1.2s ease-in-out;
+        }
+
+        /* Hover Effect for Gradient Buttons */
+        .login-buttons a:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Fade-in Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Slide-in Animation */
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Logo Icons for Buttons */
+        .login-buttons a img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Login Button -->
+    <a href="admin-login.html" class="admin-login">Admin Login</a>
+
+    <!-- Background Overlay -->
+    <div class="overlay"></div>
+
+    <!-- Main Content Container with Oval Frosted Glass Effect -->
+    <div class="container">
+        <!-- Logo Section -->
+        <div class="logo">
+            <img src="test1.jpeg" alt="Book Corner Logo">
+        </div>
+
+        <!-- Welcome Heading -->
+        <h1>Welcome to Book Corner</h1>
+
+        <!-- Gradient Rounded Button Style Login Links with Icons -->
+        <div class="login-buttons">
+            <a href="auth/FarmerLogin.php">
+                <img src="https://img.icons8.com/ios-filled/50/000000/book.png" alt="Book Icon"> <!-- Book Icon for Author Login -->
+                Author Login
+            </a>
+            <a href="auth/BuyerLogin.php">
+                <img src="https://img.icons8.com/ios-filled/50/000000/shopping-cart.png" alt="Buyer Icon"> <!-- Shopping Cart Icon for Buyer Login -->
+                Buyer Login
+            </a>
+        </div>
+    </div>
+</body>
+</html>
