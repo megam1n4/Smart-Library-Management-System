@@ -22,8 +22,8 @@
                 echo @"<div class='text-success  logins mx-1 ml-5  '>$buyer_name</div>";
             }
         } else {
-            echo "<a href = '../auth/BuyerLogin.php'><div class='text-success logins mx-5'>Login</div></a>";
-            // echo "<label><a href = '../auth/BuyerLogin.php' style = 'color:white' >Login/Sign up</a></label>";
+            echo "<a href = '../auth/UserLogin.php'><div class='text-success logins mx-5'>Login</div></a>";
+            // echo "<label><a href = '../auth/UserLogin.php' style = 'color:white' >Login/Sign up</a></label>";
         }
     }
 
@@ -420,4 +420,5 @@
         global $con;
     }
     ?>
+
 
