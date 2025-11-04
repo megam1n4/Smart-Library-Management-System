@@ -11,7 +11,7 @@
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
      <title>Product Details</title>
-     <!-- <link rel="stylesheet" type="text/css" href="../Styles/BuyerHomepage.css"> -->
+     <!-- <link rel="stylesheet" type="text/css" href="../Styles/UserHomepage.css"> -->
      <!-- <link rel="stylesheet" href="portal_files/font-awesome.min.css"> -->
      <!-- <script src="../portal_files/c587fc1763.js.download" crossorigin="anonymous"></script> -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -538,7 +538,7 @@
      <div class="header">
 
 
-          <a href="BuyerHomepage.php"><img id="logo" src="../portal_files/logo.jpg"></a>
+          <a href="UserHomepage.php"><img id="logo" src="../portal_files/logo.jpg"></a>
 
           <div class="search_input">
                <form action="SearchResults.php" method="get" enctype="multipart/form-data">
@@ -551,28 +551,28 @@
                <ul class="dropdown-menu etc">
                     <?php
                     if (isset($_SESSION['phonenumber'])) {
-                         echo "<li class='options' role='presentation'><a role='menuitem' tabindex='-1' href= 'BuyerProfile.php'><label class='makeitgreen'>Profile</label></a></li>";
+                         echo "<li class='options' role='presentation'><a role='menuitem' tabindex='-1' href= 'UserProfile.php'><label class='makeitgreen'>Profile</label></a></li>";
 
                          echo "<li class='options' role='presentation'><a role='menuitem' tabindex='-1' href= '#'><label class='makeitgreen'>Save For Later</label></a></li>";
 
-                         echo "<li class='options' role='presentation'><a role='menuitem' tabindex='-1' href= 'BuyerTransactions.php'><label class='makeitgreen'>Transactions</label></a></li>";
+                         echo "<li class='options' role='presentation'><a role='menuitem' tabindex='-1' href= 'UserTransactions.php'><label class='makeitgreen'>Transactions</label></a></li>";
 
-                         echo "<li class='options' role='presentation'><a role='menuitem' tabindex='-1' href= 'BuyerProfile.php'><label class='makeitgreen'>Customer Care</label></a></li>";
+                         echo "<li class='options' role='presentation'><a role='menuitem' tabindex='-1' href= 'UserProfile.php'><label class='makeitgreen'>Customer Care</label></a></li>";
 
-                         echo "<li class='options' role='presentation'><a role='menuitem' tabindex='-1' href= 'Farmers.php'><label class='makeitgreen'>Farmer</label></a></li>";
+                         echo "<li class='options' role='presentation'><a role='menuitem' tabindex='-1' href= 'Librarians.php'><label class='makeitgreen'>Librarian</label></a></li>";
 
                          echo "<li class='options' role='presentation'><a role='menuitem' tabindex='-1' href='../Includes/logout.php'><label class='makeitgreen'>Logout</label></a></li>";
                     } else {
-                         echo "<li class='options' role='presentation'><a role='menuitem' tabindex='-1' href= '../auth/BuyerLogin.php'><label class='makeitgreen'>Login</label></a></li>";
+                         echo "<li class='options' role='presentation'><a role='menuitem' tabindex='-1' href= '../auth/UserLogin.php'><label class='makeitgreen'>Login</label></a></li>";
                     }
                     ?>
           </div>
           <div class="proicon">
                <?php
                if (!isset($_SESSION['phonenumber'])) {
-                    echo "<a href='../auth/BuyerLogin.php'> <i class='far fa-user-circle' style='font-size:30px; color: white'></i></a>";
+                    echo "<a href='../auth/UserLogin.php'> <i class='far fa-user-circle' style='font-size:30px; color: white'></i></a>";
                } else {
-                    echo "<a href='BuyerProfile.php'> <i class='far fa-user-circle' style='font-size:30px; color: white'></i></a>";
+                    echo "<a href='UserProfile.php'> <i class='far fa-user-circle' style='font-size:30px; color: white'></i></a>";
                }
                ?>
           </div>
@@ -649,7 +649,7 @@
                $run_query = mysqli_query($con, $query);
                echo "<br>";
                while ($rows = mysqli_fetch_array($run_query)) {
-                    $farmer_fk = $rows['farmer_fk'];
+                    $Librarian_fk = $rows['Librarian_fk'];
                     $product_title = $rows['product_title'];
                     $product_image = $rows['product_image'];
                     $product_price = $rows['product_price'];
@@ -657,17 +657,17 @@
                     $product_delivery = $rows['product_delivery'];
                     $product_desc = $rows['product_desc'];
                     if ($product_delivery == "yes") {
-                         $product_delivery = "Delivery by Farmer";
+                         $product_delivery = "Delivery by Librarian";
                     } else {
-                         $product_delivery = "Delivery by Farmer Not Available";
+                         $product_delivery = "Delivery by Librarian Not Available";
                     }
-                    $querya = "select * from farmerregistration where farmer_id = $farmer_fk";
+                    $querya = "select * from Librarianregistration where Librarian_id = $Librarian_fk";
                     $runa_query = mysqli_query($con, $querya);
                     echo "<br>";
                     while ($rows = mysqli_fetch_array($runa_query)) {
-                         $name = $rows['farmer_name'];
-                         $phone = $rows['farmer_phone'];
-                         $address = $rows['farmer_address'];
+                         $name = $rows['Librarian_name'];
+                         $phone = $rows['Librarian_phone'];
+                         $address = $rows['Librarian_address'];
 
                          echo "<div class='container'>
                               <div class='row'>
@@ -713,7 +713,7 @@
                                         <br><br><i class='fa fa-truck fa-1x'></i><label  style = 'padding-left:9px;' > $product_delivery</label>
                                    </div>
                                    <div class='box'><br>
-                                        <h2> FARMER DETAILS </h2>
+                                        <h2> Librarian DETAILS </h2>
                                         <span id='linebreak'></span>
                                         <label><b> Name: </b></label><label style = 'padding-left:10px;'>$name</label><br>
                                         <label><b>  Phone Number :  </b> </label><label style = 'padding-left:10px;'>$phone</label>
@@ -809,3 +809,4 @@
 </body>
 
 </html>
+
