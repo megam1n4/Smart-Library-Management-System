@@ -1165,7 +1165,7 @@
                     <div class="row">
                          <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center">
                               <p><u><a href="">Online Book Corner</a></u> Online Website for authors and readers</p>
-                              <p class="h6">All copy Reserved By<a class="text-green ml-2" href="https://www.google.com" target="_blank">Tech Mavericks</a></p>
+                              <p class="h6">All copy Reserved By<a class="text-green ml-2" href="https://www.google.com" target="_blank">Foreign Key Friends</a></p>
                          </div>
                          </hr>
                     </div>
