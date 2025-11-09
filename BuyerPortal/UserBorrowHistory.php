@@ -11,25 +11,20 @@
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
      <title>Agrocraft Homepage</title>
-     <!-- <link rel="stylesheet" type="text/css" href="../Styles/BuyerHomepage.css"> -->
-     <!-- <link rel="stylesheet" href="portal_files/font-awesome.min.css"> -->
-     <!-- <script src="../portal_files/c587fc1763.js.download" crossorigin="anonymous"></script> -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
      <script src="https://kit.fontawesome.com/c587fc1763.js" crossorigin="anonymous"></script>
-     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 
      <link rel="stylesheet" href="../portal_files/bootstrap.min.css">
      <script src="../portal_files/jquery.min.js.download"></script>
      <script src="../portal_files/popper.min.js.download"></script>
      <script src="../portal_files/bootstrap.min.js.download"></script>
-
      <script>
           function state() {
                var a = document.getElementById('states').value;
 
                if (a === '31') {
                     var array = ['Andamans', 'Nicobars'];
-               } else if (a === '01') {
+               }else if (a === '01') {
                 var array = ['Houston', 'Dallas', 'Austin', 'San Antonio', 'Fort Worth', 'El Paso', 'Arlington', 'Corpus Christi', 'Plano', 'Laredo', 'Irving', 'Garland', 'Amarillo', 'Grand Prairie', 'McAllen', 'Mesquite', 'Killeen', 'Frisco', 'Brownsville', 'Pasadena'];
             } else if (a === '02') {
                 var array = ['New York City', 'Buffalo', 'Rochester', 'Yonkers', 'Syracuse', 'Albany', 'New Rochelle', 'Mount Vernon', 'Schenectady', 'Utica', 'White Plains', 'Hempstead', 'Troy', 'Niagara Falls', 'Binghamton', 'Freeport', 'Valley Stream', 'Long Beach', 'Spring Valley', 'Rome'];
@@ -38,6 +33,7 @@
             } else if (a === '03') {
                 var array = ['Miami', 'Tampa', 'Orlando', 'St. Petersburg', 'Jacksonville', 'Hialeah', 'Tallahassee', 'Fort Lauderdale', 'Port St. Lucie', 'Cape Coral', 'Pembroke Pines', 'Hollywood', 'Miramar', 'Gainesville', 'Coral Springs', 'Miami Gardens', 'Clearwater', 'Palm Bay', 'Pompano Beach', 'West Palm Beach'];
             } 
+
 
                var string = "";
                for (let i = 0; i < array.length; i++) {
@@ -66,7 +62,6 @@
 
           }
      </script>
-
      <style>
           * {
                margin: 0;
@@ -300,6 +295,8 @@
           .wrapper {
                display: grid;
                grid-template-columns: 20% 20% 20% 20%;
+
+
                grid-column-gap: 20px;
                grid-row-gap: 10px;
                grid-column-gap: 20px;
@@ -598,15 +595,122 @@
           .dric {
                margin-left: -50px;
           }
+
+          .tab {
+               width: 100%;
+
+               border-style: solid;
+               border-width: 2px;
+               padding: 2px;
+
+          }
+
+          th {
+               border-color: white;
+               border-style: solid;
+               border-width: 2px;
+               padding: 2px;
+
+          }
+
+          .tableyhead {
+
+               color: red;
+
+          }
+
+          .thy {
+               background-color: #555;
+               color: white;
+
+          }
+
+          .trow {
+               align-content: center;
+          }
+
+          .cont {
+               border-radius: 25%;
+               border-style: solid;
+               background-color: #FFD700;
+               padding: 10px;
+               margin-top: 40px;
+               /* margin-left:46%; */
+               transition: 1s;
+
+          }
+
+          .cont:hover {
+               padding-top: 15px;
+               padding-bottom: 20px;
+               transition: 1s;
+               width: 270px;
+               height: 70px;
+               font-size: 22px;
+          }
+
+          .order {
+               font-size: 30px;
+               /* margin-left:20%; */
+               border-color: #00b300;
+               border-style: solid;
+               border-radius: 100%;
+               padding: 15px;
+
+               border-width: 2px;
+
+          }
+
+          .order1 {
+               background-color: #FFD700;
+
+          }
+
+
+
+
+
+          .a1 {
+               /* width:100px; */
+               margin-left: 400px;
+               margin-top: -44px;
+               margin-bottom: 10px;
+               /* margin-bottom: 100px; */
+          }
+
+          ul {
+               list-style: none;
+               /* display: inline-block; */
+               text-align: center;
+               /* width:200px; */
+          }
+
+          .ash1 {
+               width: 300px;
+               text-align: center;
+
+               /* background-color: greenyellow; */
+               display: inline-block;
+          }
+
+
+          /* .fa:after {
+               content: "";
+               display: block;
+               height: 2px;
+               width: 200px;
+               color: red;
+               /* background-color: black; */
+          }
+
+          */
      </style>
 
 </head>
 
 <body>
 
-
      <div class="header">
-
 
           <a href="BuyerHomepage.php"><img id="logo" src="../portal_files/logo.jpg"></a>
 
@@ -693,10 +797,11 @@
                          <option value="02">Newyork</option>
                          <option value="03">Florida</option>
                          <option value="04">Colarado</option>
+
                     </select>
 
 
-                    <select name="SelectCity" id="district">
+                    <select name="" id="City">
                          <option>Select City</option>
                     </select>
 
@@ -704,86 +809,107 @@
                </table>
           </div>
      </div>
-     <?php
-     cart();
-     ?>
-     <?php
-     if (isset($_GET['type'])) {
 
-          $search_query = $_GET['type'];
-          $get_pro = "select * from products where product_type = '$search_query'";
-          $run_pro = mysqli_query($con, $get_pro);
-          // $count = mysqli_num_rows($run_pro);
-          if ($run_pro) {
-               echo "<br>";
-               while ($rows = mysqli_fetch_array($run_pro)) {
+     <br><br>
+
+     <ul class="ash">
+          <li class="ash1"> <i class='fas fa-people-carry order order1 '></i>
+               <br><i class="fa fa-check aria" aria-hidden="true"></i><br>Packaging
+          </li>
+          <li class="ash1"> <i class="fas fa-truck order order2"></i>
+               <br><i class="fa fa-check aria" aria-hidden="true"></i><br>Dispatch
+          </li>
+          <li class="ash1"> <i class="fas fa-road order order3"></i>
+               <br><i class="fa fa-refresh aria" aria-hidden="true"></i>
+               <br>Half way </li>
+          <li class="ash1"><i class="fas fa-map-marker-alt order order4"></i><br><i class="fa fa-times aria" aria-hidden="true"></i>
+               <br>Reached
+          </li>
+
+
+
+     </ul>
+
+
+
+
+     <br>
+     <br>
+     <table class=tab>
+          <thead align="center" class=tableyhead>
+               <th class=thy>Farmer Name</th>
+               <th class=thy>Phone</th>
+               <th class=thy>Delivery Address</th>
+               <th class=thy>Product Title</th>
+               <th class=thy>Quantity</th>
+               <th class=thy>Delivery Mode</th>
+               <th class=thy>Payment Mode</th>
+               <th class=thy>Amount</th>
+          </thead>
+          <?php
+          $sess_phone_number = $_SESSION['phonenumber'];
+          $check_query = "select * from orders where phonenumber = $sess_phone_number ";
+          $run = mysqli_query($con, $check_query);
+          if ($run) {
+               while ($rows = mysqli_fetch_array($run)) {
+                    $deliveryMode = $rows['delivery'];
+                    $amount = $rows['total'];
+                    $address = $rows['address'];
+                    $qty = $rows['qty'];
+                    $payment = $rows['payment'];
                     $product_id = $rows['product_id'];
-                    $product_title = $rows['product_title'];
-                    $product_image = $rows['product_image'];
-                    $product_price = $rows['product_price'];
-                    $product_delivery = $rows['product_delivery'];
-                    if ($product_delivery == "yes") {
-                         $product_delivery = "Delivery by Farmer";
-                    } else {
-                         $product_delivery = "Delivery by Farmer Not Available";
+
+                    $farmer_query = "select * from products where product_id = $product_id ";
+                    $farmer_run = mysqli_query($con, $farmer_query);
+                    while ($row = mysqli_fetch_array($farmer_run)) {
+                         $farmer_id = $row['farmer_fk'];
+                         $title = $row['product_title'];
                     }
-                    echo " <div class='inputwrapper'>
-                                                  <br>
-                                                  <a href='../BuyerPortal/BuyerProductDetails.php?id=$product_id'><img src='../Admin/product_images/$product_image' alt= 'Image Not Available' onerror=this.src='../Images/Website/noimage.jpg' style='height: 100px; width: 100px;'><br><br></a>
-                                                  <label>$product_title</label><br>
-                                                  <label>PRICE:- $product_price Rs/kg</label><br>	
-                                                  <label id='shop2'>$product_delivery</label><br>Qty:-
-                                                  <form action = '' method = 'post'>
-                                                  <input class='numberinput' type='number' name='quantity'  value = '1' >
-                                                  <button type = 'submit' name = 'cart' class='addtocart'>ADD TO CART <i class='fas fa-shopping-cart' style=' background-color:#FFD700'></i></button></a><br><br>    
-                                                  </form>
-                                                  </div> ";
-                    if (isset($_POST['cart'])) {
 
-                         if (isset($_POST['quantity'])) {
-                              $qty = $_POST['quantity'];
-                         } else {
-                              $qty = 1;
-                         }
-                         global $con;
-                         if (isset($_SESSION['phonenumber'])) {
-                              $sess_phone_number = $_SESSION['phonenumber'];
-
-                              $check_pro = "select * from cart where phonenumber = $sess_phone_number and product_id='$product_id' ";
-
-                              $run_check = mysqli_query($con, $check_pro);
-
-                              if (mysqli_num_rows($run_check) > 0) {
-                                   echo "";
-                              } else {
-                                   $subtotal = $product_price * $qty;
-                                   $insert_pro = "insert into cart (product_id,phonenumber,qty,subtotal) values ('$product_id','$sess_phone_number','$qty','$subtotal')";
-                                   $run_insert_pro = mysqli_query($con, $insert_pro);
-                                   echo "<script>window.location.reload(true)</script>";
-                              }
-                         } else {
-                              echo "<script>window.alert('Please Login First!');</script>";
-                         }
+                    $farmer_details = "select * from farmerregistration where farmer_id = $farmer_id ";
+                    $details_run = mysqli_query($con, $farmer_details);
+                    while ($detail = mysqli_fetch_array($details_run)) {
+                         $farmer_name = $detail['farmer_name'];
+                         $farmer_phone = $detail['farmer_phone'];
                     }
+
+
+          ?>
+                    <tr align="center" class=trow>
+                         <th align="center"><?php echo $farmer_name; ?></th>
+                         <th align="center"><?php echo $farmer_phone; ?></th>
+                         <th align="center"><?php echo $address; ?></th>
+                         <th align="center"><?php echo $title; ?></th>
+                         <th align="center"><?php echo $qty; ?></th>
+                         <th align="center"><?php echo $deliveryMode; ?></th>
+                         <th align="center"><?php echo $payment; ?></th>
+                         <th align="center"><?php echo $amount; ?></th>
+                    </tr>
+
+          <?php
                }
-          } else {
-               echo "<br><br><hr><h1 align = center>Product's Not Available !</h1><br><br><hr>";
           }
-     }
-     ?>
-     </div>
+          ?>
+     </table>
+
+     <br><br><br>
+
+
+     <a href="BuyerHomepage.php" style="color:black;margin-left:5%;"><label class="cont">CONTINUE SHOPPING <i class="fas fa-shopping-bag"></i></label></a>
+
 
 
      <div class="footer">
           <hr>
+
           <label class="payment">Payment Options:-</label>
           <div class="cash"><img src="../Images/Website/cash.jpg" height="75px" width="125px"></div>
           <div class="patym"><img src="../Images/Website/petm.jpg" height="75px" width="125px"></div>
      </div><br><br>
      <h3><span> GET SOCIAL WITH US </span></h3>
      </div>
-     <div class="morefooter">
 
+     <div class="morefooter">
           <div class="call">
                <i class="fas fa-phone-alt call_color"></i>
                <a href="#" style="color:black;">+91-8191046421</a>
@@ -798,17 +924,16 @@
 
      </div>
      <div class="instaid">
-          <div class="text"><a href="#" style="color:black;">@Deadlock</a></div>
-
+          <div class="text"><a href="#" style="color:black;">@AgroCraft</a></div>
           <div class="gmailid">
-               <a href="#" class="hypher" style="color:black;"></a>
-          </div>
+               <a href="#" class="hypher" style="color:black;">agrocraft6@gmail.com</a></div>
 
      </div>
+
+
      <div class="copy">
-          <h5 style="test-align:center; padding-top:40px;margin-left:650px; background-color:'grey';"></h5>
+          <h5 style="test-align:center; padding-top:40px;margin-left:650px; background-color:'grey';">Copyright &copy; 2022 by www.AgroCraft.com</h5>
      </div>
-
 </body>
 
 </html>
