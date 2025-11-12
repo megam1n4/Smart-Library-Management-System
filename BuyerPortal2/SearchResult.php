@@ -799,7 +799,7 @@ margin-top:2%;
                </div>
                <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center">
-                         <p><u><a href="https://www.agrocraft.com/">Online Book Corner</a></u> is a Multitrading Company for authors ang readers</p>
+                         <p><u><a href="https://www.agrocraft.com/">Smart Library Management System</a></u>A one stop solution for library users and librarians</p>
                          <p class="h6">Copy All right Reversed.<a class="text-green ml-2" href="https://www.google.com" target="_blank">Foreign Key Friends</a></p>
                     </div>
                     </hr>

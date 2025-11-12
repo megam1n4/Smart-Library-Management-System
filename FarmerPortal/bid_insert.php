@@ -120,7 +120,7 @@ $sessphonenumber = $_SESSION['phonenumber'];
 <body>
     <div class="container">
         <!-- Website Name as Header with Animation -->
-        <div class="website-name">Book Corner</div>
+        <div class="website-name">Smart Library Management System</div>
         
         <h1>Submit Rare Book Details</h1>
         
