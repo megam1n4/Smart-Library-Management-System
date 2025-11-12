@@ -103,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
     <a class="navbar-brand" href="#">
         <i class="fas fa-book-reader mr-2"></i> <!-- FontAwesome book icon -->
-        Book Corner
+        Smart Library Management System
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Book Corner - Voice Search</title>
+    <title>Smart Library Management System - Voice Search</title>
     <!-- Include necessary CSS and JS files -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/c587fc1763.js" crossorigin="anonymous"></script>
@@ -103,7 +103,7 @@
 
 <div class="container text-center">
     <!-- Heading Section -->
-    <h1 class="search-heading">Welcome to <span>Book Corner</span></h1>
+    <h1 class="search-heading">Welcome to <span>Smart Library Management System </span></h1>
     <p class="subheading">Click the microphone to start, click again to stop</p>
 
     <!-- Voice Search Icon -->
@@ -115,7 +115,7 @@
 
 <!-- Footer with additional info -->
 <div class="footer">
-    <p>Powered by Book Corner &mdash; Your personal library at a command</p>
+    <p>Powered by Smart Library Management System &mdash; Your personal library at a command</p>
 </div>
 
 <!-- Voice Search JavaScript Code -->

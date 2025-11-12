@@ -160,7 +160,7 @@ if (isset($_POST['submit_bid'])) {
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark">
     <a class="navbar-brand" href="#">
-        <i class="fas fa-book-reader mr-2"></i>Book Corner
+        <i class="fas fa-book-reader mr-2"></i>Smart Library Management System
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

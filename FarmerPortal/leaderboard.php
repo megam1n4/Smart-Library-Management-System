@@ -16,7 +16,7 @@ $leaderboard_result = mysqli_query($con, $leaderboard_query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Corner Leaderboard</title>
+    <title>Smart Library Management System  Leaderboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
@@ -79,7 +79,7 @@ $leaderboard_result = mysqli_query($con, $leaderboard_query);
 <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
     <a class="navbar-brand" href="#">
         <i class="fas fa-book-reader mr-2"></i> <!-- FontAwesome book icon -->
-        Book Corner
+        Smart Library Management System 
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

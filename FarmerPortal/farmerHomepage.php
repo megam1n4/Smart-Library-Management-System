@@ -862,7 +862,7 @@
             <!-- Text-Based Logo -->
             <a class="float-left" href="#">
                 <h1 class="book-corner-logo" style="color: yellow; font-size: 30px; font-weight: bold; margin: 0; padding: 0; line-height: 1;">
-                    Book Corner
+                    Smart Library Management System 
                 </h1>
             </a>
         </div>
@@ -871,7 +871,7 @@
         </button>
         <a class="float-left" href="farmerHomepage.php">
             <h1 class="book-corner-logo moblogo" style="color: yellow; font-size: 30px; font-weight: bold; margin: 0; padding: 0; line-height: 1;">
-                Book Corner
+                Smart Library Management System 
             </h1>
         </a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -1060,8 +1060,8 @@
                      </div>
                      <div class="row">
                           <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center">
-                               <p><u><a href="">Online Book Corner</a></u> is a Multitrading Company for Authors and Readers</p>
-                               <p class="h6">Copy All right Reversed.<a class="text-green ml-2" href="https://www.google.com" target="_blank">Tech Mavericks</a></p>
+                               <p><u><a href="">Smart Library Management System </a></u> is a Multitrading Company for Authors and Readers</p>
+                               <p class="h6">Copy All right Reversed.<a class="text-green ml-2" href="https://www.google.com" target="_blank">Foreign Key Friends</a></p>
                           </div>
                           </hr>
                      </div>

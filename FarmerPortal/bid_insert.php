@@ -9,7 +9,7 @@ $sessphonenumber = $_SESSION['phonenumber'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Corner - Submit Rare Book Details</title>
+    <title>Smart Library Management System  - Submit Rare Book Details</title>
     <style>
         /* Body background styling */
         body {
@@ -120,7 +120,7 @@ $sessphonenumber = $_SESSION['phonenumber'];
 <body>
     <div class="container">
         <!-- Website Name as Header with Animation -->
-        <div class="website-name">Book Corner</div>
+        <div class="website-name">Smart Library Management System</div>
         
         <h1>Submit Rare Book Details</h1>
         
