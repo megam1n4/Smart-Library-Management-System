@@ -241,7 +241,7 @@ session_start();
         </div>
         
         <div class="login-body">
-            <form name="my-form" action="BuyerLogin.php" method="post">
+            <form name="my-form" action="UserLogin.php" method="post">
                 <div class="form-group">
                     <label for="phone_number">
                         <i class="fas fa-phone-alt"></i> Phone Number
