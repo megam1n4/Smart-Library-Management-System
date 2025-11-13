@@ -604,13 +604,7 @@ include("../Functions/functions.php");
     <!-- Footer -->
     <section id="footer" class="myfooter">
         <div class="container">
-            <div class="row text-center">
-                <div class="col">
-                    <h5>Payment Options</h5>
-                    <img src="../Images/Website/paytm1.jpg" alt="paytm" style="height:40px;">
-                    <img src="../Images/Website/cod.jpg" alt="cod" style="height:37px;">
-                </div>
-            </div>
+
             <div class="row">
                 <div class="col-12 mt-4">
                     <ul class="list-unstyled list-inline social text-center">
