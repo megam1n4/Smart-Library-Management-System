@@ -322,7 +322,7 @@ if (isset($_POST['login'])) {
     $count_rows = mysqli_num_rows($run_query);
     if ($count_rows == 0) {
         echo "<script>alert('Please Enter Valid Details');</script>";
-        echo "<script>window.open('BuyerLogin.php','_self')</script>";
+        echo "<script>window.open('UserLogin.php','_self')</script>";
     }
     while ($row = mysqli_fetch_array($run_query)) {
         $id = $row['buyer_id'];
