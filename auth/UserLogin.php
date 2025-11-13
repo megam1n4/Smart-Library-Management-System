@@ -317,7 +317,7 @@ if (isset($_POST['login'])) {
         $encryption_iv
     );
 
-    $query = "select * from buyerregistration where buyer_phone = '$phonenumber' and buyer_password = '$password'";
+    $query = "select * from buyerregistration where buyer_phone = '$phonenumber' and buyer_password = '$encryption'";
     $run_query = mysqli_query($con, $query);
     $count_rows = mysqli_num_rows($run_query);
     if ($count_rows == 0) {
