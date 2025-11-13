@@ -97,6 +97,27 @@ session_start();
             padding: 40px 30px;
         }
 
+        .error-message {
+            background: #fee;
+            border: 2px solid #fcc;
+            color: #c33;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
         .form-group {
             margin-bottom: 25px;
         }
@@ -242,6 +263,15 @@ session_start();
         
         <div class="login-body">
             <form name="my-form" action="UserLogin.php" method="post">
+                <?php
+                if (isset($_GET['error']) && $_GET['error'] == 'invalid') {
+                    echo '<div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>Invalid phone number or password. Please try again.</span>
+                          </div>';
+                }
+                ?>
+                
                 <div class="form-group">
                     <label for="phone_number">
                         <i class="fas fa-phone-alt"></i> Phone Number
@@ -322,8 +352,9 @@ if (isset($_POST['login'])) {
     $count_rows = mysqli_num_rows($run_query);
     
     if ($count_rows == 0) {
-        echo "<script>alert('Please Enter Valid Details');</script>";
-        echo "<script>window.open('UserLogin.php','_self')</script>";
+        // Invalid credentials - redirect with error parameter
+        header("Location: UserLogin.php?error=invalid");
+        exit();
     } else {
         // Login successful
         while ($row = mysqli_fetch_array($run_query)) {
@@ -331,7 +362,11 @@ if (isset($_POST['login'])) {
         }
         
         $_SESSION['phonenumber'] = $phonenumber;
-        echo "<script>window.open('../BuyerPortal2/bhome.php','_self')</script>";
+        $_SESSION['buyer_id'] = $id;
+        
+        // Redirect to buyer home page
+        header("Location: ../BuyerPortal2/bhome.php");
+        exit();
     }
 }
 ?>
