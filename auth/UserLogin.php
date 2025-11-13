@@ -320,15 +320,18 @@ if (isset($_POST['login'])) {
     $query = "select * from buyerregistration where buyer_phone = '$phonenumber' and buyer_password = '$encryption'";
     $run_query = mysqli_query($con, $query);
     $count_rows = mysqli_num_rows($run_query);
+    
     if ($count_rows == 0) {
         echo "<script>alert('Please Enter Valid Details');</script>";
         echo "<script>window.open('UserLogin.php','_self')</script>";
+    } else {
+        // Login successful
+        while ($row = mysqli_fetch_array($run_query)) {
+            $id = $row['buyer_id'];
+        }
+        
+        $_SESSION['phonenumber'] = $phonenumber;
+        echo "<script>window.open('../BuyerPortal2/bhome.php','_self')</script>";
     }
-    while ($row = mysqli_fetch_array($run_query)) {
-        $id = $row['buyer_id'];
-    }
-
-    $_SESSION['phonenumber'] = $phonenumber;
-    echo "<script>window.open('../BuyerPortal2/bhome.php','_self')</script>";
 }
 ?>
