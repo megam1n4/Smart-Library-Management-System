@@ -6,807 +6,624 @@ include("../Functions/functions.php");
 <html lang="en">
 
 <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Buyer Homepage</title>
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-     <a href="https://icons8.com/icon/83325/roman-soldier"></a>
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-     <script src="https://kit.fontawesome.com/c587fc1763.js" crossorigin="anonymous"></script>
-     <script>
-          function state() {
-               var a = document.getElementById('states').value;
-               if (a === 'ANDAMAN & NICOBAR ISLANDS') {
-                    var array = ['Select District', 'Andamans', 'Nicobars'];
-               } else if (a === '01') {
-                var array = ['Houston', 'Dallas', 'Austin', 'San Antonio', 'Fort Worth', 'El Paso', 'Arlington', 'Corpus Christi', 'Plano', 'Laredo', 'Irving', 'Garland', 'Amarillo', 'Grand Prairie', 'McAllen', 'Mesquite', 'Killeen', 'Frisco', 'Brownsville', 'Pasadena'];
-            } else if (a === '02') {
-                var array = ['New York City', 'Buffalo', 'Rochester', 'Yonkers', 'Syracuse', 'Albany', 'New Rochelle', 'Mount Vernon', 'Schenectady', 'Utica', 'White Plains', 'Hempstead', 'Troy', 'Niagara Falls', 'Binghamton', 'Freeport', 'Valley Stream', 'Long Beach', 'Spring Valley', 'Rome'];
-            } else if (a === '04') {
-                var array = ['Denver', 'Colorado Springs', 'Aurora', 'Fort Collins', 'Lakewood', 'Thornton', 'Arvada', 'Westminster', 'Pueblo', 'Centennial', 'Boulder', 'Greeley', 'Longmont', 'Loveland', 'Broomfield', 'Grand Junction', 'Castle Rock', 'Commerce City', 'Parker', 'Littleton'];
-            } else if (a === '03') {
-                var array = ['Miami', 'Tampa', 'Orlando', 'St. Petersburg', 'Jacksonville', 'Hialeah', 'Tallahassee', 'Fort Lauderdale', 'Port St. Lucie', 'Cape Coral', 'Pembroke Pines', 'Hollywood', 'Miramar', 'Gainesville', 'Coral Springs', 'Miami Gardens', 'Clearwater', 'Palm Bay', 'Pompano Beach', 'West Palm Beach'];
-            } 
-
-
-
-               var string = "";
-               for (let i = 0; i < array.length; i++) {
-                    string = string + "<option>" + array[i] + "</option>";
-               }
-               string = "<select nmae = 'lol'>" + string + "</select>"
-               document.getElementById('district').innerHTML = string;
-
-          }
-     </script>
-     <script>
-          var a;
-          9
-
-          function display() {
-               if (a == 0) {
-                    document.getElementById("majic").style.visibility = "hidden";
-                    document.getElementById("show").style.visibility = "visible";
-                    return a = 1;
-               } else {
-                    document.getElementById("majic").style.visibility = "visible";
-                    document.getElementById("show").style.visibility = "hidden";
-                    // document.getElementById("show").style. visibility= "hidden";
-                    return a = 0;
-               }
-
-          }
-     </script>
-     <style>
-          /* .please{
-margin-left:-7%;
-margin-top:-10px;
-          }
-          .states{
-               margin-right:-15%;
-               color:white;
-          }
-          .myfooter {
-               background-color: #292b2c;
-               color:white;
-               color: goldenrod;
-               margin-top: 15px;
-          }
-.submitbtn{
-     color:white;
-     /* margin-left: -70%; */
-          /* margin-left:-240%;
-margin-top:2%;
-} */
-          .aligncenter {
-               text-align: center;
-          }
-
-          a {
-               color: goldenrod;
-          }
-
-          * {
-               margin: 0;
-               padding: 0;
-               box-sizing: border-box;
-          }
-
-          nav {
-               background-color: #292b2c;
-          }
-
-          .navbar-custom {
-               background-color: #292b2c;
-          }
-
-          /* change the brand and text color */
-          .navbar-custom .navbar-brand,
-          .navbar-custom .navbar-text {
-               background-color: #292b2c;
-          }
-
-          .navbar-custom .navbar-nav .nav-link {
-               background-color: #292b2c;
-          }
-
-          .navbar-custom .nav-item.active .nav-link,
-          .navbar-custom .nav-item:hover .nav-link {
-               background-color: #292b2c;
-          }
-
-          .firstimage {
-               height: 500px;
-               width: 100%;
-          }
-
-          .mybtn {
-               border-color: green;
-               border-style: solid;
-          }
-
-          .card {
-               width: 100%;
-               height: 100%;
-               margin: 10px;
-          }
-
-          .right {
-               display: flex;
-          }
-
-          .left {
-               display: none;
-          }
-
-          .cart {
-               /* margin-left:10px; */
-               margin-right: -9px;
-          }
-
-          .profile {
-               margin-right: 2px;
-
-          }
-
-          .login {
-               margin-right: -2px;
-               margin-top: 12px;
-               display: none;
-          }
-
-          .searchbox {
-               width: 60%;
-          }
-
-          .lists {
-               display: inline-block;
-          }
-
-          .moblists {
-               display: none;
-          }
-
-          .logins {
-               text-align: center;
-               margin-right: -30%;
-               margin-left: 35%;
-          }
-
-          /* .images {
-            transition: 0.5s;
-        } */
-
-          .images:hover {
-
-               height: 220px;
-               box-shadow: 5px 5px 10px grey;
-               transition: 0.3s;
-          }
-
-          .guard {
-               width: 100%;
-               text-align: center;
-               border-bottom: 1px solid #ffc857;
-               /* background-color: #ffc857; */
-               line-height: 0.1em;
-               margin: 10px 0 20px;
-               /* font-family: serif; */
-          }
-
-          .guard span {
-               background: white;
-               padding: 0 10px;
-          }
-
-          .mobtext {
-               display: block;
-          }
-
-          .destext {
-               display: none;
-          }
-
-          .guard {
-               width: 100%;
-               text-align: center;
-               border-bottom: 1px solid #ffc857;
-               /* background-color: #ffc857; */
-               line-height: 0.1em;
-               margin: 10px 0 20px;
-               font-family: serif;
-          }
-
-          .guard span {
-               background: white;
-               padding: 0 10px;
-          }
-
-          /* .settings{
-    margin-left:10px;
-} */
-          .States {
-               margin-right: -1%;
-               margin-left: 10%
-          }
-
-          .districts {
-               margin-right: -15%;
-          }
-
-          .go {
-               margin-right: -50%;
-               margin-left: 5%;
-          }
-
-          @media only screen and (min-device-width:320px) and (max-device-width:480px) {
-               .States {
-                    margin-right: 0%;
-                    margin-left: 0%;
-                    margin-top: 5%;
-               }
-
-               .districts {
-                    margin-right: 0%;
-                    margin-top: 5%;
-               }
-
-               .go {
-                    margin-right: 0%;
-                    margin-left: 40%;
-                    margin-right: 30%;
-                    margin-top: 10%;
-               }
-
-
-               .guard {
-                    width: 100%;
-                    text-align: center;
-                    border-bottom: 1px solid #ffc857;
-                    /* background-color: #ffc857; */
-                    line-height: 0.1em;
-                    margin: 10px 0 20px;
-                    font-family: serif;
-               }
-
-               .guard span {
-                    background: white;
-                    padding: 0 10px;
-               }
-
-               .mobtext {
-                    display: none;
-               }
-
-               .destext {
-                    display: inline-block;
-                    width: 90%;
-                    margin-left: 5%;
-                    margin-right: 5%;
-               }
-
-               .mycarousel {
-                    display: none;
-               }
-
-               .firstimage {
-                    height: auto;
-                    width: 90%;
-               }
-
-               .card {
-                    width: 80%;
-                    margin-left: 10%;
-                    margin-right: 10%;
-
-               }
-
-               .col {
-                    margin-top: 20px;
-               }
-
-               .right {
-                    display: none;
-                    background-color: #ff5500;
-               }
-
-               /* 
-            .settings{
-            margin-left:79%;
-        } */
-               .left {
-                    display: flex;
-               }
-
-               .moblogo {
-                    display: none;
-               }
-
-               .logins {
-                    text-align: center;
-                    margin-right: 35%;
-                    padding: 15px;
-               }
-
-               .searchbox {
-                    width: 95%;
-                    margin-right: 5%;
-                    margin-left: 0%;
-               }
-
-               .moblists {
-                    display: inline-block;
-                    text-align: center;
-                    width: 100%;
-               }
-
-               .guard {
-                    /* width: 100%; */
-                    text-align: center;
-                    border-bottom: 1px solid #ffc857;
-                    /* background-color: #ffc857; */
-                    /* line-height: 0.1em; */
-                    /* margin: 10px 0 20px; */
-                    /* font-family: serif; */
-
-               }
-
-               .guard span {
-                    background: white;
-                    padding: 0 10px;
-               }
-          }
-
-
-
-
-          /* Image Grig */
-
-
-          * {
-               box-sizing: border-box;
-          }
-
-          body {
-               margin: 0;
-               font-family: Arial;
-          }
-
-          .header {
-               text-align: center;
-               padding: 32px;
-          }
-
-          .row {
-               display: -ms-flexbox;
-               /* IE10 */
-               display: flex;
-               -ms-flex-wrap: wrap;
-               /* IE10 */
-               flex-wrap: wrap;
-               padding: 0 4px;
-          }
-
-          /* Create four equal columns that sits next to each other */
-          .column {
-               -ms-flex: 25%;
-               /* IE10 */
-               flex: 25%;
-               max-width: 25%;
-               padding: 0 4px;
-          }
-
-          .column img {
-               margin-top: 8px;
-               vertical-align: middle;
-               width: 100%;
-          }
-
-          .myfooter {
-               background-color: #292b2c;
-               color: goldenrod;
-               margin-top: 15px;
-          }
-
-          .aligncenter {
-               text-align: center;
-          }
-
-          a {
-               color: goldenrod;
-          }
-
-
-
-
-
-
-          #headings {
-               /* text-shadow: 2px 1px #666666; */
-               font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-          }
-
-          @media screen and (max-width: 800px) {
-               .kolum {
-                    flex: 50%;
-                    max-width: 50%;
-                    max-height: 40%;
-               }
-          }
-
-          @media screen and (max-width: 600px) {
-               .kolum {
-                    flex: 50%;
-                    max-width: 50%;
-                    max-height: 40%;
-               }
-          }
-
-          /* Responsive layout - makes a two column-layout instead of four columns */
-          /* @media screen and (max-width: 800px) {
-            .column {
-                -ms-flex: 50%;
-                flex: 50%;
-                max-width: 50%;
-            }
-        } */
-
-          /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-          /* @media screen and (max-width: 600px) {
-            .column {
-                -ms-flex: 100%;
-                flex: 100%;
-                max-width: 100%;
-            }
-        } */
-     </style>
-     <!-- <script>
-        var a;
-
-        function display() {
-            if (a == 0) {
-                document.getElementById("majic").style.display = "none";
-                document.getElementById("show").style.display = "inline-block";
-                return a = 1;
-            } else {
-                document.getElementById("majic").style.visibility = "visible";
-                document.getElementById("show").style.visibility = "hidden";
-                // document.getElementById("show").style. visibility= "hidden";
-                return a = 0;
-            }
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - Smart Library</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-    </script> -->
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        /* Modern Navbar Styling - Same as bhome.php */
+        nav.navbar {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 15px 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand img {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+            background: white;
+            padding: 5px;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Search Box Styling */
+        .searchbox .input-group {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .searchbox .input-group-text {
+            background-color: white;
+            border: 2px solid #28a745;
+            border-right: none;
+            border-radius: 25px 0 0 25px;
+            color: #28a745;
+        }
+
+        .searchbox .form-control {
+            border: 2px solid #28a745;
+            border-left: none;
+            border-radius: 0 25px 25px 0;
+            padding: 10px 20px;
+        }
+
+        .searchbox .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+            border-color: #28a745;
+        }
+
+        /* User Icons */
+        .user-icon,
+        .cart-icon {
+            color: #28a745;
+            font-size: 28px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .user-icon:hover,
+        .cart-icon:hover {
+            color: #20c997;
+            transform: scale(1.1);
+        }
+
+        #icon {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background-color: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Dropdown Button */
+        .btn-success {
+            background: #28a745;
+            border: none;
+            font-weight: 600;
+            padding: 8px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        /* Voice Search Button */
+        .voice-search-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .voice-search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        /* Search Results Header */
+        .search-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 0;
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .search-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .search-header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+
+        /* Category Buttons */
+        .category-section {
+            margin-bottom: 40px;
+        }
+
+        .category-btn {
+            background: white;
+            border: 2px solid #28a745;
+            color: #28a745;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-btn:hover {
+            background: #28a745;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+        }
+
+        /* Book Cards */
+        .book-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            height: 100%;
+        }
+
+        .book-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .book-card img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .book-card .card-body {
+            padding: 15px 0;
+        }
+
+        .book-card h5 {
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .book-card .badge {
+            background: #ffc107;
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .book-card .btn-add-cart {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .book-card .btn-add-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        /* No Results Message */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin: 40px 0;
+        }
+
+        .no-results i {
+            font-size: 80px;
+            color: #dc3545;
+            margin-bottom: 20px;
+        }
+
+        .no-results h2 {
+            color: #1a1a2e;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .no-results p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        .myfooter {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #ffc107;
+            padding: 40px 0 20px 0;
+            margin-top: 80px;
+        }
+
+        .myfooter h5 {
+            color: #ffc107;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .social li {
+            margin: 0 10px;
+        }
+
+        .social a {
+            color: #ffc107;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .social a:hover {
+            color: #28a745;
+            transform: scale(1.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .search-header h1 {
+                font-size: 2rem;
+            }
+
+            .search-header p {
+                font-size: 1rem;
+            }
+
+            .category-btn {
+                width: 100%;
+                margin: 5px 0;
+            }
+
+            .book-card img {
+                height: 250px;
+            }
+        }
+
+        /* Mobile List Styling */
+        .moblists {
+            display: none;
+        }
+
+        @media (max-width: 1200px) {
+            .moblists {
+                display: block;
+                margin-top: 20px;
+            }
+
+            .moblists .list-group-item {
+                background-color: #1a1a2e !important;
+                color: #ffc107 !important;
+                border: none;
+                text-align: center;
+                padding: 15px;
+                transition: all 0.3s ease;
+            }
+
+            .moblists .list-group-item:hover {
+                background-color: #28a745 !important;
+                color: white !important;
+            }
+        }
+    </style>
 
 </head>
 
 <body>
 
-<nav class="navbar navbar-expand-xl ">
+    <!-- Modern Navbar -->
+    <nav class="navbar navbar-expand-xl navbar-dark">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand" href="bhome.php">
+                <img src="logo2.jpg" alt="Smart Library Logo">
+            </a>
 
-<div class=" flex-row-reverse left ">
+            <!-- Mobile Icons -->
+            <div class="d-xl-none" style="display: flex; align-items: center; gap: 15px;">
+                <i class='far fa-user-circle user-icon'></i>
+                <a href="CartPage.php" style="position: relative;">
+                    <i class="fa fa-shopping-cart cart-icon"></i>
+                    <span id="icon"><?php echo totalItems(); ?></span>
+                </a>
+            </div>
 
-    <div class="p-2">
-        <div class="icon2">
-            <a href="CartPage.php"> <i class="fa" style="font-size:30px; color:green ;margin-top:2px;">&#61562;</i></a>
-            <span id="icon" style="color:green"> <?php echo totalItems(); ?> </span>
+            <!-- Navbar Toggler -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                <i class="fas fa-bars" style="color:#28a745; font-size:28px;"></i>
+            </button>
+
+            <!-- Collapsible Content -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Search Box -->
+                <div class="mx-auto searchbox">
+                    <form action="SearchResult.php" method="get" enctype="multipart/form-data">
+                        <div class="input-group mb-1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-search" style="font-size:20px;"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="search" placeholder="Search for education, romance books" style="width:500px;">
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Username Display -->
+                <?php getUsername(); ?>
+
+                <!-- Mobile Menu List -->
+                <div class="list-group moblists">
+                    <?php
+                    if (isset($_SESSION['phonenumber'])) {
+                        echo "<a href='BuyerProfile.php' class='list-group-item list-group-item-action'>Profile</a>";
+                        echo "<a href='Transaction.php' class='list-group-item list-group-item-action'>Transactions</a>";
+                        echo "<a href='claimbook.php' class='list-group-item list-group-item-action'>Claim Book</a>";
+                        echo "<a href='display.php' class='list-group-item list-group-item-action'>Bid Rare Book</a>";
+                        echo "<a href='chat.php' class='list-group-item list-group-item-action'>Group Chat</a>";
+                        echo "<a href='debate.php' class='list-group-item list-group-item-action'>Join Debate</a>";
+                        echo "<a href='genre.php' class='list-group-item list-group-item-action'>Join Quiz</a>";
+                        echo "<a href='customersupport.php' class='list-group-item list-group-item-action'>Join Meet & Greet</a>";
+                        echo "<a href='../Includes/logout.php' class='list-group-item list-group-item-action'>Logout</a>";
+                    } else {
+                        echo "<a href='../auth/UserLogin.php' class='list-group-item list-group-item-action'>Login</a>";
+                    }
+                    ?>
+                </div>
+
+                <!-- Desktop Right Icons -->
+                <div class="ml-auto d-none d-xl-flex" style="display: flex; align-items: center; gap: 20px;">
+                    <!-- Voice Search -->
+                    <a href="voice_search.php" class="voice-search-btn">
+                        <i class="fas fa-microphone"></i> Voice Search
+                    </a>
+
+                    <!-- Explore Dropdown -->
+                    <div class="dropdown">
+                        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                            Explore
+                        </button>
+                        <div class="dropdown-menu">
+                            <?php
+                            if (isset($_SESSION['phonenumber'])) {
+                                echo "<a href='BuyerProfile2.php' class='dropdown-item'>Profile</a>";
+                                echo "<a href='Transaction.php' class='dropdown-item'>Transactions</a>";
+                                echo "<a href='display.php' class='dropdown-item'>Bid Rare Book</a>";
+                                echo "<a href='chat.php' class='dropdown-item'>Group chat</a>";
+                                echo "<a href='debate.php' class='dropdown-item'>Join Debate</a>";
+                                echo "<a href='genre.php' class='dropdown-item'>Join Quiz</a>";
+                                echo "<a href='claimbook.php' class='dropdown-item'>Claim Book</a>";
+                                echo "<a href='customersupport.php' class='dropdown-item'>Join Meet & Greet</a>";
+                                echo "<a href='../Includes/logout.php' class='dropdown-item'>Logout</a>";
+                            } else {
+                                echo "<a href='../auth/UserLogin.php' class='dropdown-item'>Login</a>";
+                            }
+                            ?>
+                        </div>
+                    </div>
+
+                    <!-- User Icon -->
+                    <i class='far fa-user-circle user-icon'></i>
+
+                    <!-- Cart Icon -->
+                    <a href="CartPage.php" style="position: relative;">
+                        <i class="fa fa-shopping-cart cart-icon"></i>
+                        <span id="icon"><?php echo totalItems(); ?></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Category Buttons -->
+    <div class="container category-section" style="margin-top: 30px;">
+        <div class="d-flex justify-content-center flex-wrap">
+            <div class="dropdown">
+                <button class="category-btn dropdown-toggle" type="button" data-toggle="dropdown">
+                    📚 Romantic
+                </button>
+                <div class="dropdown-menu">
+                    <?php getFruits(); ?>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="category-btn dropdown-toggle" type="button" data-toggle="dropdown">
+                    💼 Business
+                </button>
+                <div class="dropdown-menu">
+                    <?php getVegetables(); ?>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="category-btn dropdown-toggle" type="button" data-toggle="dropdown">
+                    🎓 Educational
+                </button>
+                <div class="dropdown-menu">
+                    <?php getCrops(); ?>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="p-2 ml-5"><i class='far fa-user-circle' style='font-size:30px; color: green;margin-top:2px;'></i></div>
-    <a class="float-left" href="bhome.php">
-        <img src="main2.jpg" class="float-left mr-5 ml-0 " alt="Logo" style="height:35px;">
-    </a>
-</div>
-<button class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"><i class="fas fa-bars p-1 " style="color:green;margin-right:-9%;font-size:28px;"></i></span>
-</button>
-<a class="float-left" href="bhome.php">
-    <img src="main2.jpg" class="float-left mr-2 moblogo" alt="Logo" style="height:35px;">
-</a>
-<div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-    <div class="input-group mb-1 ml-2 searchbox">
-        <div class="input-group-prepend">
-            <div class="input-group-text"><i class="fas fa-search" style="font-size:20px;color:green; "></i></div>
-        </div>
-        <form action="SearchResult.php" method="get" enctype="multipart/form-data">
-            <input type="text" class="form-control " id="inlineFormInputGroup" name="search" placeholder="Search for fruits,vegetables or crops " style="width:500px;">
-        </form>
-    </div>
-    <?php
-    getUsername();
-    ?>
-    <div class="list-group moblists">
-
+    <!-- Search Results Section -->
+    <div class="container">
         <?php
-        if (isset($_SESSION['phonenumber'])) {
-            echo "<a href='BuyerProfile.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Profile</a>";
-            echo "<a href= 'Transaction.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Transactions</a>";
-            echo "<a href='saveforlater.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Save For Later</a>";
-            echo "<a href='#' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Subscriptions</a>";
-            echo "<a href='farmer.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Farmers</a>";
-            echo "<a href='../Includes/logout.php' class='list-group-item list-group-item-action ' style='background-color:#292b2c;text-align:center;color:goldenrod'>Logout</a>";
-        } else {
-            echo "<a href='../auth/BuyerLogin.php' class='list-group-item list-group-item-action ' style='background-color:#292b2c;text-align:center;color:goldenrod'>Login</a>";
+        cart();
+        
+        if (isset($_GET['search'])) {
+            // Get the raw search query
+            $search_query = $_GET['search'];
+
+            // Define an array of common phrases to ignore
+            $ignore_phrases = [
+                "search", "find", "give me", "I want", "show me", "book", "books"
+            ];
+
+            // Convert the search query to lowercase for consistent matching
+            $search_query = strtolower($search_query);
+
+            // Remove the ignore phrases from the search query
+            foreach ($ignore_phrases as $phrase) {
+                $search_query = str_replace($phrase, "", $search_query);
+            }
+
+            // Trim any remaining whitespace
+            $search_query = trim($search_query);
+
+            // Display search header
+            echo "
+            <div class='search-header'>
+                <h1>🔍 Search Results</h1>
+                <p>Showing results for: <strong>" . htmlspecialchars($_GET['search']) . "</strong></p>
+            </div>
+            ";
+
+            $get_pro = "SELECT * FROM products WHERE product_title LIKE '%$search_query%' OR product_type LIKE '%$search_query%' OR product_keywords LIKE '%$search_query%'";
+
+            $run_pro = mysqli_query($con, $get_pro);
+            $count = mysqli_num_rows($run_pro);
+            
+            if ($count > 0) {
+                echo "<div class='row'>";
+                
+                while ($rows = mysqli_fetch_array($run_pro)) {
+                    $product_id = $rows['product_id'];
+                    $product_title = $rows['product_title'];
+                    $product_image = $rows['product_image'];
+                    $product_type = $rows['product_type'];
+
+                    echo "
+                    <div class='col-md-4 col-sm-6 mb-4'>
+                        <div class='book-card'>
+                            <a href='../BuyerPortal2/ProductDetails.php?id=$product_id'>
+                                <img src='../Admin/product_images/$product_image' alt='$product_title' class='img-fluid'>
+                            </a>
+                            
+                            <div class='card-body'>
+                                <h5>$product_title</h5>
+                                <span class='badge'>$product_type</span>
+                                
+                                <form action='' method='post'>
+                                    <input type='hidden' name='product_id' value='$product_id'>
+                                    <button type='submit' name='cart' class='btn-add-cart'>
+                                        <i class='fas fa-shopping-cart'></i> Add to cart
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    ";
+
+                    // Handle add to cart
+                    if (isset($_POST['cart'])) {
+                        $qty = 1;
+                        if (isset($_SESSION['phonenumber'])) {
+                            $sess_phone_number = $_SESSION['phonenumber'];
+                            $check_pro = "select * from cart where phonenumber = $sess_phone_number and product_id='$product_id'";
+                            $run_check = mysqli_query($con, $check_pro);
+
+                            if (mysqli_num_rows($run_check) > 0) {
+                                echo "";
+                            } else {
+                                $insert_pro = "insert into cart (product_id,phonenumber) values ('$product_id','$sess_phone_number')";
+                                $run_insert_pro = mysqli_query($con, $insert_pro);
+                                echo "<script>window.location.reload(true)</script>";
+                            }
+                        } else {
+                            echo "<script>window.alert('Please Login First!');</script>";
+                        }
+                    }
+                }
+                
+                echo "</div>";
+            } else {
+                echo "
+                <div class='no-results'>
+                    <i class='fas fa-search'></i>
+                    <h2>No Books Found</h2>
+                    <p>We couldn't find any books matching your search: <strong>" . htmlspecialchars($_GET['search']) . "</strong></p>
+                    <p>Try searching with different keywords or browse our categories above.</p>
+                </div>
+                ";
+            }
         }
         ?>
-
     </div>
-</div>
 
-
-
-
-<div class=" flex-row-reverse right ">
-    <div class="p-2 cart">
-        <div class="icon2">
-            <a href="CartPage.php"> <i class="fa" style="font-size:30px; color:green">&#61562;</i></a>
-            <span id="icon" style="color:green"> <?php echo totalItems(); ?> </span>
+    <!-- Footer -->
+    <section id="footer" class="myfooter">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 mt-4">
+                    <ul class="list-unstyled list-inline social text-center">
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-facebook"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-instagram"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-google-plus"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-envelope"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 mt-2 text-center">
+                    <p><strong>Smart Library Management System</strong> - An Advanced Digital Library Management System</p>
+                    <p>Copyright © All Rights Reserved. Foreign Key Friends</p>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="dropdown p-2 settings ">
-        <button class="btn  dropdown-toggle text-success" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Explore
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <?php
-            if (isset($_SESSION['phonenumber'])) {
-                echo "<a href='BuyerProfile2.php' class='dropdown-item  ' style='padding-right:-20px;'>Profile</a>";
-                echo "<a href='Transaction.php' class='dropdown-item ' style='padding-right:-20px;'>Transactions</a>";
-                echo "<a href='#' class='dropdown-item'  style='padding-right:-20px;'>Subscriptions</a>";
-                echo "<a href='saveforlater.php' class='dropdown-item' style='padding-right:-20px;'>Save For Later</a>";
-                echo "<a href='farmers.php' class='dropdown-item' style='padding-right:-20px;' >Farmers</a>";
-                echo "<a href='../Includes/logout.php' class='dropdown-item ' style='padding-right:-20px;'>Logout</a>";
-            } else {
-                echo "<a href='../auth/BuyerLogin.php' class='dropdown-item ' style='padding-right:-20px;'>Login</a>";
-            }
-            ?>
-        </div>
-    </div>
+    </section>
 
-
-    <div class="text-success  login">Login</div>
-</div>
-
-</nav>
-     <div class="container">
-          <div class="d-flex justify-content-around bg-white mb-3">
-
-               <div class="p-2 ">
-                    <div class="dropdown">
-                         <button class="btn btn-green mybtn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Romantic
-                         </button>
-                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <?php
-                              getFruits();
-                              ?>
-                         </div>
-                    </div>
-               </div>
-               <div class="p-2">
-                    <div class="dropdown">
-                         <button class="btn btn-green mybtn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Business
-                         </button>
-                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <?php
-                              getVegetables();
-                              ?>
-                         </div>
-                    </div>
-               </div>
-               <div class="p-2 ">
-                    <div class="dropdown">
-                         <button class="btn btn-green mybtn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Educational
-                         </button>
-                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <?php
-                              getCrops();
-                              ?>
-                         </div>
-                    </div>
-               </div>
-          </div>
-     </div>
-
-
-     <?php
-     if (isset($_POST['go'])) {
-          $districtInput = $_POST['districtInput'];
-          $stateInput = $_POST['stateInput'];
-          echo $stateInput;
-          echo "<br>";
-          echo $districtInput;
-
-          if ($stateInput != '0' && $districtInput == 'Select District') {
-               echo "<script>window.open('StateSearch.php?state=$stateInput','_self')</script>";
-          } else {
-               echo "<script>window.open('DistrictSearch.php?district=$districtInput','_self')</script>";
-          }
-     }
-
-     ?>
-
-     <div class="container ">
-          <br>
-          <div class="row">
-
-
-               <?php
-               cart();
-               ?>
-               <?php
-               if (isset($_GET['search'])) {
-                    
-                    // Get the raw search query
-                         $search_query = $_GET['search'];
-
-                         // Define an array of common phrases to ignore
-                         $ignore_phrases = [
-                              "search", "find", "give me", "I want", "show me", "book", "books"
-                         ];
-
-                         // Convert the search query to lowercase for consistent matching
-                         $search_query = strtolower($search_query);
-
-                         // Remove the ignore phrases from the search query
-                         foreach ($ignore_phrases as $phrase) {
-                              $search_query = str_replace($phrase, "", $search_query);
-                         }
-
-                         // Trim any remaining whitespace
-                         $search_query = trim($search_query);
-
-
-                    
-                    
-                    //$search_query = $_GET['search'];
-                    // $get_pro = "select * from products where product_keywords like '%$search_query%'";
-
-                    $get_pro = "SELECT * FROM products WHERE product_title LIKE '%$search_query%' OR product_type LIKE '%$search_query%' OR product_keywords LIKE '%$search_query%'";
-
-                    $run_pro = mysqli_query($con, $get_pro);
-                    $count = mysqli_num_rows($run_pro);
-                    if ($count > 0) {
-                         echo "<br>";
-                         while ($rows = mysqli_fetch_array($run_pro)) {
-                              $product_id = $rows['product_id'];
-                              $product_title = $rows['product_title'];
-                              $product_image = $rows['product_image'];
-                              $product_price = $rows['product_price'];
-                              $product_delivery = $rows['product_delivery'];
-                              $farmer_fk = $rows['farmer_fk'];
-                              $farmer_name_query = "select farmer_name from farmerregistration where farmer_id = $farmer_fk";
-                              $running_query_name = mysqli_query($con, $farmer_name_query);
-                              while ($names = mysqli_fetch_array($running_query_name)) {
-                                   $name = $names['farmer_name'];
-                              }
-                              echo "
-                                        <div class='col col-12 col-sm-12 col-md-4 col-xl-4 col-lg-4'>
-                                             <div class='card pb-1 pl-1 pr-1 pt-0' style='height:542px'>
-                                                  <br>
-                                                  <div class='mt-0'><b>
-                                                       <h4><img src='iconsmall.png' style='width: 28px; margin-bottom:  10px;'> $name
-                                                       </b></h4>
-                                                  </div>
-                                                  <a href='../BuyerPortal2/ProductDetails.php?id=$product_id'>
-                                                  <img class='card-img-top' src='../Admin/product_images/$product_image' alt='Card image cap' height='300px'>
-                                                  </a>
-                                                  <form action = '' method = 'post'>
-                                                       <div class='card-body pb-0'>
-                                                            <div class='row'>
-                                                                 <div class='col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12'>
-                                                                      <div class='input-group mb'>
-                                                                           <div class='input-group-prepend'>
-                                                                                <h5 class='card-title font-weight-bold'>$product_title</h5>
-                                                                           </div>
-                                                                      </div>
-                                                                 </div>
-                                        
-                                                                 <div class='col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12'>
-                                                                 <div class='input-group mb-1'>
-                                                                      <div class='input-group-prepend'>
-                                                                           <span class='input-group-text bg-warning border-secondary p-1' style='color:black;' id='inputGroup-sizing-default' placeholder='1'><b>Quantity</b></span>
-                                                                      </div>
-                                                                      <input type='number' class='form-control' aria-label='Default' style='margin-top:0%;width:20%;padding:0%;' aria-describedby='inputGroup-sizing-default'>
-                                                                 </div>
-                                                            </div>
-                                                       </div>
-                                                       <p class='card-text mb-2 font-weight-bold'>PRICE:- $product_price USD/kg</p>
-                                                       <div class='row'>
-                                                            <div class='col-1 col-xl-3 col-lg-2 col-md-2 col-sm-2'></div>
-                                                                 <div class='col-12 col-xl-6 col-lg-6 col-md-6  col-sm-12'>
-                                                                      <button class='btn btn-warning border-secondary mr-1 ' name='cart' type = 'submit' style='color:black ;font-weight:50px;'>Add to cart<img src='carticons.png' height='20px'></button>
-                                                                 </div>
-                                                            </div>
-                                                       </div>
-                                                  </form>
-                                             </div>
-                                        </div>
-           ";
-                              if (isset($_POST['cart'])) {
-
-                                   if (isset($_POST['quantity'])) {
-                                        $qty = mysqli_real_escape_string($con, $_POST['quantity']);
-                                   } else {
-                                        $qty = 1;
-                                   }
-                                   global $con;
-                                   if (isset($_SESSION['phonenumber'])) {
-
-                                        $sess_phone_number = $_SESSION['phonenumber'];
-
-                                        $check_pro = "select * from cart where phonenumber = $sess_phone_number and product_id='$product_id' ";
-
-                                        $run_check = mysqli_query($con, $check_pro);
-
-                                        if (mysqli_num_rows($run_check) > 0) {
-                                             echo "";
-                                        } else {
-                                             $subtotal = $product_price * $qty;
-                                             $insert_pro = "insert into cart (product_id,phonenumber,qty,subtotal) values ('$product_id','$sess_phone_number','$qty','$subtotal')";
-                                             $run_insert_pro = mysqli_query($con, $insert_pro);
-
-                                             echo "<script>window.location.reload(true)</script>";
-                                        }
-                                   } else {
-                                        echo "<script>window.alert('Please Login First!');</script>";
-                                   }
-                              }
-                         }
-                    } else {
-                         echo "<br><br><hr><h1 align = center>Product Not Available !</h1><br><br><hr>";
-                    }
-               }
-               ?>
-          </div>
-          <br><br>
-
-
-     </div>
-     </div>
-
-
-
-     <!-- footer -->
-     <section id="footer" class="myfooter">
-          <div class="container">
-               <div class="row text-center text-xs-center text-sm-left text-md-left">
-                    <div class="col aligncenter">
-                         <br>
-                         <h5>Payment Option</h5>
-                         <img src="../Images/Website/paytm1.jpg" alt="paytm">
-                         <img src="../Images/Website/cod.jpg" alt="paytm" style="height:37px">
-                    </div>
-               </div>
-               <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
-                         <ul class="list-unstyled list-inline social text-center">
-                              <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-facebook"></i></a></li>
-                              <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-twitter"></i></a></li>
-                              <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-instagram"></i></a></li>
-                              <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-google-plus"></i></a></li>
-                              <li class="list-inline-item"><a href="javascript:void();" target="_blank"><i class="fa fa-envelope"></i></a></li>
-                         </ul>
-                    </div>
-                    </hr>
-               </div>
-               <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center">
-                         <p><u><a href="https://www.agrocraft.com/">Smart Library Management System</a></u>A one stop solution for library users and librarians</p>
-                         <p class="h6">Copy All right Reversed.<a class="text-green ml-2" href="https://www.google.com" target="_blank">Foreign Key Friends</a></p>
-                    </div>
-                    </hr>
-               </div>
-          </div>
-     </section>
-     <!-- ./Footer a ,myfooter,aligncenter-->
 </body>
 
 </html>
