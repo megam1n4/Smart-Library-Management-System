@@ -107,7 +107,8 @@
     }
 
 
-    // UPDATED getProducts() FUNCTION
+    
+// UPDATED getProducts() FUNCTION
 function getProducts()
 {
     global $con;
@@ -132,12 +133,6 @@ function getProducts()
         echo "
         <div class='col-md-4 col-sm-6 mb-4'>
             <div class='book-card'>
-                <div class='text-center mb-2'>
-                    <span style='color: #ff6b6b; font-size: 0.9rem;'>
-                        <i class='fas fa-user'></i> $name
-                    </span>
-                </div>
-                
                 <a href='../BuyerPortal2/ProductDetails.php?id=$product_id'>
                     <img src='../Admin/product_images/$product_image' alt='$product_title' class='img-fluid' style='width: 100%; height: 350px; object-fit: cover; border-radius: 10px; margin-bottom: 15px;'>
                 </a>
@@ -155,7 +150,6 @@ function getProducts()
         ";
     }
 }
-
 
     function getVegetablesHomepage()
     {
