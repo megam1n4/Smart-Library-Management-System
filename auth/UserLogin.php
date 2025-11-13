@@ -1,5 +1,50 @@
 <?php
 session_start();
+
+// Process login BEFORE any HTML output
+include("../Includes/db.php");
+
+if (isset($_POST['login'])) {
+
+    $phonenumber = mysqli_real_escape_string($con, $_POST['phonenumber']);
+    $password = mysqli_real_escape_string($con, $_POST['password']);
+
+    $ciphering = "AES-128-CTR";
+    $iv_length = openssl_cipher_iv_length($ciphering);
+    $options = 0;
+    $encryption_iv = '2345678910111211';
+    $encryption_key = "DE";
+
+    $encryption = openssl_encrypt(
+        $password,
+        $ciphering,
+        $encryption_key,
+        $options,
+        $encryption_iv
+    );
+
+    $query = "select * from buyerregistration where buyer_phone = '$phonenumber' and buyer_password = '$encryption'";
+    $run_query = mysqli_query($con, $query);
+    $count_rows = mysqli_num_rows($run_query);
+    
+    if ($count_rows == 0) {
+        // Invalid credentials - redirect with error parameter
+        header("Location: UserLogin.php?error=invalid");
+        exit();
+    } else {
+        // Login successful
+        while ($row = mysqli_fetch_array($run_query)) {
+            $id = $row['buyer_id'];
+        }
+        
+        $_SESSION['phonenumber'] = $phonenumber;
+        $_SESSION['buyer_id'] = $id;
+        
+        // Redirect to buyer home page
+        header("Location: ../BuyerPortal2/bhome.php");
+        exit();
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +54,7 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>User Login</title>
+    <title>Buyer Login</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -324,49 +369,3 @@ session_start();
 </body>
 
 </html>
-
-<?php
-include("../Includes/db.php");
-
-if (isset($_POST['login'])) {
-
-    $phonenumber = mysqli_real_escape_string($con, $_POST['phonenumber']);
-    $password = mysqli_real_escape_string($con, $_POST['password']);
-
-    $ciphering = "AES-128-CTR";
-    $iv_length = openssl_cipher_iv_length($ciphering);
-    $options = 0;
-    $encryption_iv = '2345678910111211';
-    $encryption_key = "DE";
-
-    $encryption = openssl_encrypt(
-        $password,
-        $ciphering,
-        $encryption_key,
-        $options,
-        $encryption_iv
-    );
-
-    $query = "select * from buyerregistration where buyer_phone = '$phonenumber' and buyer_password = '$encryption'";
-    $run_query = mysqli_query($con, $query);
-    $count_rows = mysqli_num_rows($run_query);
-    
-    if ($count_rows == 0) {
-        // Invalid credentials - redirect with error parameter
-        header("Location: UserLogin.php?error=invalid");
-        exit();
-    } else {
-        // Login successful
-        while ($row = mysqli_fetch_array($run_query)) {
-            $id = $row['buyer_id'];
-        }
-        
-        $_SESSION['phonenumber'] = $phonenumber;
-        $_SESSION['buyer_id'] = $id;
-        
-        // Redirect to buyer home page
-        header("Location: ../BuyerPortal2/bhome.php");
-        exit();
-    }
-}
-?>
