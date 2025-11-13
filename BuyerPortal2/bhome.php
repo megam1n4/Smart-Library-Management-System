@@ -402,7 +402,7 @@ include("../Functions/functions.php");
             
             <div class="p-2 ml-5"><i class='far fa-user-circle' style='font-size:30px; color: green;margin-top:2px;'></i></div>
             <a class="float-left" href="bhome.php">
-                <img src="main2.jpg" class="float-left mr-5 ml-0 " alt="Logo" style="height:50px;">
+                <img src="logo2.jpg" class="float-left mr-5 ml-0 " alt="Logo" style="height:50px;">
             </a>
         </div>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
