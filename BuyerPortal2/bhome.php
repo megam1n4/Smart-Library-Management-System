@@ -8,657 +8,629 @@ include("../Functions/functions.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buyer Homepage</title>
+    <title>Smart Library - Home</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <a href="https://icons8.com/icon/83325/roman-soldier"></a>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <script src="https://kit.fontawesome.com/c587fc1763.js" crossorigin="anonymous"></script>
-    <script>
-        function state() {
-            var a = document.getElementById('states').value;
-
-            if (a === '31') {
-                var array = ['Andamans', 'Nicobars'];
-            } else if (a === '01') {
-                var array = ['Houston', 'Dallas', 'Austin', 'San Antonio', 'Fort Worth', 'El Paso', 'Arlington', 'Corpus Christi', 'Plano', 'Laredo', 'Irving', 'Garland', 'Amarillo', 'Grand Prairie', 'McAllen', 'Mesquite', 'Killeen', 'Frisco', 'Brownsville', 'Pasadena'];
-            } else if (a === '02') {
-                var array = ['New York City', 'Buffalo', 'Rochester', 'Yonkers', 'Syracuse', 'Albany', 'New Rochelle', 'Mount Vernon', 'Schenectady', 'Utica', 'White Plains', 'Hempstead', 'Troy', 'Niagara Falls', 'Binghamton', 'Freeport', 'Valley Stream', 'Long Beach', 'Spring Valley', 'Rome'];
-            } else if (a === '03') {
-                var array = ['Denver', 'Colorado Springs', 'Aurora', 'Fort Collins', 'Lakewood', 'Thornton', 'Arvada', 'Westminster', 'Pueblo', 'Centennial', 'Boulder', 'Greeley', 'Longmont', 'Loveland', 'Broomfield', 'Grand Junction', 'Castle Rock', 'Commerce City', 'Parker', 'Littleton'];
-            } else if (a === '04') {
-                var array = ['Miami', 'Tampa', 'Orlando', 'St. Petersburg', 'Jacksonville', 'Hialeah', 'Tallahassee', 'Fort Lauderdale', 'Port St. Lucie', 'Cape Coral', 'Pembroke Pines', 'Hollywood', 'Miramar', 'Gainesville', 'Coral Springs', 'Miami Gardens', 'Clearwater', 'Palm Bay', 'Pompano Beach', 'West Palm Beach'];
-            } 
-
-            var string = "";
-            for (let i = 0; i < array.length; i++) {
-                string = string + "<option>" + array[i] + "</option>";
-            }
-            string = "<select nmae = 'lol'>" + string + "</select>"
-            document.getElementById('district').innerHTML = string;
-
-        }
-    </script>
-    <script>
-        var a;
-
-        function display() {
-            if (a == 0) {
-                document.getElementById("majic").style.visibility = "hidden";
-                document.getElementById("show").style.visibility = "visible";
-                return a = 1;
-            } else {
-                document.getElementById("majic").style.visibility = "visible";
-                document.getElementById("show").style.visibility = "hidden";
-                // document.getElementById("show").style. visibility= "hidden";
-                return a = 0;
-            }
-
-        }
-    </script>
     <style>
-        .myfooter {
-            background-color: #292b2c;
-
-            color: goldenrod;
-            margin-top: 15px;
-        }
-
-        .aligncenter {
-            text-align: center;
-        }
-
-        a {
-            color: goldenrod;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        nav {
-            background-color: #292b2c;
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            color: #333;
         }
 
-        .navbar-custom {
-            background-color: #292b2c;
+        /* Modern Navbar Styling */
+        nav.navbar {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 15px 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        /* change the brand and text color */
-        .navbar-custom .navbar-brand,
-        .navbar-custom .navbar-text {
-            background-color: #292b2c;
+        .navbar-brand img {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+            background: white;
+            padding: 5px;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
         }
 
-        .navbar-custom .navbar-nav .nav-link {
-            background-color: #292b2c;
+        .navbar-brand img:hover {
+            transform: scale(1.05);
         }
 
-        .navbar-custom .nav-item.active .nav-link,
-        .navbar-custom .nav-item:hover .nav-link {
-            background-color: #292b2c;
+        /* Search Box Styling */
+        .searchbox .input-group {
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .firstimage {
-            height: 500px;
-            width: 100%;
+        .searchbox .input-group-text {
+            background-color: white;
+            border: 2px solid #28a745;
+            border-right: none;
+            border-radius: 25px 0 0 25px;
+            color: #28a745;
         }
 
-        .mybtn {
-            border-color: green;
-            border-style: solid;
+        .searchbox .form-control {
+            border: 2px solid #28a745;
+            border-left: none;
+            border-radius: 0 25px 25px 0;
+            padding: 10px 20px;
         }
 
-        .card {
-            width: 100%;
-            height: 100%;
-            margin: 10px;
+        .searchbox .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+            border-color: #28a745;
         }
 
-        .right {
+        /* User Icons */
+        .user-icon,
+        .cart-icon {
+            color: #28a745;
+            font-size: 28px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .user-icon:hover,
+        .cart-icon:hover {
+            color: #20c997;
+            transform: scale(1.1);
+        }
+
+        #icon {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background-color: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
             display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
         }
 
-        .left {
-            display: none;
+        /* Dropdown Button */
+        .btn-success {
+            background: #28a745;
+            border: none;
+            font-weight: 600;
+            padding: 8px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
         }
 
-        .cart {
-            /* margin-left:10px; */
-            margin-right: -9px;
+        .btn-success:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
         }
 
-        .profile {
-            margin-right: 2px;
-
+        /* Voice Search Button */
+        .voice-search-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .login {
-            margin-right: -2px;
-            margin-top: 12px;
-            display: none;
+        .voice-search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
         }
 
-        .searchbox {
-            width: 60%;
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .lists {
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('f3.jpg') center/cover;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-section p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        /* Category Buttons */
+        .category-section {
+            margin-bottom: 50px;
+        }
+
+        .category-btn {
+            background: white;
+            border: 2px solid #28a745;
+            color: #28a745;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-btn:hover {
+            background: #28a745;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin: 60px 0 40px 0;
+            position: relative;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1a1a2e;
             display: inline-block;
+            padding: 0 30px;
+            background: #f8f9fa;
+            position: relative;
+            z-index: 1;
         }
 
+        .section-header::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #28a745, transparent);
+            z-index: 0;
+        }
+
+        /* Book Cards */
+        .book-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            height: 100%;
+        }
+
+        .book-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .book-card img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .book-card .card-body {
+            padding: 15px 0;
+        }
+
+        .book-card h5 {
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .book-card .price {
+            color: #28a745;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin: 10px 0;
+        }
+
+        .book-card .badge {
+            background: #ffc107;
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .book-card .btn-add-cart {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .book-card .btn-add-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        /* BID Button */
+        .bid-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+            margin: 40px 0;
+        }
+
+        .bid-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Footer */
+        .myfooter {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #ffc107;
+            padding: 40px 0 20px 0;
+            margin-top: 80px;
+        }
+
+        .myfooter h5 {
+            color: #ffc107;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .myfooter img {
+            margin: 10px;
+            border-radius: 8px;
+        }
+
+        .social li {
+            margin: 0 10px;
+        }
+
+        .social a {
+            color: #ffc107;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .social a:hover {
+            color: #28a745;
+            transform: scale(1.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+
+            .hero-section p {
+                font-size: 1rem;
+            }
+
+            .section-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .category-btn {
+                width: 100%;
+                margin: 5px 0;
+            }
+
+            .book-card img {
+                height: 250px;
+            }
+        }
+
+        /* Mobile List Styling */
         .moblists {
             display: none;
         }
 
-        .logins {
-            text-align: center;
-            margin-right: -30%;
-            margin-left: 35%;
-        }
-
-        /* .images {
-            transition: 0.5s;
-        } */
-
-        .images:hover {
-
-            height: 220px;
-            box-shadow: 5px 5px 10px grey;
-            transition: 0.3s;
-        }
-
-        .guard {
-            width: 100%;
-            text-align: center;
-            border-bottom: 1px solid #ffc857;
-            /* background-color: #ffc857; */
-            line-height: 0.1em;
-            margin: 10px 0 20px;
-            /* font-family: serif; */
-        }
-
-        .guard span {
-            background: white;
-            padding: 0 10px;
-        }
-
-        /* .settings{
-    margin-left:10px;
-} */
-        @media only screen and (min-device-width:320px) and (max-device-width:480px) {
-            .mycarousel {
-                display: none;
-            }
-
-            .firstimage {
-                height: auto;
-                width: 90%;
-            }
-
-            .card {
-                width: 80%;
-                margin-left: 10%;
-                margin-right: 10%;
-
-            }
-
-            .col {
+        @media (max-width: 1200px) {
+            .moblists {
+                display: block;
                 margin-top: 20px;
             }
 
-            .right {
-                display: none;
-                background-color: #ff5500;
-            }
-
-            /* 
-            .settings{
-            margin-left:79%;
-        } */
-            .left {
-                display: flex;
-            }
-
-            .moblogo {
-                display: none;
-            }
-
-            .logins {
+            .moblists .list-group-item {
+                background-color: #1a1a2e !important;
+                color: #ffc107 !important;
+                border: none;
                 text-align: center;
-                margin-right: 35%;
                 padding: 15px;
+                transition: all 0.3s ease;
             }
 
-            .searchbox {
-                width: 95%;
-                margin-right: 5%;
-                margin-left: 0%;
-            }
-
-            .moblists {
-                display: inline-block;
-                text-align: center;
-                width: 100%;
-            }
-
-            .guard {
-                /* width: 100%; */
-                text-align: center;
-                border-bottom: 1px solid #ffc857;
-                /* background-color: #ffc857; */
-                /* line-height: 0.1em; */
-                /* margin: 10px 0 20px; */
-                /* font-family: serif; */
-
-            }
-
-            .guard span {
-                background: white;
-                padding: 0 10px;
+            .moblists .list-group-item:hover {
+                background-color: #28a745 !important;
+                color: white !important;
             }
         }
-
-
-
-
-        /* Image Grig */
-
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial;
-        }
-
-        .header {
-            text-align: center;
-            padding: 32px;
-        }
-
-        .row {
-            display: -ms-flexbox;
-            /* IE10 */
-            display: flex;
-            -ms-flex-wrap: wrap;
-            /* IE10 */
-            flex-wrap: wrap;
-            padding: 0 4px;
-        }
-
-        /* Create four equal columns that sits next to each other */
-        .column {
-            -ms-flex: 25%;
-            /* IE10 */
-            flex: 25%;
-            max-width: 25%;
-            padding: 0 4px;
-        }
-
-        .column img {
-            margin-top: 8px;
-            vertical-align: middle;
-            width: 100%;
-        }
-
-        .myfooter {
-            background-color: #292b2c;
-            color: goldenrod;
-            margin-top: 15px;
-        }
-
-        .aligncenter {
-            text-align: center;
-        }
-
-        a {
-            color: goldenrod;
-        }
-
-
-
-
-
-
-        #headings {
-            /* text-shadow: 2px 1px #666666; */
-            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-        }
-
-        @media screen and (max-width: 800px) {
-            .kolum {
-                flex: 50%;
-                max-width: 50%;
-                max-height: 40%;
-            }
-        }
-
-        @media screen and (max-width: 600px) {
-            .kolum {
-                flex: 50%;
-                max-width: 50%;
-                max-height: 40%;
-            }
-        }
-
-        /* Responsive layout - makes a two column-layout instead of four columns */
-        /* @media screen and (max-width: 800px) {
-            .column {
-                -ms-flex: 50%;
-                flex: 50%;
-                max-width: 50%;
-            }
-        } */
-
-        /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-        /* @media screen and (max-width: 600px) {
-            .column {
-                -ms-flex: 100%;
-                flex: 100%;
-                max-width: 100%;
-            }
-        } */
     </style>
-    <!-- <script>
-        var a;
-
-        function display() {
-            if (a == 0) {
-                document.getElementById("majic").style.display = "none";
-                document.getElementById("show").style.display = "inline-block";
-                return a = 1;
-            } else {
-                document.getElementById("majic").style.visibility = "visible";
-                document.getElementById("show").style.visibility = "hidden";
-                // document.getElementById("show").style. visibility= "hidden";
-                return a = 0;
-            }
-
-        }
-    </script> -->
 
 </head>
 
 <body>
 
-    <nav class="navbar navbar-expand-xl ">
-
-        <div class=" flex-row-reverse left ">
-
-            <div class="p-2">
-                <div class="icon2">
-                    <a href="CartPage.php"> <i class="fa" style="font-size:30px; color:green ;margin-top:2px;">&#61562;</i></a>
-                    <span id="icon" style="color:green"> <?php echo totalItems(); ?> </span>
-                </div>
-            </div>
-            
-            <div class="p-2 ml-5"><i class='far fa-user-circle' style='font-size:30px; color: green;margin-top:2px;'></i></div>
-            <!--
-            <a class="float-left" href="bhome.php">
-                <img src="logo2.jpg" class="float-left mr-5 ml-0 " alt="Logo" style="height:50px;">
+    <!-- Modern Navbar -->
+    <nav class="navbar navbar-expand-xl navbar-dark">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand" href="bhome.php">
+                <img src="logo2.jpg" alt="Smart Library Logo">
             </a>
-            -->
-        </div>
-        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"><i class="fas fa-bars p-1 " style="color:green;margin-right:-9%;font-size:28px;"></i></span>
-        </button>
-        <a class="float-left" href="bhome.php">
-         <img src="logo2.jpg" class="float-left mr-2 moblogo" alt="Logo" style="height:50px; width:auto; object-fit:contain;">
-        </a>
-        
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-            <div class="input-group mb-1 ml-2 searchbox">
-                <div class="input-group-prepend">
-                    <div class="input-group-text"><i class="fas fa-search" style="font-size:20px;color:green; "></i></div>
+            <!-- Mobile Icons -->
+            <div class="d-xl-none" style="display: flex; align-items: center; gap: 15px;">
+                <i class='far fa-user-circle user-icon'></i>
+                <a href="CartPage.php" style="position: relative;">
+                    <i class="fa fa-shopping-cart cart-icon"></i>
+                    <span id="icon"><?php echo totalItems(); ?></span>
+                </a>
+            </div>
+
+            <!-- Navbar Toggler -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                <i class="fas fa-bars" style="color:#28a745; font-size:28px;"></i>
+            </button>
+
+            <!-- Collapsible Content -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Search Box -->
+                <div class="mx-auto searchbox">
+                    <form action="SearchResult.php" method="get" enctype="multipart/form-data">
+                        <div class="input-group mb-1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-search" style="font-size:20px;"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="search" placeholder="Search for education, romance books" style="width:500px;">
+                        </div>
+                    </form>
                 </div>
-                <form action="SearchResult.php" method="get" enctype="multipart/form-data">
-                    <input type="text" class="form-control " id="inlineFormInputGroup" name="search" placeholder="Search for education, romance books " style="width:500px;">
-                </form>
-            </div>
-            
-            <?php
-            getUsername();
-            ?>
-            <div class="list-group moblists">
 
-                <?php
-                if (isset($_SESSION['phonenumber'])) {
-                    echo "<a href='BuyerProfile.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Profile</a>";
-                    echo "<a href= 'Transaction.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Transactions</a>";
-                    echo "<a href='claimbook.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Claim Book</a>";
-                    echo "<a href='display.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Bid Rare Book</a>";
-                    echo "<a href='chat.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Group Chat</a>";
-                    echo "<a href='debate.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Join Debate</a>";
-                    echo "<a href='genre.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Join Quiz</a>";
+                <!-- Username Display -->
+                <?php getUsername(); ?>
 
-                    echo "<a href='customersupport.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Join Meet & Greet</a>";
-                    echo "<a href='../Includes/logout.php' class='list-group-item list-group-item-action ' style='background-color:#292b2c;text-align:center;color:goldenrod'>Logout</a>";
-                } else {
-                    echo "<a href='../auth/UserLogin.php' class='list-group-item list-group-item-action ' style='background-color:#292b2c;text-align:center;color:goldenrod'>Login</a>";
-                }
-                ?>
-
-            </div>
-        </div>
-
-
-
-
-        <div class=" flex-row-reverse right ">
-            <div class="p-2 cart">
-                <div class="icon2">
-                    <a href="CartPage.php"> <i class="fa" style="font-size:30px; color:green">&#61562;</i></a>
-                    <span id="icon" style="color:green"> <?php echo totalItems(); ?> </span>
-                </div>
-            </div>
-            <div class="dropdown p-2 settings ">
-                <button class="btn  dropdown-toggle text-success" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Explore
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <!-- Mobile Menu List -->
+                <div class="list-group moblists">
                     <?php
                     if (isset($_SESSION['phonenumber'])) {
-                        echo "<a href='BuyerProfile2.php' class='dropdown-item  ' style='padding-right:-20px;'>Profile</a>";
-                        echo "<a href='Transaction.php' class='dropdown-item ' style='padding-right:-20px;'>Transactions</a>";
-                        echo "<a href='display.php' class='dropdown-item'  style='padding-right:-20px;'>Bid Rare Book</a>";
-                        echo "<a href='chat.php' class='dropdown-item'  style='padding-right:-20px;'>Group chat</a>";
-                        echo "<a href='debate.php' class='dropdown-item'  style='padding-right:-20px;'>Join Debate</a>";
-                        echo "<a href='genre.php' class='dropdown-item'  style='padding-right:-20px;'>Join Quiz</a>";
-
-                        echo "<a href='claimbook.php' class='dropdown-item' style='padding-right:-20px;'>Claim Book</a>";
-                        echo "<a href='customersupport.php' class='dropdown-item' style='padding-right:-20px;' >Join Meet & Greet</a>";
-                        echo "<a href='../Includes/logout.php' class='dropdown-item ' style='padding-right:-20px;'>Logout</a>";
+                        echo "<a href='BuyerProfile.php' class='list-group-item list-group-item-action'>Profile</a>";
+                        echo "<a href='Transaction.php' class='list-group-item list-group-item-action'>Transactions</a>";
+                        echo "<a href='claimbook.php' class='list-group-item list-group-item-action'>Claim Book</a>";
+                        echo "<a href='display.php' class='list-group-item list-group-item-action'>Bid Rare Book</a>";
+                        echo "<a href='chat.php' class='list-group-item list-group-item-action'>Group Chat</a>";
+                        echo "<a href='debate.php' class='list-group-item list-group-item-action'>Join Debate</a>";
+                        echo "<a href='genre.php' class='list-group-item list-group-item-action'>Join Quiz</a>";
+                        echo "<a href='customersupport.php' class='list-group-item list-group-item-action'>Join Meet & Greet</a>";
+                        echo "<a href='../Includes/logout.php' class='list-group-item list-group-item-action'>Logout</a>";
                     } else {
-                        echo "<a href='../auth/UserLogin.php' class='dropdown-item ' style='padding-right:-20px;'>Login</a>";
+                        echo "<a href='../auth/UserLogin.php' class='list-group-item list-group-item-action'>Login</a>";
                     }
                     ?>
                 </div>
+
+                <!-- Desktop Right Icons -->
+                <div class="ml-auto d-none d-xl-flex" style="display: flex; align-items: center; gap: 20px;">
+                    <!-- Voice Search -->
+                    <a href="voice_search.php" class="voice-search-btn">
+                        <i class="fas fa-microphone"></i> Voice Search
+                    </a>
+
+                    <!-- Explore Dropdown -->
+                    <div class="dropdown">
+                        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                            Explore
+                        </button>
+                        <div class="dropdown-menu">
+                            <?php
+                            if (isset($_SESSION['phonenumber'])) {
+                                echo "<a href='BuyerProfile2.php' class='dropdown-item'>Profile</a>";
+                                echo "<a href='Transaction.php' class='dropdown-item'>Transactions</a>";
+                                echo "<a href='display.php' class='dropdown-item'>Bid Rare Book</a>";
+                                echo "<a href='chat.php' class='dropdown-item'>Group chat</a>";
+                                echo "<a href='debate.php' class='dropdown-item'>Join Debate</a>";
+                                echo "<a href='genre.php' class='dropdown-item'>Join Quiz</a>";
+                                echo "<a href='claimbook.php' class='dropdown-item'>Claim Book</a>";
+                                echo "<a href='customersupport.php' class='dropdown-item'>Join Meet & Greet</a>";
+                                echo "<a href='../Includes/logout.php' class='dropdown-item'>Logout</a>";
+                            } else {
+                                echo "<a href='../auth/UserLogin.php' class='dropdown-item'>Login</a>";
+                            }
+                            ?>
+                        </div>
+                    </div>
+
+                    <!-- User Icon -->
+                    <i class='far fa-user-circle user-icon'></i>
+
+                    <!-- Cart Icon -->
+                    <a href="CartPage.php" style="position: relative;">
+                        <i class="fa fa-shopping-cart cart-icon"></i>
+                        <span id="icon"><?php echo totalItems(); ?></span>
+                    </a>
+                </div>
             </div>
-
-
-            <div class="text-success  login">Login</div>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-        <div class="flex-row-reverse right">
-
-        <!-- Voice Search Button -->
-<a href="voice_search.php" class="btn text-success" style="font-size:20px;">
-    <i class="fas fa-microphone"></i> Voice Search
-</a>
-
-    </div>
-
     </nav>
 
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="hero-content container">
+            <h1>Smart Library Management System</h1>
+            <p>Discover, Borrow, and Explore Thousands of Books</p>
+        </div>
+    </div>
 
-    <div class="container">
-        <div class="d-flex justify-content-around bg-white mb-3">
-
-            <div class="p-2 ">
-                <div class="dropdown">
-                    <button class="btn btn-green mybtn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Romantic
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <?php
-                        getFruits();
-                        ?>
-                    </div>
+    <!-- Category Buttons -->
+    <div class="container category-section">
+        <div class="d-flex justify-content-center flex-wrap">
+            <div class="dropdown">
+                <button class="category-btn dropdown-toggle" type="button" data-toggle="dropdown">
+                    📚 Romantic
+                </button>
+                <div class="dropdown-menu">
+                    <?php getFruits(); ?>
                 </div>
             </div>
-            <div class="p-2">
-                <div class="dropdown">
-                    <button class="btn btn-green mybtn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Business
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <?php
-                        getVegetables();
-                        ?>
-                    </div>
+
+            <div class="dropdown">
+                <button class="category-btn dropdown-toggle" type="button" data-toggle="dropdown">
+                    💼 Business
+                </button>
+                <div class="dropdown-menu">
+                    <?php getVegetables(); ?>
                 </div>
             </div>
-            <div class="p-2 ">
-                <div class="dropdown">
-                    <button class="btn btn-green mybtn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Educational
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <?php
-                        getCrops();
-                        ?>
-                    </div>
+
+            <div class="dropdown">
+                <button class="category-btn dropdown-toggle" type="button" data-toggle="dropdown">
+                    🎓 Educational
+                </button>
+                <div class="dropdown-menu">
+                    <?php getCrops(); ?>
                 </div>
             </div>
         </div>
     </div>
 
-
-
-
-
-    <div class="container"> <img src="f3.jpg" class="img-fluid firstimage d-block mx-auto" alt="Responsive image">
-    </div>
-    <br>
-    <br>
-
-
+    <!-- New Books Section -->
     <div class="container">
-        <div class="text-center">
-            <!-- <h2 id="headings" class="destext">Fresh fruits</h2> -->
-            <h1 id="headings" class="guard"><span><b>New Book </b></span>
-            </h1>
+        <div class="section-header">
+            <h2>🆕 New Arrivals</h2>
         </div>
-
-        <hr>
-
-        <div class="row BigBox">
-
-            <?php
-            getFruitsHomepage();
-            ?>
-
-            <hr>
+        <div class="row">
+            <?php getFruitsHomepage(); ?>
         </div>
-        <hr>
     </div>
-    <br><br>
 
-
+    <!-- Popular Books Section -->
     <div class="container">
-        <div class="text-center">
-            <!-- <h2 id="headings" class="destext">Fresh fruits</h2> -->
-            <h1 id="headings" class="guard"><span><b>Popular Book </b></span>
-            </h1>
+        <div class="section-header">
+            <h2>🔥 Popular Books</h2>
         </div>
-
-        <hr>
-
-        <div class="row BigBox">
-
-            <?php
-            getVegetablesHomepage();
-            ?>
-
-            <hr>
+        <div class="row">
+            <?php getVegetablesHomepage(); ?>
         </div>
-        <hr>
     </div>
-    <br><br>
 
+    <!-- All Books Section -->
     <div class="container">
-
-        <div class="text-center">
-            <h1 id="headings" class="longguard"><span><b>Best Selling Books All Over USA </b></span>
-            </h1>
+        <div class="section-header">
+            <h2>📖 All Books</h2>
         </div>
-        <br>
         <div class="row">
             <?php
             cart();
             getProducts();
             ?>
         </div>
-        <br><br>
 
-        <button type="submit" style="background-color: #007bff; color: #fff; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;" onclick="window.location.href='display.php';">Click here to BID a product</button>
+        <!-- BID Button -->
+        <div class="text-center">
+            <button class="bid-button" onclick="window.location.href='display.php';">
+                <i class="fas fa-gavel"></i> Click here to BID a product
+            </button>
+        </div>
     </div>
-    </div>
 
-
-
-    <!-- footer -->
+    <!-- Footer -->
     <section id="footer" class="myfooter">
         <div class="container">
-            <div class="row text-center text-xs-center text-sm-left text-md-left">
-                <div class="col aligncenter">
-                    <br>
-                    <h5>Payment Option</h5>
-                    <img src="../Images/Website/paytm1.jpg" alt="paytm">
-                    <img src="../Images/Website/cod.jpg" alt="paytm" style="height:37px">
+            <div class="row text-center">
+                <div class="col">
+                    <h5>Payment Options</h5>
+                    <img src="../Images/Website/paytm1.jpg" alt="paytm" style="height:40px;">
+                    <img src="../Images/Website/cod.jpg" alt="cod" style="height:37px;">
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
+                <div class="col-12 mt-4">
                     <ul class="list-unstyled list-inline social text-center">
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-facebook"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-twitter"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-instagram"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-google-plus"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();" target="_blank"><i class="fa fa-envelope"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-facebook"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-instagram"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-google-plus"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-envelope"></i></a></li>
                     </ul>
                 </div>
-                </hr>
             </div>
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center">
-                    <p><u><a href="https://www.agrocraft.com/">Smart Library Management System</a></u>An Advanced  Digital Library Management System</p>
-                    <p class="h6">Copy All right Reversed.<a class="text-green ml-2" href="https://www.google.com" target="_blank">Foreign Key Friends</a></p>
+                <div class="col-12 mt-2 text-center">
+                    <p><strong>Smart Library Management System</strong> - An Advanced Digital Library Management System</p>
+                    <p>Copyright © All Rights Reserved. Foreign Key Friends</p>
                 </div>
-                </hr>
             </div>
         </div>
     </section>
-    <!-- ./Footer a ,myfooter,aligncenter-->
+
 </body>
 
 </html>
