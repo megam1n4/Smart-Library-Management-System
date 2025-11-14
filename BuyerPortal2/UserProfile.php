@@ -458,9 +458,9 @@
             </div> 
             <div class="input-group mt-4 s">
                 <div class="input-group-prepend ">
-                    <span class="input-group-text text  " id="inputGroup-sizing-default" ><i class="fas fa-id-badge mr-2"></i>License</span>
+                    <span class="input-group-text text  " id="inputGroup-sizing-default" ><i class="fas fa-id-badge mr-2"></i>User Name</span>
                 </div>
-                <input type="text" readonly class="form-control-plaintext border border-dark" id="staticEmail" value=" <?php echo $license?>">
+                <input type="text" readonly class="form-control-plaintext border border-dark" id="staticEmail" value=" <?php echo $user?>">
             </div> 
             <div class="input-group mt-4 s">
                 <div class="input-group-prepend ">
