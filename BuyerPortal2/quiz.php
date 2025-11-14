@@ -1,36 +1,30 @@
 <?php
-session_start();
+include("../Functions/functions.php");
 include("../Includes/db.php");
 
-if (!isset($_SESSION['phonenumber'])) {
-    echo "You must be logged in to take the quiz.";
-    exit();
+// Start quiz timer
+if (!isset($_SESSION['quiz_start_time'])) {
+    $_SESSION['quiz_start_time'] = time();
 }
 
+// Fetch buyer information
 $phonenumber = $_SESSION['phonenumber'];
-
-// Fetch buyer's name based on phone number
-$name_query = "SELECT buyer_name FROM buyerregistration WHERE buyer_phone = '$phonenumber'";
-$name_result = mysqli_query($con, $name_query);
-$buyer_data = mysqli_fetch_assoc($name_result);
-$buyer_name = $buyer_data['buyer_name'] ?? 'Unknown User';
-
-if (!isset($_SESSION['quiz_start_time'])) {
-    $_SESSION['quiz_start_time'] = time(); // Record the start time in session
+$sql = "SELECT * FROM buyerregistration WHERE buyerphone = '$phonenumber'";
+$run_query = mysqli_query($con, $sql);
+while ($row = mysqli_fetch_array($run_query)) {
+    $buyer_name = $row['buyername'];
 }
 
 // Fetch quiz questions
-$query = "SELECT * FROM quiz_questions ORDER BY RAND() LIMIT 5";
-$questions_result = mysqli_query($con, $query);
+$quiz_query = "SELECT * FROM quiz_questions ORDER BY RAND() LIMIT 10";
+$quiz_result = mysqli_query($con, $quiz_query);
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+// Handle form submission
+if (isset($_POST['submit_quiz'])) {
     $score = 0;
-    $start_time = $_SESSION['quiz_start_time'];
-    $end_time = time();
-    $time_taken = $end_time - $start_time; // Time taken in seconds
+    $time_taken = time() - $_SESSION['quiz_start_time'];
     
-    // Loop through questions and check answers
-    foreach ($_POST['answers'] as $question_id => $selected_option) {
+    foreach ($_POST['question'] as $question_id => $selected_option) {
         $question_query = "SELECT correct_option FROM quiz_questions WHERE id = $question_id";
         $question_result = mysqli_query($con, $question_query);
         $question = mysqli_fetch_assoc($question_result);
@@ -39,11 +33,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $score++;
         }
     }
-
-    // Insert result into `quiz_results` table
-    $insert_query = "INSERT INTO quiz_results (buyer_phone, buyer_name, score, time_taken) VALUES ('$phonenumber', '$buyer_name', '$score', '$time_taken')";
+    
+    // Insert result into quiz_results table
+    $insert_query = "INSERT INTO quiz_results (buyer_phone, buyer_name, score, time_taken) 
+                     VALUES ('$phonenumber', '$buyer_name', '$score', '$time_taken')";
     mysqli_query($con, $insert_query);
-
+    
     // Clear the start time from session
     unset($_SESSION['quiz_start_time']);
 }
@@ -53,125 +48,383 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Literature Quiz</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Literature Quiz - Smart Library</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        /* Styling for navbar and main content */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        /* Modern Navbar Styling */
+        nav.navbar {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 15px 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand img {
+            height: 50px;
+            margin-right: 10px;
+        }
+
         .navbar-brand {
-            font-weight: bold;
             font-size: 1.5rem;
-            color: #ffdd57 !important;
+            font-weight: 700;
+            color: #ffd700 !important;
+            display: flex;
+            align-items: center;
         }
-        .navbar-brand i {
-            color: #ffdd57;
+
+        .navbar-nav .nav-link {
+            color: #ffffff !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            position: relative;
         }
+
+        .navbar-nav .nav-link:hover {
+            color: #ffd700 !important;
+            transform: translateY(-2px);
+        }
+
+        .navbar-nav .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ffd700;
+            transition: width 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-icons a {
+            color: #ffffff;
+            font-size: 1.3rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-icons a:hover {
+            color: #ffd700;
+            transform: scale(1.1);
+        }
+
+        .icon-badge {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background: #28a745;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        /* Quiz Container */
         .quiz-container {
-            background-color: #ffffff;
-            border-radius: 8px;
+            max-width: 900px;
+            margin: 50px auto;
             padding: 20px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .score-alert {
-            margin-top: -1px;
-            background-color: #e3f2fd;
-            border: 1px solid #bbdefb;
-            color: #0d47a1;
-            font-weight: bold;
+
+        .quiz-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
             text-align: center;
-            padding: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
         }
-        .question-card {
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+
+        .quiz-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
         }
-        .question-card p {
-            font-weight: bold;
+
+        .quiz-header p {
             font-size: 1.1rem;
+            opacity: 0.9;
         }
-        .form-check label {
-            font-size: 0.95rem;
-            margin-left: 8px;
+
+        .question-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .question-card:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            transform: translateY(-3px);
+        }
+
+        .question-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .option-label {
+            display: block;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .option-label:hover {
+            background: #e7f3ff;
+            border-color: #667eea;
+        }
+
+        input[type="radio"]:checked + .option-label {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            font-weight: 600;
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 15px 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(40, 167, 69, 0.3);
+            display: block;
+            margin: 30px auto;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(40, 167, 69, 0.4);
+        }
+
+        /* Footer Styling */
+        footer {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .footer-content h3 {
+            color: #ffd700;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .footer-content p {
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #ffd700;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .quiz-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .question-card {
+                padding: 20px;
+            }
+
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
-<body class="bg-light">
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="bhome.php">
+            <i class="fas fa-book-reader"></i> Smart Library Management System
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon" style="color: white;"><i class="fas fa-bars"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="bhome.php">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Categories.php">Browse Books</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="quiz.php">Quiz</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.php">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.php">Contact</a>
+                </li>
+            </ul>
+            <div class="nav-icons ml-3">
+                <a href="UserProfile.php" title="My Profile">
+                    <i class="fas fa-user-circle"></i>
+                </a>
+                <a href="cartpage.php" title="My Cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <?php echo ""; // Add cart count logic if needed ?>
+                </a>
+            </div>
+        </div>
+    </nav>
 
-<!-- Navbar with Book Corner Logo -->
-<nav class="navbar navbar-expand-xl navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">
-        <i class="fas fa-book-reader mr-2"></i> <!-- FontAwesome book icon -->
-        Smart Library Management System
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Browse Books</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">About Us</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Contact</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-<!-- Display score if available -->
-<?php if (isset($score)): ?>
-    <div class="score-alert">
-        You scored <?php echo $score; ?> out of 5. Time taken: <?php echo gmdate("i:s", $time_taken); ?> minutes.
-    </div>
-<?php endif; ?>
-
-<!-- Quiz Section -->
-<div class="container mt-5">
+    <!-- Quiz Content -->
     <div class="quiz-container">
-        <h2 class="text-center mb-4">Literature Quiz</h2>
+        <div class="quiz-header">
+            <h1><i class="fas fa-graduation-cap"></i> Literature Quiz</h1>
+            <p>Test your knowledge of classic literature and famous authors</p>
+        </div>
 
-        <?php if (!isset($score)): ?>
-            <form action="quiz.php" method="POST">
-                <?php while ($question = mysqli_fetch_assoc($questions_result)): ?>
-                    <div class="card question-card">
-                        <div class="card-body">
-                            <p><?php echo htmlspecialchars($question['question']); ?></p>
-                            <div class="form-check">
-                                <input type="radio" name="answers[<?php echo $question['id']; ?>]" value="A" required>
-                                <label><?php echo htmlspecialchars($question['option_a']); ?></label>
-                            </div>
-                            <div class="form-check">
-                                <input type="radio" name="answers[<?php echo $question['id']; ?>]" value="B">
-                                <label><?php echo htmlspecialchars($question['option_b']); ?></label>
-                            </div>
-                            <div class="form-check">
-                                <input type="radio" name="answers[<?php echo $question['id']; ?>]" value="C">
-                                <label><?php echo htmlspecialchars($question['option_c']); ?></label>
-                            </div>
-                            <div class="form-check">
-                                <input type="radio" name="answers[<?php echo $question['id']; ?>]" value="D">
-                                <label><?php echo htmlspecialchars($question['option_d']); ?></label>
-                            </div>
-                        </div>
+        <form method="POST" action="">
+            <?php
+            $question_number = 1;
+            while ($quiz_row = mysqli_fetch_assoc($quiz_result)) {
+                ?>
+                <div class="question-card">
+                    <div class="question-title">
+                        <strong>Question <?php echo $question_number; ?>:</strong> 
+                        <?php echo $quiz_row['question']; ?>
                     </div>
-                <?php endwhile; ?>
-                <button type="submit" class="btn btn-primary btn-block">Submit Quiz</button>
-            </form>
-        <?php endif; ?>
+                    <div class="options">
+                        <input type="radio" name="question[<?php echo $quiz_row['id']; ?>]" 
+                               value="A" id="q<?php echo $quiz_row['id']; ?>_a" required>
+                        <label class="option-label" for="q<?php echo $quiz_row['id']; ?>_a">
+                            <?php echo $quiz_row['option_a']; ?>
+                        </label>
+
+                        <input type="radio" name="question[<?php echo $quiz_row['id']; ?>]" 
+                               value="B" id="q<?php echo $quiz_row['id']; ?>_b">
+                        <label class="option-label" for="q<?php echo $quiz_row['id']; ?>_b">
+                            <?php echo $quiz_row['option_b']; ?>
+                        </label>
+
+                        <input type="radio" name="question[<?php echo $quiz_row['id']; ?>]" 
+                               value="C" id="q<?php echo $quiz_row['id']; ?>_c">
+                        <label class="option-label" for="q<?php echo $quiz_row['id']; ?>_c">
+                            <?php echo $quiz_row['option_c']; ?>
+                        </label>
+
+                        <input type="radio" name="question[<?php echo $quiz_row['id']; ?>]" 
+                               value="D" id="q<?php echo $quiz_row['id']; ?>_d">
+                        <label class="option-label" for="q<?php echo $quiz_row['id']; ?>_d">
+                            <?php echo $quiz_row['option_d']; ?>
+                        </label>
+                    </div>
+                </div>
+                <?php
+                $question_number++;
+            }
+            ?>
+
+            <button type="submit" name="submit_quiz" class="submit-btn">
+                <i class="fas fa-check-circle"></i> Submit Quiz
+            </button>
+        </form>
     </div>
-</div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <h3><i class="fas fa-book-reader"></i> Smart Library Management System</h3>
+                <p>An Advanced Digital Library Management System</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Copyright © <?php echo date("Y"); ?> All Rights Reserved. Foreign Key Friends</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
