@@ -496,13 +496,13 @@ include("../Functions/functions.php");
                             <?php
                             if (isset($_SESSION['phonenumber'])) {
                                 echo "<a href='UserProfile.php' class='dropdown-item'>Profile</a>";
-                                echo "<a href='Transaction.php' class='dropdown-item'>Transactions</a>";
-                                echo "<a href='display.php' class='dropdown-item'>Bid Rare Book</a>";
+                                
+                                echo "<a href='display.php' class='dropdown-item'>Reserve Rare Book</a>";
                                 echo "<a href='chat.php' class='dropdown-item'>Group chat</a>";
                                 echo "<a href='debate.php' class='dropdown-item'>Join Debate</a>";
                                 echo "<a href='genre.php' class='dropdown-item'>Join Quiz</a>";
-                                echo "<a href='claimbook.php' class='dropdown-item'>Claim Book</a>";
-                                echo "<a href='customersupport.php' class='dropdown-item'>Join Meet & Greet</a>";
+                                
+                                echo "<a href='customersupport.php' class='dropdown-item'>Join Rare Book Exhibition</a>";
                                 echo "<a href='../Includes/logout.php' class='dropdown-item'>Logout</a>";
                             } else {
                                 echo "<a href='../auth/UserLogin.php' class='dropdown-item'>Login</a>";
