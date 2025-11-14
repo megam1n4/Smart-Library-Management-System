@@ -526,6 +526,65 @@ include("../Functions/functions.php");
 
     <!-- Cart Header -->
     <?php
+    // Handle Submit Borrow Request
+    if (isset($_POST['submit_borrow_request'])) {
+        if (isset($_SESSION['phonenumber'])) {
+            $sess_phone_number = $_SESSION['phonenumber'];
+            $success = true;
+            $error_message = "";
+            
+            // Get all cart items
+            $sel_cart = "select * from cart where phonenumber = '$sess_phone_number'";
+            $run_cart = mysqli_query($con, $sel_cart);
+            
+            while ($cart_item = mysqli_fetch_array($run_cart)) {
+                $product_id = $cart_item['product_id'];
+                
+                // Get borrow and return dates from POST
+                $borrow_date_field = 'borrow_date_' . $product_id;
+                $return_date_field = 'return_date_' . $product_id;
+                
+                if (isset($_POST[$borrow_date_field]) && isset($_POST[$return_date_field])) {
+                    $borrow_date = mysqli_real_escape_string($con, $_POST[$borrow_date_field]);
+                    $return_date = mysqli_real_escape_string($con, $_POST[$return_date_field]);
+                    
+                    // Validate dates
+                    if (!empty($borrow_date) && !empty($return_date)) {
+                        if (strtotime($return_date) >= strtotime($borrow_date)) {
+                            // Update cart with borrow and return dates
+                            $update_query = "UPDATE cart SET borrow_date = '$borrow_date', return_date = '$return_date' WHERE product_id = '$product_id' AND phonenumber = '$sess_phone_number'";
+                            
+                            if (!mysqli_query($con, $update_query)) {
+                                $success = false;
+                                $error_message = "Failed to update borrow dates for some items.";
+                                break;
+                            }
+                        } else {
+                            $success = false;
+                            $error_message = "Return date must be on or after borrow date.";
+                            break;
+                        }
+                    } else {
+                        $success = false;
+                        $error_message = "Please select both borrow and return dates for all books.";
+                        break;
+                    }
+                } else {
+                    $success = false;
+                    $error_message = "Please select dates for all books in your cart.";
+                    break;
+                }
+            }
+            
+            if ($success) {
+                echo "<script>alert('Borrow request submitted successfully!');</script>";
+                echo "<script>window.open('Checkout.php','_self')</script>";
+            } else {
+                echo "<script>alert('$error_message');</script>";
+            }
+        }
+    }
+    
     if (isset($_SESSION['phonenumber'])) {
         $temp = totalItems();
         echo "
@@ -547,8 +606,9 @@ include("../Functions/functions.php");
 
             if ($count > 0) {
         ?>
-                <div class="cart-table-container">
-                    <table class="table">
+                <form method="POST" action="">
+                    <div class="cart-table-container">
+                        <table class="table">
                         <thead>
                             <tr>
                                 <th>S.No</th>
@@ -593,10 +653,10 @@ include("../Functions/functions.php");
                                             </div>
                                         </td>
                                         <td data-label="Borrow Date">
-                                            <input type="date" class="date-input" name="borrow_date" min="<?php echo date('Y-m-d'); ?>">
+                                            <input type="date" class="date-input" name="borrow_date_<?php echo $product_id; ?>" id="borrow_date_<?php echo $product_id; ?>" min="<?php echo date('Y-m-d'); ?>" required>
                                         </td>
                                         <td data-label="Return Date">
-                                            <input type="date" class="date-input" name="return_date" min="<?php echo date('Y-m-d'); ?>">
+                                            <input type="date" class="date-input" name="return_date_<?php echo $product_id; ?>" id="return_date_<?php echo $product_id; ?>" min="<?php echo date('Y-m-d'); ?>" required>
                                         </td>
                                         <td data-label="Delete">
                                             <a href="DeleteProductCart.php?id=<?php echo $product_id; ?>" class="delete-btn">
@@ -615,23 +675,22 @@ include("../Functions/functions.php");
 
                 <div class="cart-actions">
                     <a href="emptyCart.php">
-                        <button class="action-btn">
+                        <button type="button" class="action-btn">
                             <i class="fas fa-trash"></i> Empty Cart
                         </button>
                     </a>
                     
                     <a href="bhome.php">
-                        <button class="action-btn">
+                        <button type="button" class="action-btn">
                             <i class="fas fa-shopping-bag"></i> Continue Shopping
                         </button>
                     </a>
                     
-                    <a href="Checkout.php">
-                        <button class="action-btn checkout-btn">
-                            Checkout <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </a>
+                    <button type="submit" name="submit_borrow_request" class="action-btn checkout-btn">
+                        <i class="fas fa-paper-plane"></i> Submit Borrow Request
+                    </button>
                 </div>
+            </form>
         <?php
             } else {
                 echo "
