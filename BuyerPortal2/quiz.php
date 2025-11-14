@@ -25,7 +25,7 @@ if (isset($_POST['submit_quiz'])) {
     $time_taken = time() - $_SESSION['quiz_start_time'];
     
     foreach ($_POST['question'] as $question_id => $selected_option) {
-        $question_query = "SELECT correct_option FROM quiz_questions WHERE id = $question_id";
+        $question_query = "SELECT correct_option FROM quiz_questions WHERE id = '$question_id'";
         $question_result = mysqli_query($con, $question_query);
         $question = mysqli_fetch_assoc($question_result);
         
@@ -41,6 +41,9 @@ if (isset($_POST['submit_quiz'])) {
     
     // Clear the start time from session
     unset($_SESSION['quiz_start_time']);
+    
+    // Redirect to results page or show success message
+    echo "<script>alert('Quiz submitted successfully! Your score: $score/10');</script>";
 }
 ?>
 
@@ -121,6 +124,16 @@ if (isset($_POST['submit_quiz'])) {
             width: 100%;
         }
 
+        .navbar-toggler {
+            border: none;
+            padding: 5px 10px;
+        }
+
+        .navbar-toggler-icon {
+            color: white;
+            font-size: 1.5rem;
+        }
+
         .nav-icons {
             display: flex;
             align-items: center;
@@ -132,6 +145,7 @@ if (isset($_POST['submit_quiz'])) {
             font-size: 1.3rem;
             position: relative;
             transition: all 0.3s ease;
+            text-decoration: none;
         }
 
         .nav-icons a:hover {
@@ -217,6 +231,7 @@ if (isset($_POST['submit_quiz'])) {
         .option-label:hover {
             background: #e7f3ff;
             border-color: #667eea;
+            transform: translateX(5px);
         }
 
         input[type="radio"]:checked + .option-label {
@@ -312,6 +327,10 @@ if (isset($_POST['submit_quiz'])) {
             .navbar-brand {
                 font-size: 1.2rem;
             }
+
+            .quiz-container {
+                padding: 10px;
+            }
         }
     </style>
 </head>
@@ -322,7 +341,7 @@ if (isset($_POST['submit_quiz'])) {
             <i class="fas fa-book-reader"></i> Smart Library Management System
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-            <span class="navbar-toggler-icon" style="color: white;"><i class="fas fa-bars"></i></span>
+            <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
@@ -348,7 +367,6 @@ if (isset($_POST['submit_quiz'])) {
                 </a>
                 <a href="cartpage.php" title="My Cart">
                     <i class="fas fa-shopping-cart"></i>
-                    <?php echo ""; // Add cart count logic if needed ?>
                 </a>
             </div>
         </div>
