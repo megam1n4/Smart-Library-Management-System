@@ -412,7 +412,7 @@
         <br>
 <br>
         <b>
-            <h1 class="guard"><span><b>BUYER'S PROFILE</b></span>
+            <h1 class="guard"><span><b>USER'S PROFILE</b></span>
             </h1>
         </b>
         <br>
