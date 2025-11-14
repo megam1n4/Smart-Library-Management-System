@@ -578,7 +578,7 @@ include("../Functions/functions.php");
             
             if ($success) {
                 echo "<script>alert('Borrow request submitted successfully!');</script>";
-                echo "<script>window.open('Checkout.php','_self')</script>";
+                echo "<script>window.open('bhome.php','_self')</script>";
             } else {
                 echo "<script>alert('$error_message');</script>";
             }
