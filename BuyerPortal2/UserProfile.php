@@ -1,478 +1,500 @@
 <?php
-    include("../Includes/db.php");
-    session_start();
-    $sessphonenumber = $_SESSION['phonenumber'];
-    $sql="select * from buyerregistration where buyer_phone = '$sessphonenumber'";
-    $run_query = mysqli_query($con,$sql);
-    while($row = mysqli_fetch_array($run_query))
-    {
-        $name = $row['buyer_name'];
-        $phone = $row['buyer_phone'];
-        $address = $row['buyer_addr'];
-        $pan = $row['buyer_pan'];
-        $bank = $row['buyer_bank'];
+include("../Functions/functions.php");
+include("../Includes/db.php");
 
-        $comp = $row['buyer_comp'];
-        $license = $row['buyer_license'];
-        $mail = $row['buyer_mail'];
-        $user = $row['buyer_username'];
-    }   
-
+$sessphonenumber = $_SESSION['phonenumber'];
+$sql = "select * from buyerregistration where buyer_phone = '$sessphonenumber'";
+$run_query = mysqli_query($con, $sql);
+while ($row = mysqli_fetch_array($run_query)) {
+    $name = $row['buyer_name'];
+    $phone = $row['buyer_phone'];
+    $address = $row['buyer_addr'];
+    $license = $row['buyer_license'];
+    $mail = $row['buyer_mail'];
+    $user = $row['buyer_username'];
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
+    <title>My Profile - Smart Library</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <a href="https://icons8.com/icon/83325/roman-soldier"></a>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <script src="https://kit.fontawesome.com/c587fc1763.js" crossorigin="anonymous"></script>
-</head>
-<style>
-    #staticEmail{
-        text-align:center;
-         border-style:solid;
-        border-color:black;
-        /* background-color:#ff5500;*/
-        width:30%;
-        font-size:20px;
-        color:black; 
-    } 
-    .text {
-        background-color: black;
-        color: gold;
-        font-size:18px;
-    }
-    input{
-        text-align:center;
-        /* border-style:solid;
-        border-color:black; */
-        background-color:#ff5500;
-        width:50%;
-        color:red;
-    }
-    .myfooter {
-        background-color: #292b2c;
-
-        color: goldenrod;
-        margin-top: 15px;
-    }
-
-    .aligncenter {
-        text-align: center;
-    }
-
-    a {
-        color: goldenrod;
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    nav {
-        background-color: #292b2c;
-    }
-
-    .navbar-custom {
-        background-color: #292b2c;
-    }
-
-    /* change the brand and text color */
-    .navbar-custom .navbar-brand,
-    .navbar-custom .navbar-text {
-        background-color: #292b2c;
-    }
-
-    .navbar-custom .navbar-nav .nav-link {
-        background-color: #292b2c;
-    }
-
-    .navbar-custom .nav-item.active .nav-link,
-    .navbar-custom .nav-item:hover .nav-link {
-        background-color: #292b2c;
-    }
-
-
-    .mybtn {
-        border-color: green;
-        border-style: solid;
-    }
-
-
-    .right {
-        display: flex;
-    }
-
-    .left {
-        display: none;
-    }
-
-    .cart {
-        /* margin-left:10px; */
-        margin-right: -9px;
-    }
-
-    .profile {
-        margin-right: 2px;
-
-    }
-
-    .login {
-        margin-right: -2px;
-        margin-top: 12px;
-        display: none;
-    }
-
-    .searchbox {
-        width: 60%;
-    }
-
-    .lists {
-        display: inline-block;
-    }
-
-    .moblists {
-        display: none;
-    }
-
-    .logins {
-        text-align: center;
-        margin-right: -30%;
-        margin-left: 35%;
-    }
-
-    .x {
-        height: 70vh;
-        margin-top: 10vh;
-        margin-bottom: 10vh;
-        width: 100%;
-    }
-
-    .inp::placeholder {
-        display: none;
-        visibility: hidden;
-    }
-
-    /* .s {
-        width: auto;
-    }
-     */
-
-    .x {
-        background-color: white;
-        height: 80%;
-        width: 38%;
-        margin-top: 0%;
-    }
-
-   
-
-    h2,
-    h1 {
-        color: black;
-    }
-
-    .imag {
-        height: 120px;
-    }
-
-    .s {
-        width: 50%;
-        margin-left: 25%;
-        margin-right: 25%;
-        margin-top:0%;
-        margin-bottom:4%;
-    
-    }
-
-    .fp {
-        margin-left: 0%;
-        margin-top: -10%;
-        text-align: right;
-        color: black;
-        font-size: 20px;
-    }
-
-    .nu {
-        /* margin-right: 0%;
-        margin-left: 25%; */
-        margin-top: -10%;
-        text-align: center;
-        margin-left: -2%;
-        color: black;
-        font-size: 20px;
-    }
-
-    .guard {
-        width: 100%;
-        text-align: center;
-        border-bottom: 1px solid #ffc857;
-        /* background-color: #ffc857; */
-        line-height: 0.1em;
-        margin: 10px 0 20px;
-        font-family: serif;
-    }
-
-    .guard span {
-        background: white;
-        padding: 0 10px;
-    }
-
-    .lastbtn {
-        color: goldenrod;
-    }
-
-    .text {
-        min-width: 180px !important;
-        display: inline-block !important
-    }
-
-    .inp {
-        width: 10%;
-    }
-
-    .head {
-        margin-left: -20%;
-        /* background-color: black; */
-        margin-top: 10%;
-    }
-
-    /* .area{
-
-    } */
-
-    .logo {
-        margin-left: 0%;
-        float: right;
-    }
-
-    .inner {
-        float: left;
-    }
-
-    .main {
-        float: left;
-    }
-
-    a {
-        text-decoration: none;
-        color: #333;
-    }
-
-    a:hover {
-        text-decoration: none;
-        color: black
-    }
-
-    @media only screen and (min-device-width:320px) and (max-device-width:480px) {
-        /* .mycarousel {
-            display: none;
-        }
-
-        .firstimage {
-            height: auto;
-            width: 90%;
-        }
-
-        .card {
-            width: 80%;
-            margin-left: 10%;
-            margin-right: 10%;
-
-        }
-
-        .col {
-            margin-top: 20px;
-        } */
-
-        .right {
-            display: none;
-            background-color: #ff5500;
-        }
-
-        /* 
-            .settings{
-            margin-left:79%;
-        } */
-        .left {
-            display: flex;
-        }
-
-        .moblogo {
-            display: none;
-        }
-
-        .logins {
-            text-align: center;
-            margin-right: 35%;
-            padding: 15px;
-        }
-
-        .searchbox {
-            width: 95%;
-            margin-right: 5%;
-            margin-left: 0%;
-        }
-
-        .moblists {
-            display: inline-block;
-            text-align: center;
-            width: 100%;
-        }
-
-    
-        .x {
+    <style>
+        * {
+            margin: 0;
             padding: 0;
-            width: 80%;
-            margin-left: 10%;
-            margin-right: 10%;
+            box-sizing: border-box;
         }
 
-   
-        .s {
-            width: 100%;
-            margin-left: 0;
-            margin-right: 0;
-        }
-
-        .inp::placeholder {
-            visibility: visible;
-        }
-
-        .input-group-prepend {
-            display: inline-block;
-       
-        }
-
-        .fp {
-            margin-left: 0%;
-            margin-top: -30%;
-            text-align: center;
-         
-        }
-
-        .nu {
-            margin-right: 0%;
-            margin-left: 0%;
-            margin-top: -15%;
-            text-align: center;
-        }
-
-        .text1 {
-            text-align: center;
-            font-size: 20px;
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
             color: #333;
         }
 
-        .text2 {
-            text-align: center;
-            font-size: 20px;
+        /* Modern Navbar Styling */
+        nav.navbar {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 15px 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        .button1 {
-            margin-top: 10%;
+        .navbar-brand img {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+            background: white;
+            padding: 5px;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
         }
 
-        .inp1 {
-            text-align: center;
+        .navbar-brand img:hover {
+            transform: scale(1.05);
         }
 
-        a {
+        /* Search Box Styling */
+        .searchbox .input-group {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .searchbox .input-group-text {
+            background-color: white;
+            border: 2px solid #28a745;
+            border-right: none;
+            border-radius: 25px 0 0 25px;
+            color: #28a745;
+        }
+
+        .searchbox .form-control {
+            border: 2px solid #28a745;
+            border-left: none;
+            border-radius: 0 25px 25px 0;
+            padding: 10px 20px;
+        }
+
+        .searchbox .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+            border-color: #28a745;
+        }
+
+        /* User Icons */
+        .user-icon,
+        .cart-icon {
+            color: #28a745;
+            font-size: 28px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .user-icon:hover,
+        .cart-icon:hover {
+            color: #20c997;
+            transform: scale(1.1);
+        }
+
+        #icon {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background-color: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Dropdown Button */
+        .btn-success {
+            background: #28a745;
+            border: none;
+            font-weight: 600;
+            padding: 8px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        /* Voice Search Button */
+        .voice-search-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             text-decoration: none;
-            color: #333;
         }
-      
-        .text {
-        min-width: 150px !important;
-        display: inline-block !important
-    }
-    }
-</style>
+
+        .voice-search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Profile Header */
+        .profile-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 60px 0;
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        .profile-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .profile-header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+
+        /* Profile Card */
+        .profile-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+        }
+
+        .profile-field {
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .profile-field:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .profile-field-label {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #ffc107;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            min-width: 180px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+        }
+
+        .profile-field-value {
+            padding-left: 30px;
+            font-size: 1.1rem;
+            color: #333;
+            font-weight: 500;
+            flex: 1;
+        }
+
+        /* Footer */
+        .myfooter {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #ffc107;
+            padding: 40px 0 20px 0;
+            margin-top: 80px;
+        }
+
+        .social li {
+            margin: 0 10px;
+        }
+
+        .social a {
+            color: #ffc107;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .social a:hover {
+            color: #28a745;
+            transform: scale(1.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .profile-header h1 {
+                font-size: 2rem;
+            }
+
+            .profile-card {
+                padding: 20px;
+            }
+
+            .profile-field {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 15px;
+            }
+
+            .profile-field-label {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .profile-field-value {
+                padding-left: 0;
+                width: 100%;
+            }
+        }
+
+        /* Mobile List Styling */
+        .moblists {
+            display: none;
+        }
+
+        @media (max-width: 1200px) {
+            .moblists {
+                display: block;
+                margin-top: 20px;
+            }
+
+            .moblists .list-group-item {
+                background-color: #1a1a2e !important;
+                color: #ffc107 !important;
+                border: none;
+                text-align: center;
+                padding: 15px;
+                transition: all 0.3s ease;
+            }
+
+            .moblists .list-group-item:hover {
+                background-color: #28a745 !important;
+                color: white !important;
+            }
+        }
+    </style>
+</head>
 
 <body>
 
+    <!-- Modern Navbar -->
+    <nav class="navbar navbar-expand-xl navbar-dark">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand" href="bhome.php">
+                <img src="logo2.jpg" alt="Smart Library Logo">
+            </a>
 
-
-
-
-    
-    <div class="container">
-    <div class="text-center">
-        <br>
-<br>
-        <b>
-            <h1 class="guard"><span><b>USER'S PROFILE</b></span>
-            </h1>
-        </b>
-        <br>
-    </div></div>
-
-    <div class="container" >
-        <div class="form">
-            <div class="input-group mt-4 s">
-                <div class="input-group-prepend ">
-                    <span class="input-group-text text  " id="inputGroup-sizing-default" ><i class="fas fa-user mr-2"></i>Full name</span>
-                </div>
-                <input type="text" readonly class="form-control-plaintext border border-dark" id="staticEmail" value="<?php echo $name?>">
+            <!-- Mobile Icons -->
+            <div class="d-xl-none" style="display: flex; align-items: center; gap: 15px;">
+                <i class='far fa-user-circle user-icon'></i>
+                <a href="CartPage.php" style="position: relative;">
+                    <i class="fa fa-shopping-cart cart-icon"></i>
+                    <span id="icon"><?php echo totalItems(); ?></span>
+                </a>
             </div>
-            <div class="input-group mt-4 s">
-                <div class="input-group-prepend ">
-                    <span class="input-group-text text  " id="inputGroup-sizing-default" ><i class="fas fa-phone-alt mr-2"></i>Phone No.</span>
+
+            <!-- Navbar Toggler -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                <i class="fas fa-bars" style="color:#28a745; font-size:28px;"></i>
+            </button>
+
+            <!-- Collapsible Content -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Search Box -->
+                <div class="mx-auto searchbox">
+                    <form action="SearchResult.php" method="get" enctype="multipart/form-data">
+                        <div class="input-group mb-1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-search" style="font-size:20px;"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="search" placeholder="Search for education, romance books" style="width:500px;">
+                        </div>
+                    </form>
                 </div>
-                <input type="phonenumber" readonly class="form-control-plaintext border border-dark" id="staticEmail" value="<?php echo $phone ?>">
+
+                <!-- Username Display -->
+                <?php getUsername(); ?>
+
+                <!-- Mobile Menu List -->
+                <div class="list-group moblists">
+                    <?php
+                    if (isset($_SESSION['phonenumber'])) {
+                        echo "<a href='BuyerProfile.php' class='list-group-item list-group-item-action'>Profile</a>";
+                        echo "<a href='Transaction.php' class='list-group-item list-group-item-action'>Transactions</a>";
+                        echo "<a href='claimbook.php' class='list-group-item list-group-item-action'>Claim Book</a>";
+                        echo "<a href='display.php' class='list-group-item list-group-item-action'>Bid Rare Book</a>";
+                        echo "<a href='chat.php' class='list-group-item list-group-item-action'>Group Chat</a>";
+                        echo "<a href='debate.php' class='list-group-item list-group-item-action'>Join Debate</a>";
+                        echo "<a href='genre.php' class='list-group-item list-group-item-action'>Join Quiz</a>";
+                        echo "<a href='customersupport.php' class='list-group-item list-group-item-action'>Join Meet & Greet</a>";
+                        echo "<a href='../Includes/logout.php' class='list-group-item list-group-item-action'>Logout</a>";
+                    } else {
+                        echo "<a href='../auth/UserLogin.php' class='list-group-item list-group-item-action'>Login</a>";
+                    }
+                    ?>
+                </div>
+
+                <!-- Desktop Right Icons -->
+                <div class="ml-auto d-none d-xl-flex" style="display: flex; align-items: center; gap: 20px;">
+                    <!-- Voice Search -->
+                    <a href="voice_search.php" class="voice-search-btn">
+                        <i class="fas fa-microphone"></i> Voice Search
+                    </a>
+
+                    <!-- Explore Dropdown -->
+                    <div class="dropdown">
+                        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                            Explore
+                        </button>
+                        <div class="dropdown-menu">
+                            <?php
+                            if (isset($_SESSION['phonenumber'])) {
+                                echo "<a href='BuyerProfile2.php' class='dropdown-item'>Profile</a>";
+                                echo "<a href='Transaction.php' class='dropdown-item'>Transactions</a>";
+                                echo "<a href='display.php' class='dropdown-item'>Bid Rare Book</a>";
+                                echo "<a href='chat.php' class='dropdown-item'>Group chat</a>";
+                                echo "<a href='debate.php' class='dropdown-item'>Join Debate</a>";
+                                echo "<a href='genre.php' class='dropdown-item'>Join Quiz</a>";
+                                echo "<a href='claimbook.php' class='dropdown-item'>Claim Book</a>";
+                                echo "<a href='customersupport.php' class='dropdown-item'>Join Meet & Greet</a>";
+                                echo "<a href='../Includes/logout.php' class='dropdown-item'>Logout</a>";
+                            } else {
+                                echo "<a href='../auth/UserLogin.php' class='dropdown-item'>Login</a>";
+                            }
+                            ?>
+                        </div>
+                    </div>
+
+                    <!-- User Icon -->
+                    <i class='far fa-user-circle user-icon'></i>
+
+                    <!-- Cart Icon -->
+                    <a href="CartPage.php" style="position: relative;">
+                        <i class="fa fa-shopping-cart cart-icon"></i>
+                        <span id="icon"><?php echo totalItems(); ?></span>
+                    </a>
+                </div>
             </div>
-            <div class="input-group mt-4 s">
-                <div class="input-group-prepend ">
-                    <span class="input-group-text text  " id="inputGroup-sizing-default" ><i class="fas fa-home mr-2"></i>Address</span>
-                </div>
-                <input type="text" readonly class="form-control-plaintext border border-dark" id="staticEmail" value="<?php echo $address ?>">
-            </div> 
-            <div class="input-group mt-4 s">
-                <div class="input-group-prepend ">
-                    <span class="input-group-text text  " id="inputGroup-sizing-default" ><i class="fas fa-pencil-alt mr-2"></i>Pan No.</span>
-                </div>
-                <input type="text" readonly class="form-control-plaintext border border-dark" id="staticEmail" value=" <?php echo $pan ?> ">
-            </div> 
-            <div class="input-group mt-4 s">
-                <div class="input-group-prepend ">
-                    <span class="input-group-text text  " id="inputGroup-sizing-default" ><i class="fas fa-university mr-2"></i>Account No.</span>
-                </div>
-                <input type="text" readonly class="form-control-plaintext border border-dark" id="staticEmail" value=" <?php echo $bank ?>">
-            </div> 
-            <div class="input-group mt-4 s">
-                <div class="input-group-prepend ">
-                    <span class="input-group-text text  " id="inputGroup-sizing-default" ><i class="fas fa-building mr-2"></i>Company</span>
-                </div>
-                <input type="text" readonly class="form-control-plaintext border border-dark" id="staticEmail" value="<?php echo $comp ?>">
-            </div> 
-            <div class="input-group mt-4 s">
-                <div class="input-group-prepend ">
-                    <span class="input-group-text text  " id="inputGroup-sizing-default" ><i class="fas fa-id-badge mr-2"></i>User Name</span>
-                </div>
-                <input type="text" readonly class="form-control-plaintext border border-dark" id="staticEmail" value=" <?php echo $user?>">
-            </div> 
-            <div class="input-group mt-4 s">
-                <div class="input-group-prepend ">
-                    <span class="input-group-text text  " id="inputGroup-sizing-default" ><i class="far fa-envelope mr-2"></i>Email id </span>
-                </div>
-                <input type="text" readonly class="form-control-plaintext border border-dark" id="staticEmail" value="<?php echo $mail?> ">
-            </div> 
         </div>
-        <button type="button" class="btn text-center d-flex mx-auto btn-lg" style="background-color:#292b2c;color:goldenrod">Edit Profile</button>
+    </nav>
+
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <h1>👤 My Profile</h1>
+        <p>View your personal information</p>
     </div>
 
-    
+    <!-- Profile Content -->
+    <div class="container">
+        <div class="profile-card">
+            <div class="profile-field">
+                <div class="profile-field-label">
+                    <i class="fas fa-user"></i>
+                    <span>Full Name</span>
+                </div>
+                <div class="profile-field-value"><?php echo $name; ?></div>
+            </div>
+
+            <div class="profile-field">
+                <div class="profile-field-label">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>Phone Number</span>
+                </div>
+                <div class="profile-field-value"><?php echo $phone; ?></div>
+            </div>
+
+            <div class="profile-field">
+                <div class="profile-field-label">
+                    <i class="fas fa-home"></i>
+                    <span>Address</span>
+                </div>
+                <div class="profile-field-value"><?php echo $address; ?></div>
+            </div>
+
+            <div class="profile-field">
+                <div class="profile-field-label">
+                    <i class="fas fa-id-badge"></i>
+                    <span>License</span>
+                </div>
+                <div class="profile-field-value"><?php echo $license; ?></div>
+            </div>
+
+            <div class="profile-field">
+                <div class="profile-field-label">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Username</span>
+                </div>
+                <div class="profile-field-value"><?php echo $user; ?></div>
+            </div>
+
+            <div class="profile-field">
+                <div class="profile-field-label">
+                    <i class="far fa-envelope"></i>
+                    <span>Email</span>
+                </div>
+                <div class="profile-field-value"><?php echo $mail; ?></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <section id="footer" class="myfooter">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 mt-4">
+                    <ul class="list-unstyled list-inline social text-center">
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-facebook"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-instagram"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-google-plus"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-envelope"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 mt-2 text-center">
+                    <p><strong>Smart Library Management System</strong> - An Advanced Digital Library Management System</p>
+                    <p>Copyright © All Rights Reserved. Foreign Key Friends</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
 </body>
 
 </html>
