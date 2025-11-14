@@ -133,7 +133,7 @@ function getProducts()
         echo "
         <div class='col-md-4 col-sm-6 mb-4'>
             <div class='book-card'>
-                <a href='../BuyerPortal2/ProductDetails.php?id=$product_id'>
+                <a href='../BuyerPortal2/Categories.php?type=$product_type'>
                     <img src='../Admin/product_images/$product_image' alt='$product_title' class='img-fluid' style='width: 100%; height: 350px; object-fit: cover; border-radius: 10px; margin-bottom: 15px;'>
                 </a>
                 
