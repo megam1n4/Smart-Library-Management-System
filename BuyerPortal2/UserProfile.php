@@ -446,13 +446,7 @@ while ($row = mysqli_fetch_array($run_query)) {
                 <div class="profile-field-value"><?php echo $address; ?></div>
             </div>
 
-            <div class="profile-field">
-                <div class="profile-field-label">
-                    <i class="fas fa-id-badge"></i>
-                    <span>License</span>
-                </div>
-                <div class="profile-field-value"><?php echo $license; ?></div>
-            </div>
+
 
             <div class="profile-field">
                 <div class="profile-field-label">
