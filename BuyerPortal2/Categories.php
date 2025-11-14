@@ -436,7 +436,7 @@ include("../Functions/functions.php");
                         <div class="dropdown-menu">
                             <?php
                             if (isset($_SESSION['phonenumber'])) {
-                                echo "<a href='BuyerProfile2.php' class='dropdown-item'>Profile</a>";
+                                echo "<a href='UserProfile.php' class='dropdown-item'>Profile</a>";
                                 echo "<a href='Transaction.php' class='dropdown-item'>Transactions</a>";
                                 echo "<a href='display.php' class='dropdown-item'>Bid Rare Book</a>";
                                 echo "<a href='chat.php' class='dropdown-item'>Group chat</a>";
