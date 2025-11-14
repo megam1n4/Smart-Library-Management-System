@@ -462,7 +462,7 @@ include("../Functions/functions.php");
                 <div class="list-group moblists">
                     <?php
                     if (isset($_SESSION['phonenumber'])) {
-                        echo "<a href='BuyerProfile.php' class='list-group-item list-group-item-action'>Profile</a>";
+                        echo "<a href='UserProfile.php' class='list-group-item list-group-item-action'>Profile</a>";
                         echo "<a href='Transaction.php' class='list-group-item list-group-item-action'>Transactions</a>";
                         echo "<a href='claimbook.php' class='list-group-item list-group-item-action'>Claim Book</a>";
                         echo "<a href='display.php' class='list-group-item list-group-item-action'>Bid Rare Book</a>";
