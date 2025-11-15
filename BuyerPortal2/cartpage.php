@@ -682,7 +682,7 @@ include("../Functions/functions.php");
                     
                     <a href="bhome.php">
                         <button type="button" class="action-btn">
-                            <i class="fas fa-shopping-bag"></i> Continue Shopping
+                            <i class="fas fa-shopping-bag"></i> Continue Browsing Books
                         </button>
                     </a>
                     
