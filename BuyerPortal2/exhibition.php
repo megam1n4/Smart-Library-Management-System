@@ -533,8 +533,8 @@ $meet_and_greet_result = mysqli_query($con, $meet_and_greet_query);
 
     <!-- Page Header -->
     <div class="page-header">
-        <h1>🤝 Meet and Greet Sessions</h1>
-        <p>Connect with authors and book lovers in exclusive sessions</p>
+        <h1>🤝 Rare Book Exhibition</h1>
+        <p>Join and explore the books you never seen before</p>
     </div>
 
     <!-- Main Content -->
