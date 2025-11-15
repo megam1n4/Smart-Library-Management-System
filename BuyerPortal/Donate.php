@@ -1,5 +1,4 @@
 <?php
-
 include("../Functions/functions.php");
 include("../Includes/db.php");
 
