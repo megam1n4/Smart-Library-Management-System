@@ -380,7 +380,7 @@
                                 echo "<a href='leaderboard.php' class='dropdown-item'>See Quiz Results</a>";
                                 echo "<a href='donate_book.php' class='dropdown-item'>Donation</a>";
                                 echo "<a href='viewclaim.php' class='dropdown-item'>Donation Message</a>";
-                                echo "<a href='logout.php' class='dropdown-item'>Logout</a>";
+                                echo "<a href='../auth/FarmerLogin.php' class='dropdown-item'>Logout</a>";
                             } else {
                                 echo "<a href='../auth/FarmerLogin.php' class='dropdown-item'>Login</a>";
                             }
@@ -478,15 +478,6 @@
     
     <section id="footer" class="myfooter">
         <div class="container">
-            <div class="row text-center">
-                 <div class="col">
-                     <br>
-                     <h5>Payment Channels</h5>
-                     <img src="../Images/Website/paytm1.jpg" alt="Paytm Logo">
-                     <img src="../Images/Website/cod.jpg" alt="Cash on Delivery" style="height:37px">
-                 </div>
-            </div>
-
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
                     <ul class="list-unstyled list-inline social text-center">
