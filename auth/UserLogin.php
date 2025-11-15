@@ -9,23 +9,8 @@ if (isset($_POST['login'])) {
     $phonenumber = mysqli_real_escape_string($con, $_POST['phonenumber']);
     $password = mysqli_real_escape_string($con, $_POST['password']);
 
-    // Encrypt the password using the same method as registration
-    $ciphering = "AES-128-CTR";
-    $iv_length = openssl_cipher_iv_length($ciphering);
-    $options = 0;
-    $encryption_iv = '2345678910111211';
-    $encryption_key = "DE";
-
-    $encrypted_password = openssl_encrypt(
-        $password,
-        $ciphering,
-        $encryption_key,
-        $options,
-        $encryption_iv
-    );
-
-    // Query with encrypted password
-    $query = "SELECT * FROM buyerregistration WHERE buyer_phone = '$phonenumber' AND buyer_password = '$encrypted_password'";
+    // Simple query - just match phone and password directly
+    $query = "SELECT * FROM buyerregistration WHERE buyer_phone = '$phonenumber' AND buyer_password = '$password'";
     $run_query = mysqli_query($con, $query);
     
     if (mysqli_num_rows($run_query) > 0) {
@@ -357,7 +342,7 @@ if (isset($_POST['login'])) {
                     <a href="BuyerForgotPassword.php">
                         <i class="fas fa-key"></i> Forgot your password?
                     </a>
-                    <a href="UserRegistration.php">
+                    <a href="BuyerRegistration.php">
                         <i class="fas fa-user-plus"></i> Create New Account
                     </a>
                 </div>
