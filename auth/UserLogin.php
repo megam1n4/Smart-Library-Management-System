@@ -73,6 +73,30 @@ if (isset($_POST['login'])) {
             justify-content: center;
             padding: 20px;
         }
+        
+        /* New Style for the Librarian link */
+        .librarian-page-link {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 10px 15px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .librarian-page-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            text-decoration: none;
+            transform: translateY(-2px);
+            color: #ffc107;
+        }
 
         .login-container {
             width: 100%;
@@ -82,6 +106,8 @@ if (isset($_POST['login'])) {
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             overflow: hidden;
             animation: slideUp 0.5s ease-out;
+            position: relative; 
+            z-index: 5;
         }
 
         @keyframes slideUp {
@@ -279,6 +305,12 @@ if (isset($_POST['login'])) {
                 padding: 12px;
                 font-size: 15px;
             }
+            .librarian-page-link {
+                top: 10px;
+                left: 10px;
+                font-size: 0.8rem;
+                padding: 8px 10px;
+            }
         }
 
         @media (max-width: 360px) {
@@ -298,6 +330,10 @@ if (isset($_POST['login'])) {
 </head>
 
 <body>
+    <a href="../index.html" class="librarian-page-link">
+        <i class="fas fa-arrow-left mr-2"></i>Not a User? Click here to login as a Librarian
+    </a>
+    
     <div class="login-container">
         <div class="login-header">
             <h1>Login</h1>
