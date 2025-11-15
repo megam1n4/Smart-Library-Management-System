@@ -272,43 +272,7 @@
                     <textarea id="present_address" class="form-control" name="address" placeholder="Enter Your Complete Address" required></textarea>
                 </div>
 
-                <!-- Company Name and License Number -->
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="company_name">
-                            <i class="fas fa-building"></i>
-                            Company Name
-                        </label>
-                        <input type="text" id="company_name" class="form-control" name="company_name" placeholder="Enter Company Name" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="license">
-                            <i class="fas fa-id-card"></i>
-                            License Number
-                        </label>
-                        <input type="text" id="license" class="form-control" name="license" placeholder="Enter License Number" required>
-                    </div>
-                </div>
-
-                <!-- Bank Account and PAN -->
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="account">
-                            <i class="fas fa-university"></i>
-                            Bank Account
-                        </label>
-                        <input type="text" id="account" class="form-control" name="account" placeholder="Enter Bank Account Number" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="pan">
-                            <i class="fas fa-credit-card"></i>
-                            PAN Number
-                        </label>
-                        <input type="text" id="pan" class="form-control" name="pan" placeholder="Enter PAN Number" required>
-                    </div>
-                </div>
+                              
 
                 <!-- Username -->
                 <div class="form-group">
