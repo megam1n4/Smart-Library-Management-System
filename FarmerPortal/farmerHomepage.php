@@ -1,1073 +1,512 @@
- <?php
+<?php
      include("../Functions/functions.php");
      ?>
 
- <!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
 
- <html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
- <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Author Homepage</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-      <title>Author Homepage</title>
-      <!-- <link rel="stylesheet" href="portal_files/font-awesome.min.css"> -->
-      <!-- <script src="../portal_files/c587fc1763.js.download" crossorigin="anonymous"></script> -->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      <script src="https://kit.fontawesome.com/c587fc1763.js" crossorigin="anonymous"></script>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-      <link rel="stylesheet" href="../portal_files/bootstrap.min.css">
-      <script src="../portal_files/jquery.min.js.download"></script>
-      <script src="../portal_files/popper.min.js.download"></script>
-      <script src="../portal_files/bootstrap.min.js.download"></script>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+        }
 
-      <style>
-           * {
-                margin: 0;
-                box-sizing: border-box;
-           }
+        /* Modern Navbar Styling - Using Farmer's existing green/dark scheme */
+        nav.navbar {
+            background: linear-gradient(135deg, #292b2c 0%, #1a1a2e 100%);
+            padding: 15px 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        /* ADDED: Logo styling from bhome.php */
+        .navbar-brand img {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+            background: white;
+            padding: 5px;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand img:hover {
+            transform: scale(1.05);
+        }
+        /* END ADDED Logo styling */
 
 
-           .header {
-                position: sticky;
-                z-index: 100;
-                top: 0rem;
-                height: 69px;
+        .navbar-brand h1 {
+            color: goldenrod !important;
+            font-weight: 800;
+            font-size: 28px;
+            margin: 0;
+        }
+
+        /* Search Box Styling (Removed for Author Portal as it only has a "My Books" section) 
+           If you want a search bar for the author's own books, uncomment and adapt this:
+        .searchbox .input-group {
+            max-width: 600px;
+            margin: 0 auto;
+        } */
+
+
+        /* User Icons */
+        .user-icon,
+        .cart-icon {
+            color: goldenrod;
+            font-size: 28px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .user-icon:hover,
+        .cart-icon:hover {
+            color: #ffcc66;
+            transform: scale(1.1);
+        }
+
+        /* Dropdown Button */
+        .btn-custom {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 8px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+        
+        /* Hero Section - Adapted for Author Portal */
+        .hero-section {
+            background: linear-gradient(135deg, #292b2c 0%, #1a1a2e 100%);
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('splash.jpg') center/cover;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: goldenrod;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-section p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        /* Category Buttons (Replaced with Main Navigation) */
+        .main-nav-section {
+            margin-bottom: 50px;
+        }
+
+        .main-nav-btn {
+            background: white;
+            border: 2px solid #28a745;
+            color: #28a745;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-nav-btn:hover {
+            background: #28a745;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+            text-decoration: none;
+        }
+        
+        .main-nav-btn i {
+            margin-right: 8px;
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin: 60px 0 40px 0;
+            position: relative;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1a1a2e;
+            display: inline-block;
+            padding: 0 30px;
+            background: #f8f9fa;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-header::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, goldenrod, transparent);
+            z-index: 0;
+        }
+
+        /* Feature Cards */
+        .card-deck .card {
+            border: none;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin: 15px;
+            flex: 1 1 300px; /* For responsive sizing */
+        }
+
+        .card-deck .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-deck .card img {
+            height: 180px;
+            object-fit: contain;
+            padding: 20px;
+        }
+
+        .card-deck .card-body h4 {
+            color: #28a745;
+            font-weight: 700;
+        }
+        
+        .card-deck .card-body h5 {
+            color: #666;
+            font-size: 1rem;
+        }
+
+
+        /* Footer */
+        .myfooter {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #ffc107;
+            padding: 40px 0 20px 0;
+            margin-top: 80px;
+        }
+
+        .myfooter h5 {
+            color: #ffc107;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .myfooter img {
+            margin: 10px;
+            border-radius: 8px;
+            max-height: 35px;
+            width: auto;
+        }
+
+        .social li a {
+            color: #ffc107;
+            font-size: 24px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+
+            .hero-section p {
+                font-size: 1rem;
+            }
+
+            .section-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .main-nav-btn {
                 width: 100%;
-                background-color: #00b300;
-           }
-
-           .select_element {
-                width: 20px;
-                background-color: transparent;
-                border: none;
-                text: none;
-           }
-
-
-           #logo {
-                height: 66px;
-                width: 100px;
-                text-align: left;
-                float: left;
-           }
-
-           .search_input {
-                float: left;
-                margin-left: 50px;
-                margin-top: 20px;
-
-           }
-
-           .proicon {
-                float: right;
-                margin-right: 10px;
-                margin-top: 20px;
-           }
-
-           .dropdown {
-                float: right;
-                margin-right: 35px;
-                margin-top: 20px;
-
-           }
-
-           .options {
-                color: yellow;
-                margin-left: 20px;
-                /* width: 25px; */
-                margin-right: 50px;
-                display: inline;
-           }
-
-           .icon2 {
-                float: right;
-                margin-right: 10px;
-                margin-top: 20px;
-
-           }
-
-           .loginz {
-                float: right;
-                margin-right: 20px;
-                margin-top: 20px;
-           }
-
-           .headerdown {
-                margin-left: 15%;
-                height: 50px;
-                width: 80%;
-           }
-
-           .makeitgreen {
-                color: #00b300;
-           }
-
-           .sel1 {
-                color: green;
-                float: left;
-                margin-top: 3px;
-           }
-
-           .sel2 {
-                border-color: green;
-                color: green;
-                float: left;
-                margin-left: 600px;
-                margin-top: 3px;
-           }
-
-           .sel3 {
-                font-size: 20px;
-                margin-top: 3px;
-                float: right;
-                margin-right: 5px;
-           }
-
-
-
-           #input1 {
-                width: 220px;
-                border: none;
-           }
-
-
-           #input1:active {
-                background-color: tomato;
-           }
-
-
-           .wrapper {
-                display: grid;
-                grid-template-columns: 20% 20% 20% 20%;
-                grid-column-gap: 20px;
-                grid-row-gap: 10px;
-                grid-column-gap: 20px;
-                grid-row-gap: 10px;
-                margin-left: 30px;
-           }
-
-           .inputwrapper {
-                float: left;
-                border-style: double;
-                text-align: center;
-                margin-left: 80px;
-                width: 280px;
-                margin-bottom: 20px;
-                clear: auto;
-           }
-
-
-           .inputwrapper:last-child {
-                margin-right: 30px;
-           }
-
-           .addtocart {
-                background-color: #FFD700;
-           }
-
-           .numberinput {
-                width: 35px;
-           }
-
-           .content_item {
-                text-align: center;
-                justify-content: center;
-           }
-
-           .etc {
-                margin-left: -40px;
-                min-width: 90px;
-                font-size: 20px;
-           }
-
-           .crop_items {
-                color: green;
-           }
-
-           .footer {
-                height: 70px;
-                width: 100%;
-                clear: both;
-           }
-
-           .payment {
-                float: left;
-                margin-left: 520px;
-                font-size: 20px;
-                margin-top: 25px;
-           }
-
-           .cash {
-                float: left;
-                margin-top: 0px;
-                margin-left: 20px;
-                margin-right: 20px;
-           }
-
-           .paytm {
-                float: left;
-           }
-
-           h3 {
-                width: 100%;
-                text-align: center;
-                border-bottom: 1px solid #000;
-                line-height: 0.1em;
-                margin: 10px 0 20px;
-           }
-
-           h3 span {
-                background: #fff;
-                padding: 0 10px;
-           }
-
-           .morefooter {
-                height: 100px;
-                width: 100%;
-                background-color: white;
-
-           }
-
-           .call {
-                float: left;
-                font-size: 20px;
-                margin-left: 150px;
-                margin-top: 25px;
-           }
-
-           .gmail {
-                margin-top: 10px;
-                float: right;
-                margin-right: 150px;
-
-           }
-
-           .instagram {
-                margin-top: 10px;
-                float: left;
-                margin-left: 420px;
-           }
-
-           .instaid {
-                height: 10px;
-                width: 100%;
-
-           }
-
-           .text {
-                float: left;
-                margin-left: 735px;
-                margin-top: -50px;
-           }
-
-           .gmailid {
-                float: right;
-                margin-right: 80px;
-                margin-top: -60px;
-           }
-
-           .copy {
-                float: left;
-                margin-top: -65px;
-           }
-
-           body {
-                margin: 0;
-                padding: 0;
-                font-family: sans-serif;
-                background-size: cover;
-                background-position: center;
-                box-sizing: border-box;
-           }
-
-           .wrapper {
-                background-image: 100px;
-           }
-
-           .add_button {
-                float: right;
-                text-align: center;
-           }
-
-
-           h1 {
-                font-family: 'Times New Roman', Times, serif;
-                color: white;
-
-           }
-
-           .lost {
-                /* <font-fam></font-fam>; */
-                color: black;
-                text-align: center;
-                height: 8%;
-                margin-top: 150px;
-                border-radius: 30px;
-                font-size: 30px;
-                /* margin-top: 5em; */
-                background-color: olive;
-                margin-top: 120px;
-                margin: auto;
-           }
-
-           .new {
-                text-align: center;
-           }
-
-           .button {
-                position: relative;
-                float: right;
-           }
-
-           h2 {
-                color: white;
-                margin-top: 3em;
-                text-align: center;
-
-           }
-
-           .hii {
-                float: right;
-                margin-right: 5em;
-           }
-
-           .ribbon {
-                position: relative;
-                top: -16px;
-                right: -706px;
-                float: left;
-                top: 0px;
-                left: 0px;
-                height: 74px;
-                background-color: green;
-           }
-
-           .over {
-                background-color: green;
-                border: 1px;
-                width: 100%;
-                white-space: nowrap;
-                height: 70px;
-
-
-           }
-
-           .subtract {
-                float: right;
-                border-color: olive;
-                margin-top: 2%;
-                text-align: center;
-                border-radius: 25px;
-           }
-
-
-           .wrapper {
-                background-image: 100px;
-           }
-
-           .add_button {
-                float: right;
-                text-align: center;
-           }
-
-
-           h1 {
-                font-family: 'Times New Roman', Times, serif;
-                color: white;
-
-           }
-
-           .lost {
-                font-family: Verdana, Geneva, Tahoma, sans-serif;
-                color: black;
-                text-align: center;
-                margin-top: 220px;
-                margin: auto;
-           }
-
-
-           .new {
-                text-align: center;
-           }
-
-           .button {
-                position: relative;
-                float: right;
-           }
-
-           h2 {
-                color: white;
-                margin-top: 3em;
-                text-align: center;
-
-           }
-
-           .hii {
-                float: right;
-                margin-right: 5em;
-           }
-
-           .ribbon {
-                position: relative;
-                top: -16px;
-                right: -706px;
-                float: left;
-                top: 0px;
-                left: 0px;
-                height: 74px;
-                background-color: green;
-           }
-
-           .over {
-                background-color: green;
-                border: 1px;
-                width: 100%;
-                white-space: nowrap;
-                height: 70px;
-
-
-           }
-
-           .subtract {
-                float: right;
-                border-color: olive;
-                margin-right: 12%;
-                background-color: #00b300;
-                text-align: center;
-                /* border-radius: 25px; */
-                width: 9%;
-                height: 8%;
-                margin-top: -5%;
-                padding: 5px;
-
-           }
-
-           .items {
-                width: 100%;
-                margin: auto;
-                height: auto;
-           }
-
-           .productbox {
-                float: left;
-                margin: 15px;
-                margin-left: 30px;
-                padding: 15px;
-                border-style: outline;
-                border: 2px solid;
-                border-color: green;
-                border-radius: 10px;
-           }
-
-           .productbox:hover {
-                float: left;
-                margin: 25px;
-                margin-left: 30px;
-                padding: 20px;
-                border-style: outline;
-                border: 2px solid;
-                border-color: green;
-                border-radius: 5px;
-                font-weight: bolder;
-                height: 325px;
-                width: 240px;
-
-           }
-
-           .slideshow {
-                margin-top: 10px;
-                margin-left: 100px;
-                margin-bottom: 20px;
-                float: left;
-                border-style: solid;
-           }
-
-           #navbar {
-
-                padding: 20px;
-                color: green;
-                text-decoration: none;
-                margin: 20px;
-                font-size: 25px;
-                padding-top: 10px;
-           }
-
-           #navbar:hover {
-                padding: 20px;
-                color: green;
-                text-decoration: underline;
-                margin: 15px;
-                font-size: 25px;
-                font-weight: bolder;
-                padding-top: 10px;
-           }
-
-           #navbar i {
-                padding-right: 1%;
-           }
-
-           .time {
-                background-color: red;
-                /* margin-left: 20px; */
-           }
-
-           .whats {
-                text-align: center;
-                margin-left: 30%;
-           }
-
-           .f1 {
-                float: left;
-                background-color: #fff;
-                border: 1px solid red;
-                height: 200px;
-                border-radius: 50%;
-                width: 200px;
-                padding-top: 20px;
-                border-style: solid;
-                background-image: url("../Images/Website/f2.jpg");
-                background-size: 200px 200px;
-                background-repeat: no-repeat;
-                border-color: #000;
-                /* opacity: 5%; */
-           }
-
-           .t1 {
-                padding-top: 70px;
-                text-align: center;
-                justify-items: center;
-                color: black;
-                font-weight: bold;
-           }
-
-           .t5 {
-                margin-top: -13px;
-           }
-
-           .t4 {
-                margin-top: -13px;
-
-           }
-
-           .whatsnew {
-                /* background-image: url("../Images/Website/back.jpeg"); */
-
-                background-color: red;
-
-           }
-
-           .f2 {
-                margin-left: 130px;
-                margin-right: 150px;
-           }
-
-           .f3 {
-                margin-right: 150px;
-
-           }
-
-           .f4 {
-                margin-right: 150px;
-           }
-
-           .pictus {
-                margin-top: 200px;
-                /* background-color: red; */
-           }
-
-           .pictus>img {
-                height: 100px;
-
-                width: 150px;
-           }
-
-           .imag1 {
-                margin-top: 20px;
-                margin-left: 180px;
-           }
-
-           .imag2 {
-                margin-top: 20px;
-
-                margin-left: 340px;
-
-           }
-
-           .imag3 {
-                margin-top: 20px;
-
-                margin-left: 350px;
-
-           }
-
-           .imag1_under {
-                max-width: 250px;
-                width: 100%;
-                min-height: 100px;
-                margin-left: 100px;
-                text-align: center;
-                font-size: 20px;
-
-           }
-
-           .imag2_under {
-                max-width: 250px;
-                width: 100%;
-                min-height: 100px;
-                margin-left: 290px;
-                margin-top: 20px;
-                text-align: center;
-                font-size: 20px;
-           }
-
-           .imag3_under {
-                max-width: 250px;
-                width: 100%;
-                font-size: 20px;
-
-                min-height: 100px;
-                margin-left: 290px;
-                text-align: center;
-           }
-
-           .image {
-                max-width: 200px;
-           }
-
-           .aligncenter {
-                text-align: center;
-           }
-
-           .myfooter {
-                background-color: #292b2c;
-                color: goldenrod;
-                margin-top: 15px;
-           }
-
-           a {
-                color: goldenrod;
-           }
-
-           .navbar-inverse {
-                background: #00cc00;
-                color: black;
-           }
-
-           .navbar-inverse .navbar-brand,
-           .navbar-inverse a {
-                color: black;
-           }
-
-           .navbar-inverse .navbar-nav>li>a {
-                color: clack;
-           }
-
-           .caros {
-                margin-top: 30px;
-
-           }
-
-           hr {
-                border: 0;
-                height: 0.5px;
-                clear: both;
+                margin: 5px 0;
+            }
+
+            .card-deck {
+                flex-direction: column;
+                align-items: center;
+            }
+            .card-deck .card {
+                width: 90%;
+                margin: 15px 0;
+            }
+        }
+
+        /* Mobile List Styling */
+        .moblists {
+            display: none;
+        }
+
+        @media (max-width: 1200px) {
+            .moblists {
                 display: block;
-                width: 99%;
-                background-color: black;
-                margin-left: 0.5em;
-           }
+                margin-top: 20px;
+            }
 
-           img {
-                max-width: 100%;
-                display: inline-block;
-           }
-
-           * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-           }
-
-           nav {
-                background-color: #292b2c;
-           }
-
-           .navbar-custom {
-                background-color: #292b2c;
-           }
-
-           /* change the brand and text color */
-           .navbar-custom .navbar-brand,
-           .navbar-custom .navbar-text {
-                background-color: #292b2c;
-           }
-
-           .navbar-custom .navbar-nav .nav-link {
-                background-color: #292b2c;
-           }
-
-           .navbar-custom .nav-item.active .nav-link,
-           .navbar-custom .nav-item:hover .nav-link {
-                background-color: #292b2c;
-           }
-
-           .firstimage {
-                height: 500px;
-                width: 100%;
-           }
-
-           .mybtn {
-                border-color: green;
-                border-style: solid;
-           }
-
-           .card {
-                width: 100%;
-                height: 100%;
-                margin: 10px;
-           }
-
-           .right {
-                display: flex;
-           }
-
-           .left {
-                display: none;
-           }
-
-           .cart {
-                /* margin-left:10px; */
-                margin-right: -9px;
-           }
-
-           .profile {
-                margin-right: 2px;
-
-           }
-
-           .login {
-                margin-right: -2px;
-                margin-top: 12px;
-                display: none;
-           }
-
-           .searchbox {
-                width: 60%;
-           }
-
-           .lists {
-                display: inline-block;
-           }
-
-           .moblists {
-                display: none;
-           }
-
-           .logins {
+            .moblists .list-group-item,
+            .moblists .dropdown-item {
+                background-color: #1a1a2e !important;
+                color: goldenrod !important;
+                border: none;
                 text-align: center;
-                margin-right: -30%;
-                margin-left: 35%;
-           }
+                padding: 15px;
+                transition: all 0.3s ease;
+            }
 
+            .moblists .list-group-item:hover,
+            .moblists .dropdown-item:hover {
+                background-color: #28a745 !important;
+                color: white !important;
+            }
+        }
+    </style>
 
+</head>
 
-           /* For medium devices (e.g. tablets) */
-           /* @media (min-width: 420px) {
-               img {
-               max-width: 48%;
-               }
-          } */
-           /* For large devices (e.g. desktops) */
-           @media (min-width: 760px) {
-                .resizing {
-                     height: 500px;
-                }
-           }
+<body>
 
-           @media only screen and (min-device-width:320px) and (max-device-width:480px) {
-                .image {
-                     max-width: 48%;
-                }
-
-                .firstimage {
-                     height: auto;
-                     width: 90%;
-                }
-
-                .card {
-                     width: 80%;
-                     margin-left: 10%;
-                     margin-right: 10%;
-
-                }
-
-                .col {
-                     margin-top: 20px;
-                }
-
-                .right {
-                     display: none;
-                     background-color: #ff5500;
-                }
-
-                /* 
-           .settings{
-           margin-left:79%;
-       } */
-                .left {
-                     display: flex;
-                }
-
-                .moblogo {
-                     display: none;
-                }
-
-                .logins {
-                     text-align: center;
-                     margin-right: 35%;
-                     padding: 15px;
-                }
-
-                .searchbox {
-                     width: 95%;
-                     margin-right: 5%;
-                     margin-left: 0%;
-                }
-
-                .moblists {
-                     display: inline-block;
-                     text-align: center;
-                     width: 100%;
-                }
-
-
-           }
-      </style>
-
- </head>
-
- <body>
-
-
-
-
-
- <body>
     <nav class="navbar navbar-expand-xl">
-        <div class="flex-row-reverse left">
-            <div class="p-2"></div>
-            <!-- Text-Based Logo -->
-            <a class="float-left" href="#">
-                <h1 class="book-corner-logo" style="color: yellow; font-size: 30px; font-weight: bold; margin: 0; padding: 0; line-height: 1;">
-                    Smart Library Management System 
-                </h1>
+        <div class="container-fluid">
+            <a class="navbar-brand" href="farmerHomepage.php">
+                <img src="logo2.jpg" alt="Smart Library Logo">
+            </a>
+
+            <div class="d-xl-none" style="display: flex; align-items: center; gap: 15px;">
+                <i class='far fa-user-circle user-icon'></i>
+                </div>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                <i class="fas fa-bars" style="color:goldenrod; font-size:28px;"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                
+                <?php getFarmerUsername(); ?>
+
+                <div class="list-group moblists">
+                    <?php
+                        if (isset($_SESSION['phonenumber'])) {
+                            echo "<a href='FarmerProfile2.php' class='list-group-item list-group-item-action'>Profile</a>";
+                            echo "<a href='MyProducts.php' class='list-group-item list-group-item-action'>My Books</a>";
+                            echo "<a href='Transactions.php' class='list-group-item list-group-item-action'>My Transactions</a>";
+                            echo "<a href='bid_insert.php' class='list-group-item list-group-item-action'>Bid</a>";
+                            echo "<a href='display_bids2.php' class='list-group-item list-group-item-action'>Bid Message</a>";
+                            echo "<a href='online_class.php' class='list-group-item list-group-item-action'>Post Meet & Greet</a>";
+                            echo "<a href='leaderboard.php' class='list-group-item list-group-item-action'>See Quiz Results</a>";
+                            echo "<a href='donate_book.php' class='list-group-item list-group-item-action'>Donation</a>";
+                            echo "<a href='viewclaim.php' class='list-group-item list-group-item-action'>Donation Message</a>";
+                            echo "<a href='logout.php' class='list-group-item list-group-item-action'>Logout</a>";
+                        } else {
+                            echo "<a href='../auth/FarmerLogin.php' class='list-group-item list-group-item-action'>Login</a>";
+                        }
+                    ?>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 20px; margin-left: auto; margin-right: 150px;"> 
+                    
+                    <div class="dropdown">
+                        <button class="btn btn-custom dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                            More
+                        </button>
+                        <div class="dropdown-menu">
+                            <?php
+                            if (isset($_SESSION['phonenumber'])) {
+                                echo "<a href='FarmerProfile2.php' class='dropdown-item'>Profile</a>";
+                                echo "<a href='Transactions.php' class='dropdown-item'>Orders</a>";
+                                echo "<a href='bid_insert.php' class='dropdown-item'>Create a Priority List of Users</a>";
+                                echo "<a href='display_bids2.php' class='dropdown-item'>View Priority List of Users</a>";
+                                echo "<a href='online_class.php' class='dropdown-item'>Post Meet & Greet</a>";
+                                echo "<a href='leaderboard.php' class='dropdown-item'>See Quiz Results</a>";
+                                echo "<a href='donate_book.php' class='dropdown-item'>Donation</a>";
+                                echo "<a href='viewclaim.php' class='dropdown-item'>Donation Message</a>";
+                                echo "<a href='logout.php' class='dropdown-item'>Logout</a>";
+                            } else {
+                                echo "<a href='../auth/FarmerLogin.php' class='dropdown-item'>Login</a>";
+                            }
+                            ?>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <div class="hero-content container">
+            <h1>Librarian Portal</h1>
+            <p>Empowering Librarians in the Smart Library Management System</p>
+        </div>
+    </div>
+
+    <div class="container main-nav-section">
+        <div class="d-flex justify-content-center flex-wrap">
+            <a href="farmerHomepage.php" class="main-nav-btn">
+                <i class="fa fa-home" aria-hidden="true"></i>Home
+            </a>
+            <a href="MyProducts.php" class="main-nav-btn">
+                <i class="fa fa-book" aria-hidden="true"></i>My Books
+            </a>
+            <a href="Transactions.php" class="main-nav-btn">
+                <i class="fa fa-exchange" aria-hidden="true"></i>My Transactions
             </a>
         </div>
-        <button class="navbar-toggler" data-toggle="collapse" style="margin-left:-20px;" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"><i class="fas fa-bars p-1" style="color:green;font-size:20px;"></i></span>
-        </button>
-        <a class="float-left" href="farmerHomepage.php">
-            <h1 class="book-corner-logo moblogo" style="color: yellow; font-size: 30px; font-weight: bold; margin: 0; padding: 0; line-height: 1;">
-                Smart Library Management System 
-            </h1>
-        </a>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    </div>
 
 
-
-                     <div class="proicon">
-
-                          <?php
-                              if (!isset($_SESSION['phonenumber'])) {
-                                   echo "<a href='../auth/FarmerLogin.php'> <div class='text-success  logins '></div></a>";
-                              }
-                              ?>
-                     </div>
-
-                     <div class="list-group moblists">
-
-                          <?php
-                              if (isset($_SESSION['phonenumber'])) {
-
-                                   echo "<a href='FarmerProfile2.php' class='list-group-item list-group-item-action ' style='background-color:#292b2c;text-align:center;color:goldenrod'>Profile</a>";
-                                   echo "<a href='Transactions.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Orders</a>";
-                                   echo "<a href='bid_insert.php' class='dropdown-item' style='padding-right:-20px;'>Bid</a>";
-                                   echo "<a href='display_bids2.php' class='dropdown-item' style='padding-right:-20px;'>Bid Message</a>";
-                                   echo "<a href='online_class.php' class='dropdown-item' style='padding-right:-20px;'>Join Online Class</a>";
-                                   echo "<a href='leaderboard.php' class='dropdown-item' style='padding-right:-20px;'>See Quiz Results</a>";
-
-                                   echo "<a href='donate_book.php' class='dropdown-item' style='padding-right:-20px;'>Donation</a>";
-                                   echo "<a href='viewclaim.php' class='dropdown-item' style='padding-right:-20px;'>Donation Message</a>";
-
-
-
-                                   echo "<a href='logout.php' class='list-group-item list-group-item-action ' style='background-color:#292b2c;text-align:center;color:goldenrod'>Logout</a>";
-                              } else {
-                                   echo "<a href='../auth/FarmerLogin.php'> <div class='text-success  logins '>Login</div></a>";
-                              }
-                              ?>
-                          <div class='loginz' style="text-align:center;">
-                               <?php getFarmerUsername(); ?>
-                          </div>
-                     </div>
+    <div class="container">
+        <div id="authorCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="splash.jpg" alt="Author Welcome" style="height: 400px; object-fit: cover; border-radius: 15px;">
                 </div>
-
-
-
-
-                <div class=" flex-row-reverse right ">
-                     <div class="p-2 cart">
-                          <!-- <div class="icon2">
-                    <a href="CartPage.php"> <i class="fa" style="font-size:30px; color:green;margin-top:-20px;">&#61562;</i></a>
-                    <span id="icon" style="color:green"> 5 </span>
-                </div> -->
-                          <div class='loginz'>
-                               <?php getFarmerUsername(); ?>
-                          </div>
-                     </div>
-                     <div class="dropdown p-2 settings ">
-                          <button class="btn  dropdown-toggle text-success" style="margin-top:-20px;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                               More
-                          </button>
-                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                               <?php
-                                   if (isset($_SESSION['phonenumber'])) {
-                                        echo "<a href='FarmerProfile2.php' class='dropdown-item' style='padding-right:-20px;'>Profile</a>";
-                                        echo "<a href='Transactions.php' class='dropdown-item' style='padding-right:-20px;'>Orders</a>";
-                                        echo "<a href='bid_insert.php' class='dropdown-item' style='padding-right:-20px;'>Bid</a>";
-                                        echo "<a href='display_bids2.php' class='dropdown-item' style='padding-right:-20px;'>Bid Message</a>";
-                                        echo "<a href='online_class.php' class='dropdown-item' style='padding-right:-20px;'>Post Meet & Greet</a>";
-                                        echo "<a href='leaderboard.php' class='dropdown-item' style='padding-right:-20px;'>See Quiz Results</a>";
-
-
-                                        echo "<a href='donate_book.php' class='dropdown-item' style='padding-right:-20px;'>Donation</a>";
-                                        echo "<a href='viewclaim.php' class='dropdown-item' style='padding-right:-20px;'>Donation Message</a>";
-
-
-                                        echo "<a href='logout.php' class='dropdown-item' style='padding-right:-20px;'>Logout</a>";
-                                   } else {
-                                        echo "<a href='../auth/FarmerLogin.php'> <div class='dropdown-item' style='padding-right:-20px;'>Login</div></a>";
-                                   }
-                                   ?>
-                          </div>
-                     </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="../Images/Homepage/61RRVLcRyQL.jpg" alt="Book Feature" style="height: 400px; object-fit: cover; border-radius: 15px;">
                 </div>
-           </nav>
-           <br>
-           <div class="row" style="text-align:center;">
-                <div class="col-md-3 col-sm-12">
-                     <a href="farmerHomepage.php" id="navbar"><i class="fa fa-home" aria-hidden="true"></i><label>Home</label></a>
                 </div>
-                <div class="col-md-3 col-sm-12">
-                     <a href="MyProducts.php" id="navbar"><i class="fa fa-book" aria-hidden="true"></i><label>My Books</label></a>
-                </div>
-                <div class="col-md-3 col-sm-12">
-                     <a href="Transactions.php" id="navbar"><i class="fa fa-exchange" aria-hidden="true"></i><label>My Transactions</label></a>
-                </div>
-                <div class="col-md-3 col-sm-12">
-                     <a href="CallCenter.php" id="navbar"><i class="fa fa-phone fa-rotate-vertical" aria-hidden="true"></i><label>Contact</label></a>
-                </div>
-           </div>
-           <hr>
+            <a class="carousel-control-prev" href="#authorCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#authorCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+    
+    <br> 
 
-           <div class="container caros">
-                <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-                     <div class="carousel-inner">
-                          <div class="carousel-item active">
-                               <img class="d-block w-100 resizing" src="splash.jpg" alt="First slide">
-                          </div>
-                          <div class="carousel-item">
-                               <img class="d-block w-100 resizing" src="../Images/Homepage/61RRVLcRyQL.jpg" alt="Third slide">
-                          </div>
-                          <div class="carousel-item">
-                               <img class="d-block w-100 resizing" src="../Images/Homepage/61RRVLcRyQL.jpg" alt="Second slide">
-                          </div>
-
-                     </div>
-                     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                          <span class="sr-only">Previous</span>
-                     </a>
-                     <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                          <span class="sr-only">Next</span>
-                     </a>
+    <div class="features container">
+        <div class="section-header">
+            <h2>✨ Standout Features</h2>
+        </div>
+        <div class="card-deck row text-center" style="display: flex; flex-wrap: wrap;">
+            <div class="card">
+                <p class="aligncenter">
+                    <img class="card-img-top" src="../Images/Homepage/sms.png" alt="SMS System" >
+                </p>
+                <div class="card-body">
+                    <h4 class="card-title">SMS System</h4>
+                    <h5 class="card-text">Upload and Edit Your Book via SMS</h5>
                 </div>
-           </div>
-
-           <br><br>
-           <div class="features container">
-                <h1 style="font-weight: bold;color:black; text-align:center">Standout Features</h1>
-                <div class="card-deck row text-center" style="display: flex; flex-wrap: wrap;">
-                     <div class="card">
-                          <p class="aligncenter">
-                               <img class="card-img-top image" src="../Images/Homepage/sms.png" alt="Card image cap" width="250px" height="200px">
-                          </p>
-                          <div class="card-body">
-                               <h4 class="card-title font-weight-bold">Sms System </h4>
-                               <br>
-                               <h5 class="card-text">Upload and Edit Your Book via SMS </h5>
-                          </div>
-                     </div>
-                     <div class="card">
-                          <p class="aligncenter">
-                               <img class="card-img-top image" src="../Images/Homepage/handshake.png" alt="Card image cap" width="250px" height="200px">
-                          </p>
-                          <div class="card-body">
-                               <h4 class="card-title font-weight-bold">Reader Connection</h4>
-                               <br>
-                               <h5 class="card-text">Get in direct touch with the reader to satisfy its need </h5>
-                          </div>
-                     </div>
-                     <div class="card">
-                          <p class="aligncenter">
-                               <img class="card-img-top image" src="../Images/Homepage/farmer.png" alt="Card image cap" width="250px" height="200px">
-                          </p>
-                          <div class="card-body">
-                               <h4 class="card-title font-weight-bold">Author Group Formation</h4>
-                               <br>
-                               <h5 class="card-text">Get in touch with other readers making your own community where you can ask for help</h5>
-                          </div>
-                     </div>
+            </div>
+            
+            <div class="card">
+                <p class="aligncenter">
+                    <img class="card-img-top" src="../Images/Homepage/handshake.png" alt="Reader Connection" >
+                </p>
+                <div class="card-body">
+                    <h4 class="card-title">Reader Connection</h4>
+                    <h5 class="card-text">Get in direct touch with the reader to satisfy its need</h5>
                 </div>
-           </div>
-           </div>
-           <br> <br>
-           <section id="footer" class="myfooter">
-                <div class="container">
-                     <div class="row text-center text-xs-center text-sm-left text-md-left">
-                          <div class="col aligncenter">
-                               <br>
-                               <h5>Payment Option</h5>
-                               <img src="../Images/Website/paytm1.jpg" alt="paytm">
-                               <img src="../Images/Website/cod.jpg" alt="paytm" style="height:37px">
-                          </div>
-                     </div>
-                     <div class="row">
-                          <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
-                               <ul class="list-unstyled list-inline social text-center">
-                                    <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-facebook"></i></a></li>
-                                    <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-twitter"></i></a></li>
-                                    <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-instagram"></i></a></li>
-                                    <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-google-plus"></i></a></li>
-                                    <li class="list-inline-item"><a href="javascript:void();" target="_blank"><i class="fa fa-envelope"></i></a></li>
-                               </ul>
-                          </div>
-
-                     </div>
-                     <div class="row">
-                          <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center">
-                               <p><u><a href="">Smart Library Management System </a></u> is a Multitrading Company for Authors and Readers</p>
-                               <p class="h6">Copy All right Reversed.<a class="text-green ml-2" href="https://www.google.com" target="_blank">Foreign Key Friends</a></p>
-                          </div>
-                          </hr>
-                     </div>
+            </div>
+            
+            <div class="card">
+                <p class="aligncenter">
+                    <img class="card-img-top" src="../Images/Homepage/farmer.png" alt="Author Group Formation" >
+                </p>
+                <div class="card-body">
+                    <h4 class="card-title">Librarian Community</h4>
+                    <h5 class="card-text">Connect with other librarians, form a community, and ask for help</h5>
                 </div>
-           </section>
+            </div>
+        </div>
+    </div>
+    
+    
+    <section id="footer" class="myfooter">
+        <div class="container">
+            <div class="row text-center">
+                 <div class="col">
+                     <br>
+                     <h5>Payment Channels</h5>
+                     <img src="../Images/Website/paytm1.jpg" alt="Paytm Logo">
+                     <img src="../Images/Website/cod.jpg" alt="Cash on Delivery" style="height:37px">
+                 </div>
+            </div>
 
-      </body>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
+                    <ul class="list-unstyled list-inline social text-center">
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-facebook"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-instagram"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-google-plus"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();" target="_blank"><i class="fa fa-envelope"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center">
+                    <p>Smart Library Management System is a Online Management System for Book Lovers!</p>
+                    <p class="h6"><a class="text-green ml-2" target="_blank">Foreign Key Friends</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
 
- </html>
+</body>
+
+</html>
