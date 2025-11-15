@@ -342,7 +342,7 @@ if (isset($_POST['login'])) {
                     <a href="BuyerForgotPassword.php">
                         <i class="fas fa-key"></i> Forgot your password?
                     </a>
-                    <a href="BuyerRegistration.php">
+                    <a href="UserRegistration.php">
                         <i class="fas fa-user-plus"></i> Create New Account
                     </a>
                 </div>
