@@ -234,7 +234,7 @@
         <div class="registration-container">
             <h2>Registration Form</h2>
             
-            <form name="my-form" action="BuyerRegistration.php" method="post">
+            <form name="my-form" action="UserRegistration.php" method="post">
                 <!-- Full Name -->
                 <div class="form-group">
                     <label for="full_name">
