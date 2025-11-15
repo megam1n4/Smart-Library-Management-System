@@ -527,7 +527,7 @@ include("../Functions/functions.php");
                     echo "
                     <div class='col-md-4 col-sm-6 mb-4'>
                         <div class='book-card'>
-                            <a href='../BuyerPortal2/ProductDetails.php?id=$product_id'>
+                            <a>
                                 <img src='../Admin/product_images/$product_image' alt='$product_title' class='img-fluid'>
                             </a>
                             
