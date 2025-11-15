@@ -1,8 +1,9 @@
 <?php
-include("../Functions/functions.php");
+session_start();
+
 include("../Includes/db.php");
 
-// Check if the farmer is logged in
+// Check if the user is logged in
 if (!isset($_SESSION['phonenumber'])) {
     echo "<script>alert('You must be logged in to donate books.');</script>";
     echo "<script>window.open('../auth/UserLogin.php','_self')</script>";
