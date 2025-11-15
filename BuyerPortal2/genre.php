@@ -431,7 +431,7 @@ include("../Functions/functions.php");
             <div class="genre-buttons">
                 <!-- Backend logic kept same: all buttons go to quiz.php -->
                 <button class="genre-button" onclick="window.location.href='quiz.php'">Literature</button>
-                <button class="genre-button" onclick="window.location.href='quiz.php'">Programming</button>
+                <button class="genre-button" onclick="window.location.href='quiz2.php'">SQL Coding</button>
                 <button class="genre-button" onclick="window.location.href='quiz.php'">Music</button>
             </div>
 
