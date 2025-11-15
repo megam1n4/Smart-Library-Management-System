@@ -25,7 +25,13 @@ while ($row = mysqli_fetch_array($run_query)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Edit Password</title>
+    <title>Edit Librarian Profile</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/c587fc1763.js" crossorigin="anonymous"></script>
+
     <script>
         function state() {
             var a = document.getElementById('states').value;
@@ -41,270 +47,247 @@ while ($row = mysqli_fetch_array($run_query)) {
                 var array = ['Miami', 'Tampa', 'Orlando', 'St. Petersburg', 'Jacksonville', 'Hialeah', 'Tallahassee', 'Fort Lauderdale', 'Port St. Lucie', 'Cape Coral', 'Pembroke Pines', 'Hollywood', 'Miramar', 'Gainesville', 'Coral Springs', 'Miami Gardens', 'Clearwater', 'Palm Bay', 'Pompano Beach', 'West Palm Beach'];
             } 
 
-                
-
             var string = "";
             for (let i = 0; i < array.length; i++) {
                 string = string + "<option>" + array[i] + "</option>";
 
             }
-            string = "<select nmae = 'lol'>" + string + "</select>"
+            // Corrected typo nmae to name in the original JS logic
+            string = "<select name = 'district'>" + string + "</select>"
             document.getElementById('district').innerHTML = string;
         }
     </script>
 
     <style>
-        h1 {
-            background-color: transparent;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            text-align: center;
-            cursor: pointer
-        }
-
-        .box {
-            color: rgb(6, 36, 7);
-            width: 350px;
-            line-height: 40px;
-            margin: auto;
-            text-align: center;
-            margin-top: 50px;
-            padding: 5px;
-            border-style: outset;
-            border-width: 5px;
-            border-radius: 16px;
-            border-color: green;
-        }
-
         body {
-            /* background-image: url(Images/Website/FarmerLogin.jpg); */
-            /* background: black; */
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-color: white;
-            background-image: url(../Images/Website/forgotpassword.jpg);
-            border: chartreuse;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 15px;
         }
 
-        form {
-            margin: 10px;
-            padding: 10px;
-            background-color: rgb(247, 248, 247);
+        .edit-card {
+            max-width: 600px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 30px;
         }
-
-        input {
-            padding: 7px;
-            margin: 10px;
-            border-color: rgb(78, 180, 121);
-            display: inline-block;
-            border-radius: 16px;
-        }
-
-        input[type="submit"] {
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            color: rgb(246, 248, 246);
-            background-color: green;
-            /* display: inline-block; */
-            border-radius: 16px;
-            border-color: rgb(3, 66, 34);
-            width: 44%;
-        }
-
-        input[type="submit"]:hover {
-            background-color: rgb(97, 16, 33);
-            outline: none;
-            border-color: blanchedalmond;
-            color: rgb(155, 248, 4);
-            border-radius: 20%;
-            border-style: outset;
-            border-color: rgb(155, 248, 4);
-            font-weight: bolder;
-            width: 54%;
-            font-size: 18px;
-        }
-
-        textarea {
-            border-width: 3px;
-            border-radius: 16px;
-            border-color: rgb(78, 180, 121);
-
-
-        }
-
-
-
-
-        .in-icons {
+        
+        .card-header-custom {
+            background: linear-gradient(135deg, #292b2c 0%, #1a1a2e 100%);
+            color: goldenrod;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            margin: -30px -30px 30px -30px; /* Pull header out */
             text-align: center;
         }
 
-        .in-icons i {
-            position: absolute;
-            left: 600px;
-            top: 175px;
+        .card-header-custom h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0;
         }
 
-        .just {
-
-
-            float: left;
-            margin-left: 1%;
-            margin: 20px;
-            position: absolute;
-            left: 0;
-            top: 0px;
-            text-shadow: 1px 1px 1px black;
-
+        /* Form Group Styling */
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .input-group-prepend .input-label {
+            min-width: 150px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            font-size: 1rem;
+            padding: 10px 15px;
+            border-radius: 8px 0 0 8px;
+            border: 1px solid #28a745;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 8px;
         }
 
-        .again {
-            cursor: pointer;
-            font-size: 24px;
-            font-weight: bold;
-            color: rgb(246, 248, 246);
-            /* background-color: green; */
-            /* display: inline-block; */
-            border-radius: 16px;
-            border-color: rgb(3, 66, 34);
-            width: 44%;
-            margin-left: 100px;
-
-
+        .form-control, textarea.form-control, .custom-select {
+            border: 2px solid #e9ecef;
+            border-left: none;
+            border-radius: 0 8px 8px 0;
+            padding: 10px 15px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
         }
 
-        .say {
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            color: rgb(246, 248, 246);
-            background-color: green;
-            /* display: inline-block; */
-            border-radius: 16px;
-            border-color: rgb(3, 66, 34);
-            /* width: 96%; */
-            padding: 10px;
-            padding-left: 10px;
-            padding-right: 10px;
-
-
-
-        }
-
-        .say:hover {
-            background-color: rgb(97, 16, 33);
+        .form-control:focus, textarea.form-control:focus, .custom-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
             outline: none;
-            border-color: blanchedalmond;
-            color: rgb(155, 248, 4);
-            border-radius: 20%;
-            border-style: outset;
-            border-color: rgb(155, 248, 4);
-            font-weight: bolder;
-            width: 94%;
-            font-size: 18px;
+        }
+        
+        .input-group {
+            border-radius: 8px;
+        }
+        
+        .input-group > .input-group-prepend > .input-label {
+            border-radius: 8px 0 0 8px;
+            border: none;
+        }
+        
+        /* Disabled Name/Pan fields */
+        .form-control[disabled], textarea[disabled] {
+            background-color: #f1f1f1;
+            color: #6c757d;
+        }
 
+        /* Submit Button */
+        .btn-submit {
+            background: linear-gradient(135deg, #292b2c 0%, #1a1a2e 100%);
+            color: goldenrod;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(41, 43, 44, 0.4);
+        }
+
+        /* Change Password Link Button */
+        .btn-change-password {
+            background: none;
+            color: #667eea;
+            padding: 10px;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            font-weight: 600;
+            margin-top: 20px;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .btn-change-password:hover {
+            background-color: #667eea;
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Home Icon */
+        .home-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #292b2c;
+            font-size: 30px;
+            transition: color 0.3s;
+        }
+
+        .home-link:hover {
+            color: #ffc107;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
 </head>
 
 <body>
+    <a href="farmerHomepage.php" class="home-link"> <i class="fa fa-home"></i></a>
 
-
-    <div class="just">
-        <a href="Homepage.php"> <i class="fa fa-home fa-4x"></i></a>
-    </div>
-
-    <div class="box">
+    <div class="edit-card">
+        <div class="card-header-custom">
+            <h1>EDIT PROFILE</h1>
+        </div>
+        
         <form action="EditProfile.php" method="post">
-            <table align="center">
-                <tr colspan=2>
-                    <h1> EDIT PROFILE</h1>
-                </tr>
-                <tr align="center">
-                    <div class="in-icons">
-                        <td>
-                            <label><b>Name :</b></label>
-                        </td>
-                        <td>
-                            <textarea rows="2" column="18" value="" disabled><?php echo $name; ?></textarea>
-                        </td>
-                </tr>
-                <tr align="center">
-                    <td>
-                        <label><b>Pan :</b></label>
-                    </td>
-                    <td>
-                        <textarea rows="2" column="20" ><?php echo $pan; ?></textarea>
-                    </td>
-                </tr>
-                <tr align="center">
-                    <td>
-                        <label><b>Phone :</b></label>
-                    </td>
-                    <td>
-                        <input type="phonenumber" name="phonenumber" value="<?php echo $phone; ?>" />
-                    </td>
-                </tr>
-                <tr align="center">
-                    <td>
-                        <label><b>Address :</b></label>
-                    </td>
-                    <td>
-                        <input type="text" name="address" value="<?php echo $address; ?> " />
-                    </td>
-                </tr>
+            
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text input-label"><i class="fas fa-user"></i>Name</span>
+                    </div>
+                    <textarea class="form-control" disabled><?php echo $name; ?></textarea>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text input-label"><i class="fas fa-pencil-alt"></i>Pan No.</span>
+                    </div>
+                    <textarea class="form-control" disabled><?php echo $pan; ?></textarea>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text input-label"><i class="fas fa-phone-alt"></i>Phone</span>
+                    </div>
+                    <input type="text" name="phonenumber" class="form-control" value="<?php echo $phone; ?>" required />
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text input-label"><i class="fas fa-home"></i>Address</span>
+                    </div>
+                    <textarea type="text" name="address" class="form-control" rows="3" required><?php echo $address; ?></textarea>
+                </div>
+            </div>
 
-                <tr align="center">
-                    <td>
-                        <label><b>State :</b></label>
-                    </td>
-                    <td>
-                        <select name = "statevalue" id="states" onchange="state()" tabindex="1" style="width:170px;">
-                            <option value="0">--Select State--</option>
-                                            <option value="Texas">Texas</option>
-                                            <option value="Newyork">Newyork</option>
-                                            <option value="Florida">Florida</option>
-                                            <option value="Colarado">Colarado</option>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text input-label"><i class="fas fa-globe-americas"></i>State</span>
+                    </div>
+                    <select name="statevalue" id="states" onchange="state()" class="custom-select" required>
+                        <option value="<?php echo $state; ?>"><?php echo $state; ?></option>
+                        <option value="Texas">Texas</option>
+                        <option value="Newyork">Newyork</option>
+                        <option value="Florida">Florida</option>
+                        <option value="Colarado">Colarado</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text input-label"><i class="fas fa-city"></i>City</span>
+                    </div>
+                    <select name="district" id="district" class="custom-select" required>
+                         <option value="<?php echo $district; ?>"><?php echo $district; ?></option>
+                    </select>
+                </div>
+            </div>
 
-                        </select>
-                    </td>
-                </tr>
-                <tr align="center">
-                    <td>
-                        <label><b>City :</b></label>
-                    </td>
-                    <td>
-                         <select name="district" id="district"><option>Select City</option></select>
-                    </td>
-                </tr>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text input-label"><i class="fas fa-university"></i>Account No.</span>
+                    </div>
+                    <input type="text" name="bank" class="form-control" value="<?php echo $account; ?>" required />
+                </div>
+            </div>
 
-                <tr align="center">
-                    <td>
-                        <label><b>Bank :</b></label>
-                    </td>
-                    <td>
-                        <input type="number" name="bank" value="<?php echo $account; ?>" />
-                    </td>
-                    <span style=" display:block;  margin-bottom: .75em; "></span>
-                </tr>
-                <tr colspan=2>
-                    <td colspan=2>
-                        <input type="submit" name="confirm" value="Confirm">
-                    </td>
-                </tr>
-            </table>
+            <input type="submit" name="confirm" class="btn-submit" value="Confirm Update">
+
         </form>
 
-        <div class="again">
-            <a href="ChangePassword.php"><button class="say">Change Password</button></a>
-        </div>
+        <a href="ChangePassword.php" class="btn btn-change-password">
+            <i class="fas fa-key mr-2"></i>Change Password
+        </a>
 
     </div>
-
 
 
 </body>
@@ -312,8 +295,6 @@ while ($row = mysqli_fetch_array($run_query)) {
 </html>
 
 <?php
-
-
 if (isset($_POST['confirm'])) {
     $phone = mysqli_real_escape_string( $con, $_POST['phonenumber']);
     $address = mysqli_real_escape_string( $con, $_POST['address']);
@@ -331,6 +312,6 @@ if (isset($_POST['confirm'])) {
     $run = mysqli_query($con, $query);
     
     $_SESSION['phonenumber'] = $phone;
-    echo "<script>window.open('FarmerProfile.php','_self')</script>";
+    echo "<script>window.open('FarmerProfile2.php','_self')</script>";
 }
 ?>

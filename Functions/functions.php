@@ -107,76 +107,49 @@
     }
 
 
-    function getProducts()
-    {
-        global $con;
-        $query = "select * from products  order by RAND() LIMIT 0,6";
-        $run_query = mysqli_query($con, $query);
-        echo "<br>";
-        while ($rows = mysqli_fetch_array($run_query)) {
-            $product_id = $rows['product_id'];
-            $product_title = $rows['product_title'];
-            $product_image = $rows['product_image'];
-            $product_price = $rows['product_price'];
-            $product_delivery = $rows['product_delivery'];
-            $farmer_fk = $rows['farmer_fk'];
-            $farmer_name_query = "select farmer_name from farmerregistration where farmer_id = $farmer_fk";
-            $running_query_name = mysqli_query($con, $farmer_name_query);
-            while ($names = mysqli_fetch_array($running_query_name)) {
-                $name = $names['farmer_name'];
-            }
-            if ($product_delivery == "yes") {
-                $product_delivery = "Delivery by Farmer";
-            } else {
-                $product_delivery = "Delivery by Farmer Not Available";
-            }
+    
+// UPDATED getProducts() FUNCTION
+function getProducts()
+{
+    global $con;
+    $query = "select * from products order by RAND() LIMIT 0,6";
+    $run_query = mysqli_query($con, $query);
+    
+    while ($rows = mysqli_fetch_array($run_query)) {
+        $product_id = $rows['product_id'];
+        $product_title = $rows['product_title'];
+        $product_image = $rows['product_image'];
+        $product_price = $rows['product_price'];
+        $product_type = $rows['product_type'];
+        $farmer_fk = $rows['farmer_fk'];
+        
+        // Get farmer name
+        $farmer_name_query = "select farmer_name from farmerregistration where farmer_id = $farmer_fk";
+        $running_query_name = mysqli_query($con, $farmer_name_query);
+        while ($names = mysqli_fetch_array($running_query_name)) {
+            $name = $names['farmer_name'];
+        }
 
-
-            echo "
-                    <div class='col col-12 col-sm-12 col-md-4 col-xl-4 col-lg-4'>
-                <div class='card pb-1 pl-1 pr-1 pt-0' style='height:542px'>
-                    <br>
-                    <div class='mt-0'><b>
-                            <h4><img src='iconsmall.png' style='width: 28px; margin-bottom:  10px;'> $name
-                        </b></h4>
-                    </div>
-                    <a href='../BuyerPortal2/ProductDetails.php?id=$product_id'>
-                        <img class='card-img-top' src='../Admin/product_images/$product_image' alt='Card image cap' height='300px'>
+        echo "
+        <div class='col-md-4 col-sm-6 mb-4'>
+            <div class='book-card'>
+                <a href='../BuyerPortal2/Categories.php?type=$product_type'>
+                    <img src='../Admin/product_images/$product_image' alt='$product_title' class='img-fluid' style='width: 100%; height: 350px; object-fit: cover; border-radius: 10px; margin-bottom: 15px;'>
+                </a>
+                
+                <div class='card-body'>
+                    <h5 style='font-weight: 700; color: #1a1a2e; margin-bottom: 10px; font-size: 1.2rem;'>$product_title</h5>
+                    <span class='badge' style='background: #ffc107; color: #000; padding: 5px 15px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; display: inline-block; margin-bottom: 15px;'>$product_type</span>
+                    
+                    <a href='../BuyerPortal2/bhome.php?add_cart=$product_id' class='btn-add-cart' style='background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; width: 100%; display: block; text-align: center; text-decoration: none; transition: all 0.3s ease;'>
+                        <i class='fas fa-shopping-cart'></i> Add to cart
                     </a>
-                    <div class='card-body pb-0'>
-                        <div class='row'>
-                            <div class='col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12'>
-                                <div class='input-group mb'>
-                                    <div class='input-group-prepend'>
-                                        <h5 class='card-title font-weight-bold'>$product_title</h5>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class='col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12'>
-                                <div class='input-group mb-1'>
-                                    <div class='input-group-prepend'>
-                                        <span class='input-group-text bg-warning border-secondary p-1' style='color:black;' id='inputGroup-sizing-default' placeholder='1'><b>Quantity</b></span>
-                                    </div>
-                                    <input type='number' class='form-control' aria-label='Default' style='margin-top:0%;width:20%;padding:0%;' aria-describedby='inputGroup-sizing-default'>
-                                </div>
-                            </div>
-                        </div>
-                        <p class='card-text mb-2 font-weight-bold'>PRICE:- $product_price USD/kg</p>
-                        <div class='row'>
-                            <div class='col-1 col-xl-3 col-lg-2 col-md-2 col-sm-2'></div>
-                            <div class='col-12 col-xl-6 col-lg-6 col-md-6  col-sm-12'>
-                                <a href='../BuyerPortal2/bhome.php?add_cart=$product_id' class='btn btn-warning border-secondary mr-1  ' style='color:black ;font-weight:50px;'>Add to cart<img src='carticons.png' height='20px'></a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
-           ";
-        }
+        </div>
+        ";
     }
-
-
+}
 
     function getVegetablesHomepage()
     {
@@ -266,37 +239,36 @@
     // }
 
     // Checkout System Functions
-    function cart()
-    {
-        if (isset($_SESSION['phonenumber'])) {
-            if (isset($_GET['add_cart'])) {
 
-                global $con;
-                if (isset($_POST['quantity'])) {
-                    $qty = $_POST['quantity'];
-                } else {
-                    $qty = 1;
-                }
-                $sess_phone_number = $_SESSION['phonenumber'];
-                $product_id = $_GET['add_cart'];
+// UPDATED cart() FUNCTION
+function cart()
+{
+    if (isset($_SESSION['phonenumber'])) {
+        if (isset($_GET['add_cart'])) {
 
-                $check_pro = "select * from cart where phonenumber = $sess_phone_number and product_id='$product_id' ";
+            global $con;
+            $qty = 1; // Default quantity is 1 (no quantity input field)
+            
+            $sess_phone_number = $_SESSION['phonenumber'];
+            $product_id = $_GET['add_cart'];
 
-                $run_check = mysqli_query($con, $check_pro);
+            $check_pro = "select * from cart where phonenumber = $sess_phone_number and product_id='$product_id' ";
 
-                if (mysqli_num_rows($run_check) > 0) {
-                    echo "";
-                } else {
-                    $insert_pro = "insert into cart (product_id,phonenumber) values ('$product_id','$sess_phone_number')";
-                    $run_insert_pro = mysqli_query($con, $insert_pro);
-                }
+            $run_check = mysqli_query($con, $check_pro);
 
-                echo "<script>window.open('bhome.php','_self')</script>";
+            if (mysqli_num_rows($run_check) > 0) {
+                echo "";
+            } else {
+                $insert_pro = "insert into cart (product_id,phonenumber) values ('$product_id','$sess_phone_number')";
+                $run_insert_pro = mysqli_query($con, $insert_pro);
             }
-        } else {
-            // echo "<script>alert('Please Login First! ');</script>";
+
+            echo "<script>window.open('bhome.php','_self')</script>";
         }
+    } else {
+        // echo "<script>alert('Please Login First! ');</script>";
     }
+}
 
     //function which is link with FarmerHomePage
     function getFarmerProducts()

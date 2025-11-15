@@ -2,567 +2,752 @@
 include("../Functions/functions.php");
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart Page</title>
+    <title>My Cart - Smart Library</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <a href="https://icons8.com/icon/83325/roman-soldier"></a>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <script src="https://kit.fontawesome.com/c587fc1763.js" crossorigin="anonymous"></script>
-</head>
-<style>
-    .myfooter {
-        background-color: #292b2c;
-
-        color: goldenrod;
-        margin-top: 15px;
-    }
-
-    .aligncenter {
-        text-align: center;
-    }
-
-    a {
-        color: goldenrod;
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    nav {
-        background-color: #292b2c;
-    }
-
-    .navbar-custom {
-        background-color: #292b2c;
-    }
-
-    /* change the brand and text color */
-    .navbar-custom .navbar-brand,
-    .navbar-custom .navbar-text {
-        background-color: #292b2c;
-    }
-
-    .navbar-custom .navbar-nav .nav-link {
-        background-color: #292b2c;
-    }
-
-    .navbar-custom .nav-item.active .nav-link,
-    .navbar-custom .nav-item:hover .nav-link {
-        background-color: #292b2c;
-    }
-
-
-    .mybtn {
-        border-color: green;
-        border-style: solid;
-    }
-
-
-    .right {
-        display: flex;
-    }
-
-    .left {
-        display: none;
-    }
-
-    .cart {
-
-        margin-right: -9px;
-    }
-
-    .profile {
-        margin-right: 2px;
-
-    }
-
-    .login {
-        margin-right: -2px;
-        margin-top: 12px;
-        display: none;
-    }
-
-    .searchbox {
-        width: 60%;
-    }
-
-    .lists {
-        display: inline-block;
-    }
-
-    .moblists {
-        display: none;
-    }
-
-    .logins {
-        text-align: center;
-        margin-right: -30%;
-        margin-left: 35%;
-    }
-
-    .table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .table td,
-    .table th {
-        padding: 8px 8px;
-        border: 0.5px solid black;
-        text-align: center;
-        font-size: 16px;
-        background-color: white;
-    }
-
-    .table thead th {
-        vertical-align: bottom;
-        border-bottom: 0px solid #dee2e6;
-    }
-
-    .table th {
-        background-color: #292b2c;
-        color: goldenrod;
-    }
-
-    .table tbody tr:nth-child(even) {
-        background-color: #f5f5f5;
-    }
-
-    .add {
-        width: 40%;
-    }
-
-    @media only screen and (min-device-width:320px) and (max-device-width:480px) {
-
-
-        .right {
-            display: none;
-            background-color: #ff5500;
-
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-
-        .left {
-            display: flex;
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            color: #333;
         }
 
-        .moblogo {
-            display: none;
+        /* Modern Navbar Styling */
+        nav.navbar {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 15px 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        .logins {
-            text-align: center;
-            margin-right: 35%;
-            padding: 15px;
-        }
-
-        .searchbox {
-            width: 95%;
-            margin-right: 5%;
-            margin-left: 0%;
-        }
-
-        .moblists {
-            display: inline-block;
-            text-align: center;
-            width: 100%;
-        }
-
-        .table thead {
-            display: none;
-            background-color: #292b2c;
-            color: goldenrod;
-        }
-
-        .table,
-        .table tbody,
-        .table tr,
-        .table td {
-            display: block;
-            width: 100%;
-
-        }
-
-        .table tr {
-            margin-bottom: 15px;
-
-        }
-
-        .table td {
-            text-align: right;
-            padding-left: 50%;
-            text-align: right;
-            position: relative;
-
-
-        }
-
-        .table td::before {
-            content: attr(data-label);
-            position: absolute;
-            left: 0;
-            width: 50%;
-            padding-left: 15px;
-            font-size: 15px;
-            font-weight: bold;
-            text-align: left;
-            /* background-color: #292b2c;
-        color: goldenrod; */
-        }
-
-        .add {
+        .navbar-brand img {
+            height: 50px;
             width: auto;
+            object-fit: contain;
+            background: white;
+            padding: 5px;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
         }
 
-        .emptycart {
-            /* margin-left: 20%;
-            width:80%;  */
-            float: none;
+        .navbar-brand img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Search Box Styling */
+        .searchbox .input-group {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .searchbox .input-group-text {
+            background-color: white;
+            border: 2px solid #28a745;
+            border-right: none;
+            border-radius: 25px 0 0 25px;
+            color: #28a745;
+        }
+
+        .searchbox .form-control {
+            border: 2px solid #28a745;
+            border-left: none;
+            border-radius: 0 25px 25px 0;
+            padding: 10px 20px;
+        }
+
+        .searchbox .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+            border-color: #28a745;
+        }
+
+        /* User Icons */
+        .user-icon,
+        .cart-icon {
+            color: #28a745;
+            font-size: 28px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .user-icon:hover,
+        .cart-icon:hover {
+            color: #20c997;
+            transform: scale(1.1);
+        }
+
+        #icon {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background-color: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Dropdown Button */
+        .btn-success {
+            background: #28a745;
+            border: none;
+            font-weight: 600;
+            padding: 8px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        /* Cart Header */
+        .cart-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 0;
             text-align: center;
-
+            color: white;
+            margin-bottom: 40px;
         }
 
-        .continueshopping {
-            /* margin-top:20%;
-            margin-left: 20%;  */
-            float: none;
+        .cart-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .cart-header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+
+        /* Cart Table */
+        .cart-table-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .table {
+            width: 100%;
+            margin-bottom: 0;
+        }
+
+        .table thead th {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #ffc107;
+            font-weight: 700;
+            border: none;
+            padding: 15px;
             text-align: center;
-            margin-top: -20%;
-
+            font-size: 1rem;
         }
 
-        .grandtotal {
-            /* margin-right: 20%; */
-            float: none;
-            margin-top: 40%;
+        .table tbody td {
+            padding: 20px 15px;
+            vertical-align: middle;
+            text-align: center;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 1rem;
         }
-    }
-</style>
+
+        .table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        /* Quantity Controls */
+        .qty-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .qty-btn {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #ffc107;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qty-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .qty-input {
+            width: 60px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 8px;
+            font-weight: 600;
+        }
+
+        /* Date Picker */
+        .date-input {
+            width: 100%;
+            max-width: 150px;
+            padding: 8px 12px;
+            border: 2px solid #28a745;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            text-align: center;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .date-input:focus {
+            outline: none;
+            border-color: #20c997;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+        }
+
+        /* Delete Button */
+        .delete-btn {
+            color: #dc3545;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            color: #c82333;
+            transform: scale(1.2);
+        }
+
+        /* Action Buttons */
+        .cart-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+            color: #000;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 193, 7, 0.4);
+        }
+
+        .checkout-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+        }
+
+        .checkout-btn:hover {
+            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        /* Empty Cart Message */
+        .empty-cart {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin: 40px 0;
+        }
+
+        .empty-cart i {
+            font-size: 80px;
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+
+        .empty-cart h2 {
+            color: #1a1a2e;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        .myfooter {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #ffc107;
+            padding: 40px 0 20px 0;
+            margin-top: 80px;
+        }
+
+        .social li {
+            margin: 0 10px;
+        }
+
+        .social a {
+            color: #ffc107;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .social a:hover {
+            color: #28a745;
+            transform: scale(1.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cart-header h1 {
+                font-size: 2rem;
+            }
+
+            .table thead {
+                display: none;
+            }
+
+            .table tbody tr {
+                display: block;
+                margin-bottom: 20px;
+                border: 1px solid #e9ecef;
+                border-radius: 10px;
+                padding: 15px;
+            }
+
+            .table tbody td {
+                display: block;
+                text-align: left;
+                padding: 10px 0;
+                border: none;
+            }
+
+            .table tbody td::before {
+                content: attr(data-label);
+                font-weight: 700;
+                display: inline-block;
+                width: 120px;
+                color: #1a1a2e;
+            }
+
+            .qty-control {
+                justify-content: flex-start;
+                margin-left: 120px;
+            }
+
+            .date-input {
+                margin: 0;
+            }
+
+            .cart-actions {
+                flex-direction: column;
+            }
+
+            .action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Mobile List Styling */
+        .moblists {
+            display: none;
+        }
+
+        @media (max-width: 1200px) {
+            .moblists {
+                display: block;
+                margin-top: 20px;
+            }
+
+            .moblists .list-group-item {
+                background-color: #1a1a2e !important;
+                color: #ffc107 !important;
+                border: none;
+                text-align: center;
+                padding: 15px;
+                transition: all 0.3s ease;
+            }
+
+            .moblists .list-group-item:hover {
+                background-color: #28a745 !important;
+                color: white !important;
+            }
+        }
+    </style>
+</head>
 
 <body>
 
-
-
-
-
-<nav class="navbar navbar-expand-xl ">
-
-        <div class=" flex-row-reverse left ">
-
-            <div class="p-2">
-                <div class="icon2">
-                    <a href="CartPage.php"> <i class="fa" style="font-size:30px; color:green ;margin-top:2px;">&#61562;</i></a>
-                    <span id="icon" style="color:green"> <?php echo totalItems(); ?> </span>
-                </div>
-            </div>
-            <div class="p-2 ml-5"><i class='far fa-user-circle' style='font-size:30px; color: green;margin-top:2px;'></i></div>
-            <a class="float-left" href="bhome.php">
-                <img src="main2.jpg" class="float-left mr-5 ml-0 " alt="Logo" style="height:35px;">
+    <!-- Modern Navbar -->
+    <nav class="navbar navbar-expand-xl navbar-dark">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand" href="bhome.php">
+                <img src="logo2.jpg" alt="Smart Library Logo">
             </a>
-        </div>
-        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"><i class="fas fa-bars p-1 " style="color:green;margin-right:-9%;font-size:28px;"></i></span>
-        </button>
-        <a class="float-left" href="bhome.php">
-            <img src="main2.jpg" class="float-left mr-2 moblogo" alt="Logo" style="height:35px;">
-        </a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-            <div class="input-group mb-1 ml-2 searchbox">
-                <div class="input-group-prepend">
-                    <div class="input-group-text"><i class="fas fa-search" style="font-size:20px;color:green; "></i></div>
+            <!-- Mobile Icons -->
+            <div class="d-xl-none" style="display: flex; align-items: center; gap: 15px;">
+                <i class='far fa-user-circle user-icon'></i>
+                <a href="CartPage.php" style="position: relative;">
+                    <i class="fa fa-shopping-cart cart-icon"></i>
+                    <span id="icon"><?php echo totalItems(); ?></span>
+                </a>
+            </div>
+
+            <!-- Navbar Toggler -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                <i class="fas fa-bars" style="color:#28a745; font-size:28px;"></i>
+            </button>
+
+            <!-- Collapsible Content -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Search Box -->
+                <div class="mx-auto searchbox">
+                    <form action="SearchResult.php" method="get" enctype="multipart/form-data">
+                        <div class="input-group mb-1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-search" style="font-size:20px;"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="search" placeholder="Search for education, romance books" style="width:500px;">
+                        </div>
+                    </form>
                 </div>
-                <form action="SearchResult.php" method="get" enctype="multipart/form-data">
-                    <input type="text" class="form-control " id="inlineFormInputGroup" name="search" placeholder="Search for books " style="width:500px;">
-                </form>
-            </div>
-            <?php
-            getUsername();
-            ?>
-            <div class="list-group moblists">
 
-                <?php
-                if (isset($_SESSION['phonenumber'])) {
-                    echo "<a href='BuyerProfile.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Profile</a>";
-                    echo "<a href= 'Transaction.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Transactions</a>";
-                    echo "<a href='saveforlater.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Save For Later</a>";
-                    echo "<a href='#' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Subscriptions</a>";
-                    echo "<a href='farmer.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Farmers</a>";
-                    echo "<a href='../Includes/logout.php' class='list-group-item list-group-item-action ' style='background-color:#292b2c;text-align:center;color:goldenrod'>Logout</a>";
-                } else {
-                    echo "<a href='../auth/BuyerLogin.php' class='list-group-item list-group-item-action ' style='background-color:#292b2c;text-align:center;color:goldenrod'>Login</a>";
-                }
-                ?>
+                <!-- Username Display -->
+                <?php getUsername(); ?>
 
-            </div>
-        </div>
-
-
-
-
-        <div class=" flex-row-reverse right ">
-            <div class="p-2 cart">
-                <div class="icon2">
-                    <a href="CartPage.php"> <i class="fa" style="font-size:30px; color:green">&#61562;</i></a>
-                    <span id="icon" style="color:green"> <?php echo totalItems(); ?> </span>
-                </div>
-            </div>
-            <div class="dropdown p-2 settings ">
-                <button class="btn  dropdown-toggle text-success" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Settings
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <!-- Mobile Menu List -->
+                <div class="list-group moblists">
                     <?php
                     if (isset($_SESSION['phonenumber'])) {
-                        echo "<a href='BuyerProfile2.php' class='dropdown-item  ' style='padding-right:-20px;'>Profile</a>";
-                        echo "<a href='Transaction.php' class='dropdown-item ' style='padding-right:-20px;'>Transactions</a>";
-                        echo "<a href='#' class='dropdown-item'  style='padding-right:-20px;'>Subscriptions</a>";
-                        echo "<a href='saveforlater.php' class='dropdown-item' style='padding-right:-20px;'>Save For Later</a>";
-                        echo "<a href='farmers.php' class='dropdown-item' style='padding-right:-20px;' >Farmers</a>";
-                        echo "<a href='../Includes/logout.php' class='dropdown-item ' style='padding-right:-20px;'>Logout</a>";
+                        echo "<a href='BuyerProfile.php' class='list-group-item list-group-item-action'>Profile</a>";
+                        echo "<a href='Transaction.php' class='list-group-item list-group-item-action'>Transactions</a>";
+                        echo "<a href='claimbook.php' class='list-group-item list-group-item-action'>Claim Book</a>";
+                        echo "<a href='display.php' class='list-group-item list-group-item-action'>Bid Rare Book</a>";
+                        echo "<a href='chat.php' class='list-group-item list-group-item-action'>Group Chat</a>";
+                        echo "<a href='debate.php' class='list-group-item list-group-item-action'>Join Debate</a>";
+                        echo "<a href='genre.php' class='list-group-item list-group-item-action'>Join Quiz</a>";
+                        echo "<a href='customersupport.php' class='list-group-item list-group-item-action'>Join Meet & Greet</a>";
+                        echo "<a href='../Includes/logout.php' class='list-group-item list-group-item-action'>Logout</a>";
                     } else {
-                        echo "<a href='../auth/BuyerLogin.php' class='dropdown-item ' style='padding-right:-20px;'>Login</a>";
+                        echo "<a href='../auth/UserLogin.php' class='list-group-item list-group-item-action'>Login</a>";
                     }
                     ?>
                 </div>
+
+                <!-- Desktop Right Icons -->
+                <div class="ml-auto d-none d-xl-flex" style="display: flex; align-items: center; gap: 20px;">
+                    <!-- Voice Search -->
+                    <a href="voice_search.php" class="voice-search-btn" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-microphone"></i> Voice Search
+                    </a>
+
+                    <!-- Explore Dropdown -->
+                    <div class="dropdown">
+                        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                            Explore
+                        </button>
+                        <div class="dropdown-menu">
+                            <?php
+                            if (isset($_SESSION['phonenumber'])) {
+                                echo "<a href='UserProfile.php' class='dropdown-item'>Profile</a>";
+                                
+                                echo "<a href='display.php' class='dropdown-item'>Reserve Rare Book</a>";
+                                echo "<a href='chat.php' class='dropdown-item'>Group chat</a>";
+                                echo "<a href='debate.php' class='dropdown-item'>Join Debate</a>";
+                                echo "<a href='genre.php' class='dropdown-item'>Join Quiz</a>";
+                                
+                                echo "<a href='customersupport.php' class='dropdown-item'>Join Rare Book Exhibition</a>";
+                                echo "<a href='../Includes/logout.php' class='dropdown-item'>Logout</a>";
+                            } else {
+                                echo "<a href='../auth/UserLogin.php' class='dropdown-item'>Login</a>";
+                            }
+                            ?>
+                        </div>
+                    </div>
+
+                    <!-- User Icon -->
+                    <i class='far fa-user-circle user-icon'></i>
+
+                    <!-- Cart Icon -->
+                    <a href="CartPage.php" style="position: relative;">
+                        <i class="fa fa-shopping-cart cart-icon"></i>
+                        <span id="icon"><?php echo totalItems(); ?></span>
+                    </a>
+                </div>
             </div>
-
-
-            <div class="text-success  login">Login</div>
         </div>
-
     </nav>
 
-    <div class="container">
+    <!-- Cart Header -->
+    <?php
+    // Handle Submit Borrow Request
+    if (isset($_POST['submit_borrow_request'])) {
+        if (isset($_SESSION['phonenumber'])) {
+            $sess_phone_number = $_SESSION['phonenumber'];
+            $success = true;
+            $error_message = "";
+            
+            // Get all cart items
+            $sel_cart = "select * from cart where phonenumber = '$sess_phone_number'";
+            $run_cart = mysqli_query($con, $sel_cart);
+            
+            while ($cart_item = mysqli_fetch_array($run_cart)) {
+                $product_id = $cart_item['product_id'];
+                
+                // Get borrow and return dates from POST
+                $borrow_date_field = 'borrow_date_' . $product_id;
+                $return_date_field = 'return_date_' . $product_id;
+                
+                if (isset($_POST[$borrow_date_field]) && isset($_POST[$return_date_field])) {
+                    $borrow_date = mysqli_real_escape_string($con, $_POST[$borrow_date_field]);
+                    $return_date = mysqli_real_escape_string($con, $_POST[$return_date_field]);
+                    
+                    // Validate dates
+                    if (!empty($borrow_date) && !empty($return_date)) {
+                        if (strtotime($return_date) >= strtotime($borrow_date)) {
+                            // Update cart with borrow and return dates
+                            $update_query = "UPDATE cart SET borrow_date = '$borrow_date', return_date = '$return_date' WHERE product_id = '$product_id' AND phonenumber = '$sess_phone_number'";
+                            
+                            if (!mysqli_query($con, $update_query)) {
+                                $success = false;
+                                $error_message = "Failed to update borrow dates for some items.";
+                                break;
+                            }
+                        } else {
+                            $success = false;
+                            $error_message = "Return date must be on or after borrow date.";
+                            break;
+                        }
+                    } else {
+                        $success = false;
+                        $error_message = "Please select both borrow and return dates for all books.";
+                        break;
+                    }
+                } else {
+                    $success = false;
+                    $error_message = "Please select dates for all books in your cart.";
+                    break;
+                }
+            }
+            
+            if ($success) {
+                echo "<script>alert('Borrow request submitted successfully!');</script>";
+                echo "<script>window.open('bhome.php','_self')</script>";
+            } else {
+                echo "<script>alert('$error_message');</script>";
+            }
+        }
+    }
+    
+    if (isset($_SESSION['phonenumber'])) {
+        $temp = totalItems();
+        echo "
+        <div class='cart-header'>
+            <h1>🛒 My Cart</h1>
+            <p>You have $temp book(s) in your cart</p>
+        </div>
+        ";
+    }
+    ?>
 
+    <div class="container">
         <?php
         if (isset($_SESSION['phonenumber'])) {
-            $temp = totalItems();
-            echo   "<div class='text-left'>
-                        <h3>Your Items :- $temp</h3>
-                        <hr>";
+            $sess_phone_number = $_SESSION['phonenumber'];
+            $sel_price = "select * from cart where phonenumber = '$sess_phone_number'";
+            $run_price = mysqli_query($con, $sel_price);
+            $count = mysqli_num_rows($run_price);
+
+            if ($count > 0) {
+        ?>
+                <form method="POST" action="">
+                    <div class="cart-table-container">
+                        <table class="table">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Book Name</th>
+                                <th>Quantity</th>
+                                <th>Borrow Date</th>
+                                <th>Return Date</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $i = 0;
+                            $qtycart = array();
+                            
+                            while ($p_price = mysqli_fetch_array($run_price)) {
+                                $product_id = $p_price['product_id'];
+                                $_SESSION['qtycart'][$i] = $p_price['qty'];
+
+                                $pro_price = "select * from products where product_id='$product_id'";
+                                $run_pro_price = mysqli_query($con, $pro_price);
+                                
+                                while ($pp_price = mysqli_fetch_array($run_pro_price)) {
+                                    $product_title = $pp_price['product_title'];
+                            ?>
+                                    <tr>
+                                        <td data-label="S.No"><?php echo $i + 1; ?></td>
+                                        <td data-label="Book Name"><?php echo $product_title; ?></td>
+                                        <td data-label="Quantity">
+                                            <div class="qty-control">
+                                                <a href="MinusQty.php?id=<?php echo $product_id; ?>">
+                                                    <button class="qty-btn">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
+                                                </a>
+                                                <input type="number" class="qty-input" value="<?php echo $_SESSION['qtycart'][$i]; ?>" readonly>
+                                                <a href="AddQty.php?id=<?php echo $product_id; ?>">
+                                                    <button class="qty-btn">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td data-label="Borrow Date">
+                                            <input type="date" class="date-input" name="borrow_date_<?php echo $product_id; ?>" id="borrow_date_<?php echo $product_id; ?>" min="<?php echo date('Y-m-d'); ?>" required>
+                                        </td>
+                                        <td data-label="Return Date">
+                                            <input type="date" class="date-input" name="return_date_<?php echo $product_id; ?>" id="return_date_<?php echo $product_id; ?>" min="<?php echo date('Y-m-d'); ?>" required>
+                                        </td>
+                                        <td data-label="Delete">
+                                            <a href="DeleteProductCart.php?id=<?php echo $product_id; ?>" class="delete-btn">
+                                                <i class="far fa-times-circle"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                            <?php
+                                }
+                                $i++;
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="cart-actions">
+                    <a href="emptyCart.php">
+                        <button type="button" class="action-btn">
+                            <i class="fas fa-trash"></i> Empty Cart
+                        </button>
+                    </a>
+                    
+                    <a href="bhome.php">
+                        <button type="button" class="action-btn">
+                            <i class="fas fa-shopping-bag"></i> Continue Shopping
+                        </button>
+                    </a>
+                    
+                    <button type="submit" name="submit_borrow_request" class="action-btn checkout-btn">
+                        <i class="fas fa-paper-plane"></i> Submit Borrow Request
+                    </button>
+                </div>
+            </form>
+        <?php
+            } else {
+                echo "
+                <div class='empty-cart'>
+                    <i class='fas fa-shopping-cart'></i>
+                    <h2>Your Cart is Empty</h2>
+                    <p>Add some books to your cart to get started!</p>
+                    <br>
+                    <a href='bhome.php'>
+                        <button class='action-btn'>
+                            <i class='fas fa-book'></i> Browse Books
+                        </button>
+                    </a>
+                </div>
+                ";
+            }
+        } else {
+            echo "
+            <div class='empty-cart'>
+                <i class='fas fa-user-lock'></i>
+                <h2>Please Login First</h2>
+                <p>You need to login to view your cart</p>
+                <br>
+                <a href='../auth/UserLogin.php'>
+                    <button class='action-btn'>
+                        <i class='fas fa-sign-in-alt'></i> Login
+                    </button>
+                </a>
+            </div>
+            ";
         }
         ?>
-
-        <table class="table">
-            <thead>
-                <th>S.No</th>
-                <th>Item Name</th>
-                <th>Unit Price </th>
-                <th style="width:25%;">Quantity</th>
-                <th>Subtotal</th>
-                <th>Delete</th>
-            </thead>
-
-            <?php
-            $total = 0;
-            global $con;
-            if (isset($_SESSION['phonenumber'])) {
-                $sess_phone_number = $_SESSION['phonenumber'];
-                $sel_price = "select * from cart where phonenumber = '$sess_phone_number'";
-                $run_price = mysqli_query($con, $sel_price);
-
-                $qtycart = array();
-                $i = 0;
-                while ($p_price = mysqli_fetch_array($run_price)) {
-                    $product_id = $p_price['product_id'];
-                    $_SESSION['qtycart'][$i] = $p_price['qty'];
-
-                    $pro_price = "select * from products where product_id='$product_id'";
-                    $run_pro_price = mysqli_query($con, $pro_price);
-                    while ($pp_price = mysqli_fetch_array($run_pro_price)) {
-                        $product_title = $pp_price['product_title'];
-                        $product_price = $pp_price['product_price'];
-                        $subtotal = $_SESSION['qtycart'][$i] * $product_price;
-
-            ?>
-
-
-
-                        <!-- <td class="tdy" data-label="quantity"><a style="color:black;margin-right:12px;" href="MinusQty.php?id=<?php echo $product_id; ?>"><label class="add ladd"><i style="padding: 4px;" class=" icon left  fas fa-minus">
-                                    </label></a></i>
-                                <input type="number" oninput="this.value = Math.abs(this.value)" min="1" value='<?php echo $_SESSION['qtycart'][$i]; ?>' name="qty" style="width:40px; "><a style="color:black;margin-left:4px;" href="AddQty.php?id=<?php echo $product_id; ?>"><label class="add radd">
-                                        <i style="padding: 4px;" class="icon right  fas fa-plus"></label></a></i></td>
-                            </td> -->
-
-
-                        <tbody>
-                            <tr>
-                                <td data-label="S.No" style="font-size:20px;"><?php echo $i + 1; ?></td>
-                                <td data-label="Item Name " style="font-size:20px;"><?php echo $product_title; ?></td>
-                                <td data-label="Unit Price" style="font-size:20px;"><?php echo $product_price; ?></td>
-
-                                <td data-label="Quantity p-0 " style="padding-top:1.5%;padding-bottom:-2%">
-                                    <div class="d-flex justify-content-center " style="width:90%;padding-left:10%;">
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <a href="AddQty.php?id=<?php echo $product_id; ?>">
-                                                    <button class="btn btn-outline-secondary" style=" background-color:#292b2c;" type="button" id="button-addon1">
-                                                        <b style="color:goldenrod"><i class="fas fa-plus"></i></b>
-                                                    </button>
-                                                </a>
-                                            </div>
-                                            <input type="number" class="form-control" oninput="this.value = Math.abs(this.value)" min="1" value='<?php echo $_SESSION['qtycart'][$i]; ?>' name="qty" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
-                                            <div class="input-group-append">
-                                                <a href="MinusQty.php?id=<?php echo $product_id; ?>">
-                                                    <button class="btn btn-outline-secondary" style=" background-color:#292b2c;" type="button" id="button-addon2">
-                                                        <b style="color:goldenrod"><i class="fas fa-minus"></i></b>
-                                                    </button>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-
-
-                                <?php $subtotal = $_SESSION['qtycart'][$i] * $product_price; ?>
-                                <?php
-                                $subquery = "update cart set subtotal = $subtotal where product_id = $product_id";
-                                $run = mysqli_query($con, $subquery);
-                                ?>
-
-                                <td data-label="Subtotal" style="font-size:20px;"><?php echo $subtotal; ?></td>
-                                <?php $total = $total + $subtotal ?>
-                                <td data-label="Delete" style="font-size:20px;"><a href="DeleteProductCart.php?id=<?php echo $product_id; ?>" id="Deletionlink"><i class="far fa-times-circle"></i></a></td>
-                            </tr>
-                <?php
-                    }
-                    $i++;
-                }
-            } else {
-                echo "<h1 align = center>Please Login First!</h1><br><br><hr>";
-            } ?>
-
-                        </tbody>
-        </table>
-
     </div>
 
-    </div>
-
-
-    <div class="container">
-        <div class="float-none float-sm-none float-md-none float-lg-left float-xl-left  emptycart">
-            <a href="emptyCart.php">
-                <button type="button" class="btn btn-lg  border border-dark " style="font-size:22px;color:black;background-color:#FFD700">Empty Cart
-                    <i class="fas fa-shopping-cart ml-1"></i></button>
-            </a>
-        </div>
-        <!-- <div class="grandtotal  float-none float-sm-none float-md-none float-lg-right float-xl-right"></div><br> -->
-        <br>
-        <div class=" float-none float-sm-none float-md-none float-lg-right float-xl-rightcheckout mr-0 p-2 border border-dark  " style="border-radius:5%;">
-
-            <h2>Grand total = USD <?php echo $total; ?> </h2>
-
-
-
-
-            <?php
-            if (isset($_SESSION['phonenumber'])) {
-                $sel_price = "select * from cart where phonenumber = '$sess_phone_number'";
-                $run_price = mysqli_query($con, $sel_price);
-                $count = mysqli_num_rows($run_price);
-                if ($count > 0) {
-                    echo "<a href='Checkout.php'>
-                                <button type='button' class='btn btn-lg border border-dark d-flex mx-auto' style='font-size:22px;color:black;background-color:#FFD700'>
-                                    Checkout<i class='fas fa-arrow-right ml-2 mt-2 mb-1'></i>
-                                </button>
-                            </a>";
-                } else {
-
-                    echo "<a href='Includes/alert.php'>
-                                <button type='button' class='btn btn-lg border border-dark d-flex mx-auto' style='font-size:22px;color:black;background-color:#FFD700'>
-                                    Checkout<i class='fas fa-arrow-right ml-2 mt-2 mb-1'></i>
-                                </button>
-                            </a>";
-                }
-            } else {
-
-                echo "<a href='../auth/BuyerLogin.php'>
-                                <button type='button' class='btn btn-lg border border-dark d-flex mx-auto' style='font-size:22px;color:black;background-color:#FFD700'>
-                                    Checkout<i class='fas fa-arrow-right ml-2 mt-2 mb-1'></i>
-                                </button>
-                            </a>";
-            }
-
-            ?>
-
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <?php $_SESSION['grandtotal'] = $total; ?>
-        <br>
-        <br>
-        <div class=" float-none float-sm-none float-md-none float-lg-left float-xl-left continueshopping mt-5">
-            <a href="bhome.php"><button type="button" class="btn btn-lg  border border-dark " style="font-size:22px;color:black;background-color:#FFD700">Continue Shopping
-                    <i class="fas fa-shopping-bag ml-1"></i></button></a>
-        </div>
-    </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+    <!-- Footer -->
     <section id="footer" class="myfooter">
         <div class="container">
-            <div class="row text-center text-xs-center text-sm-left text-md-left">
-                <div class="col aligncenter">
-                    <br>
-                    <h5>Payment Option</h5>
-                    <img src="../Images/Website/paytm1.jpg" alt="paytm">
-                    <img src="../Images/Website/cod.jpg" alt="paytm" style="height:37px">
-                </div>
-            </div>
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
+                <div class="col-12 mt-4">
                     <ul class="list-unstyled list-inline social text-center">
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-facebook"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-twitter"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-instagram"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-google-plus"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();" target="_blank"><i class="fa fa-envelope"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-facebook"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-instagram"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-google-plus"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-envelope"></i></a></li>
                     </ul>
                 </div>
-                </hr>
             </div>
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center">
-                    <p><u><a href="https://www.agrocraft.com/">Smart Library Management System</a></u>A smart system for libaray users and librarians</p>
-                    <p class="h6">Copy All right Reversed.<a class="text-green ml-2" href="https://www.google.com" target="_blank">Foreign Key Friends</a></p>
+                <div class="col-12 mt-2 text-center">
+                    <p><strong>Smart Library Management System</strong> - An Advanced Digital Library Management System</p>
+                    <p>Copyright © All Rights Reserved. Foreign Key Friends</p>
                 </div>
-                </hr>
             </div>
         </div>
+    </section>
+
 </body>
 
 </html>
