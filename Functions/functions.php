@@ -106,6 +106,140 @@
         }
     }
 
+    /**
+     * Displays auto-disappearing alerts for borrowed items.
+     * Checks the 'cart' table for items with a borrow_date and return_date
+     * for the currently logged-in user.
+     * - Green Alert: Item is due in the future.
+     * - Yellow Alert: Item is due today.
+     * - Red Alert: Item is overdue.
+     */
+    function borrowedBooksAlerts() {
+        // Only run if a user is logged in
+        if (!isset($_SESSION['phonenumber'])) {
+            return;
+        }
+
+        global $con;
+        $phonenumber = $_SESSION['phonenumber'];
+
+        // Get today's date for comparison
+        $today_dt = new DateTime(date('Y-m-d'));
+
+        // Query to get all 'borrowed' items for the user, joining with products to get the title
+        $query = "SELECT 
+                    p.product_title, 
+                    c.return_date 
+                FROM 
+                    cart c
+                JOIN 
+                    products p ON c.product_id = p.product_id
+                WHERE 
+                    c.phonenumber = '$phonenumber' 
+                    AND c.borrow_date IS NOT NULL
+                    AND c.return_date IS NOT NULL";
+
+        $run_query = mysqli_query($con, $query);
+
+        if ($run_query && mysqli_num_rows($run_query) > 0) {
+            
+            $alerts_html = ""; // To store our alert messages
+
+            while ($row = mysqli_fetch_array($run_query)) {
+                $product_title = $row['product_title'];
+                $return_date_str = $row['return_date'];
+
+                // Skip if return date is invalid
+                if (empty($return_date_str)) continue;
+
+                $return_dt = new DateTime($return_date_str);
+                
+                // Calculate the difference in days
+                $interval = $today_dt->diff($return_dt);
+                $days_diff = (int)$interval->format('%r%a'); // %r gives sign (+/-), %a gives total days
+
+                if ($days_diff > 0) {
+                    // Due in the future
+                    $message = "<strong>$product_title:</strong> Due in $days_diff days.";
+                    $alert_class = 'borrow-alert-success'; // Green
+                } elseif ($days_diff == 0) {
+                    // Due today
+                    $message = "<strong>$product_title:</strong> Due today.";
+                    $alert_class = 'borrow-alert-warning'; // Yellow
+                } else {
+                    // Overdue
+                    $days_overdue = abs($days_diff);
+                    $message = "<strong>$product_title:</strong> Overdue by $days_overdue days.";
+                    $alert_class = 'borrow-alert-danger'; // Red
+                }
+
+                $alerts_html .= "<div class='borrow-alert $alert_class' role='alert'>$message</div>";
+            }
+
+            if (!empty($alerts_html)) {
+                echo "
+                <style>
+                    .borrow-alert-container {
+                        position: fixed;
+                        top: 80px; /* Adjust as needed */
+                        right: 20px;
+                        z-index: 1050;
+                        width: 320px;
+                    }
+                    .borrow-alert {
+                        padding: 1rem;
+                        margin-bottom: 10px;
+                        border: 1px solid transparent;
+                        border-radius: 0.25rem;
+                        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                        opacity: 1;
+                        transition: opacity 0.5s ease-out;
+                    }
+                    .borrow-alert-success { /* Green */
+                        color: #155724;
+                        background-color: #d4edda;
+                        border-color: #c3e6cb;
+                    }
+                    .borrow-alert-warning { /* Yellow */
+                        color: #856404;
+                        background-color: #fff3cd;
+                        border-color: #ffeeba;
+                    }
+                    .borrow-alert-danger { /* Red */
+                        color: #721c24;
+                        background-color: #f8d7da;
+                        border-color: #f5c6cb;
+                    }
+                </style>
+
+                <div class='borrow-alert-container'>
+                    $alerts_html
+                </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const alerts = document.querySelectorAll('.borrow-alert');
+                        
+                        alerts.forEach((alert, index) => {
+                            // Set a timeout to fade the alert
+                            setTimeout(() => {
+                                alert.style.opacity = '0';
+                                
+                                // Set another timeout to remove the alert from the DOM after fading
+                                setTimeout(() => {
+                                    if (alert.parentNode) {
+                                        alert.parentNode.removeChild(alert);
+                                    }
+                                }, 600); // 0.6s (must be > transition duration)
+
+                            }, 5000 + (index * 1000)); // 5s base, +1s for each additional alert
+                        });
+                    });
+                </script>
+                ";
+            }
+        }
+    }
 
     
 // UPDATED getProducts() FUNCTION
