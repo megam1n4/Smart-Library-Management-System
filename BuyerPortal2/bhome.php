@@ -596,7 +596,7 @@ include("../Functions/functions.php");
         <!-- BID Button -->
         <div class="text-center">
             <button class="bid-button" onclick="window.location.href='display.php';">
-                <i class="fas fa-gavel"></i> Click here to BID a product
+                <i class="fas fa-gavel"></i> Click here to reserve a Rare Book
             </button>
         </div>
     </div>

@@ -340,12 +340,11 @@
                         if (isset($_SESSION['phonenumber'])) {
                             echo "<a href='FarmerProfile2.php' class='dropdown-item'>Profile</a>"; 
                             echo "<a href='Transactions.php' class='dropdown-item'>Orders</a>";
-                            echo "<a href='bid_insert.php' class='dropdown-item'>Create a Priority List of Users</a>";
+                            echo "<a href='bid_insert.php' class='dropdown-item'>Post A Rare Book</a>";
                             echo "<a href='display_bids2.php' class='dropdown-item'>View Priority List of Users</a>";
-                            echo "<a href='online_class.php' class='dropdown-item'>Post Meet & Greet</a>";
+                            echo "<a href='online_class.php' class='dropdown-item'>Post Rare Book Exhibition</a>";
                             echo "<a href='leaderboard.php' class='dropdown-item'>See Quiz Results</a>";
                             echo "<a href='donate_book.php' class='dropdown-item'>Donation</a>";
-                            echo "<a href='viewclaim.php' class='dropdown-item'>Donation Message</a>";
                             echo "<a href='../auth/FarmerLogin.php' class='dropdown-item'>Logout</a>";
                         } else {
                             echo "<a href='../auth/FarmerLogin.php' class='dropdown-item'>Login</a>";

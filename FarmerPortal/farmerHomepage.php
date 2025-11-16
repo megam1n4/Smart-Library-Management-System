@@ -374,12 +374,11 @@
                             if (isset($_SESSION['phonenumber'])) {
                                 echo "<a href='FarmerProfile2.php' class='dropdown-item'>Profile</a>";
                                 echo "<a href='Transactions.php' class='dropdown-item'>Orders</a>";
-                                echo "<a href='bid_insert.php' class='dropdown-item'>Create a Priority List of Users</a>";
+                                echo "<a href='bid_insert.php' class='dropdown-item'>Post A Rare Book</a>";
                                 echo "<a href='display_bids2.php' class='dropdown-item'>View Priority List of Users</a>";
-                                echo "<a href='online_class.php' class='dropdown-item'>Post Meet & Greet</a>";
+                                echo "<a href='online_class.php' class='dropdown-item'>Post Rare Book Exhibition</a>";
                                 echo "<a href='leaderboard.php' class='dropdown-item'>See Quiz Results</a>";
                                 echo "<a href='donate_book.php' class='dropdown-item'>Donation</a>";
-                                echo "<a href='viewclaim.php' class='dropdown-item'>Donation Message</a>";
                                 echo "<a href='../auth/FarmerLogin.php' class='dropdown-item'>Logout</a>";
                             } else {
                                 echo "<a href='../auth/FarmerLogin.php' class='dropdown-item'>Login</a>";
@@ -445,11 +444,11 @@
         <div class="card-deck row text-center" style="display: flex; flex-wrap: wrap;">
             <div class="card">
                 <p class="aligncenter">
-                    <img class="card-img-top" src="../Images/Homepage/sms.png" alt="SMS System" >
+                    <img class="card-img-top" src="../Images/Homepage/sms.png" alt="Chatting System" >
                 </p>
                 <div class="card-body">
-                    <h4 class="card-title">SMS System</h4>
-                    <h5 class="card-text">Upload and Edit Your Book via SMS</h5>
+                    <h4 class="card-title">Chatting System</h4>
+                    <h5 class="card-text">Upload and Ask About Your Books in the Chatting System</h5>
                 </div>
             </div>
             
