@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("../Functions/functions.php");
+// Removed: include("../Functions/functions.php"); to avoid duplicate session_start() call
 include("../Includes/db.php");
 
 // Check if the farmer is logged in
@@ -416,31 +416,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
 
-    <!-- Modern Navbar -->
     <nav class="navbar navbar-expand-xl navbar-dark">
         <div class="container-fluid">
-            <!-- Logo -->
             <a class="navbar-brand" href="bhome.php">
                 <img src="logo2.jpg" alt="Smart Library Logo">
             </a>
 
-            <!-- Mobile Icons -->
             <div class="d-xl-none" style="display: flex; align-items: center; gap: 15px;">
                 <i class='far fa-user-circle user-icon'></i>
                 <a href="CartPage.php" style="position: relative;">
                     <i class="fa fa-shopping-cart cart-icon"></i>
-                    <span id="icon"><?php echo totalItems(); ?></span>
+                    <span id="icon">0</span> 
                 </a>
             </div>
 
-            <!-- Navbar Toggler -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
                 <i class="fas fa-bars" style="color:#28a745; font-size:28px;"></i>
             </button>
 
-            <!-- Collapsible Content -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Search Box -->
                 <div class="mx-auto searchbox">
                     <form action="SearchResult.php" method="get" enctype="multipart/form-data">
                         <div class="input-group mb-1">
@@ -454,12 +448,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </form>
                 </div>
 
-                <!-- Username Display -->
-                <?php getUsername(); ?>
-
-                <!-- Mobile Menu List -->
                 <div class="list-group moblists">
                     <?php
+                    // Links assume the user is a Buyer, based on original file context
                     if (isset($_SESSION['phonenumber'])) {
                         echo "<a href='UserProfile.php' class='list-group-item list-group-item-action'>Profile</a>";
                         echo "<a href='Transaction.php' class='list-group-item list-group-item-action'>Transactions</a>";
@@ -476,14 +467,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ?>
                 </div>
 
-                <!-- Desktop Right Icons -->
                 <div class="ml-auto d-none d-xl-flex" style="display: flex; align-items: center; gap: 20px;">
-                    <!-- Voice Search -->
                     <a href="voice_search.php" class="voice-search-btn">
                         <i class="fas fa-microphone"></i> Voice Search
                     </a>
 
-                    <!-- Explore Dropdown -->
                     <div class="dropdown">
                         <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
                             Explore
@@ -507,32 +495,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div>
 
-                    <!-- User Icon -->
                     <i class='far fa-user-circle user-icon'></i>
 
-                    <!-- Cart Icon -->
                     <a href="CartPage.php" style="position: relative;">
                         <i class="fa fa-shopping-cart cart-icon"></i>
-                        <span id="icon"><?php echo totalItems(); ?></span>
+                        <span id="icon">0</span>
                     </a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Donation Header -->
     <div class="donation-header">
         <h1>📚 Donate a Book</h1>
         <p>Share knowledge and help others discover great books</p>
     </div>
 
-    <!-- Donation Form -->
     <div class="container">
         <div class="donation-container">
             <?php if (isset($message)) echo $message; ?>
 
             <form action="" method="POST" enctype="multipart/form-data">
-                <!-- Book Title -->
                 <div class="form-group">
                     <label for="book_title">
                         <i class="fas fa-book"></i>
@@ -541,7 +524,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="text" name="book_title" id="book_title" class="form-control" placeholder="Enter book title" required>
                 </div>
 
-                <!-- Book Description -->
                 <div class="form-group">
                     <label for="book_description">
                         <i class="fas fa-align-left"></i>
@@ -550,7 +532,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <textarea name="book_description" id="book_description" class="form-control" placeholder="Provide a brief description of the book" required></textarea>
                 </div>
 
-                <!-- Condition -->
                 <div class="form-group">
                     <label for="condition">
                         <i class="fas fa-star"></i>
@@ -563,7 +544,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </select>
                 </div>
 
-                <!-- Image Upload -->
                 <div class="form-group">
                     <label>
                         <i class="fas fa-image"></i>
@@ -578,7 +558,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div id="file-name" class="file-name"></div>
                 </div>
 
-                <!-- Submit Button -->
                 <button type="submit" class="btn-donate">
                     <i class="fas fa-heart"></i> Donate Book
                 </button>
@@ -586,7 +565,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <!-- Footer -->
     <section id="footer" class="myfooter">
         <div class="container">
             <div class="row">
