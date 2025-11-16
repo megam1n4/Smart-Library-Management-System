@@ -492,11 +492,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <?php
                             if (isset($_SESSION['phonenumber'])) {
                                 echo "<a href='UserProfile.php' class='dropdown-item'>Profile</a>";
+                                
                                 echo "<a href='display.php' class='dropdown-item'>Reserve Rare Book</a>";
                                 echo "<a href='chat.php' class='dropdown-item'>Group chat</a>";
-                                echo "<a href='debate.php' class='dropdown-item'>Join Debate</a>";
+                                
                                 echo "<a href='genre.php' class='dropdown-item'>Join Quiz</a>";
-                                echo "<a href='customersupport.php' class='dropdown-item'>Join Rare Book Exhibition</a>";
+                                echo "<a href='Donate.php' class='dropdown-item'>Book Donation</a>";
+                                echo "<a href='exhibition.php' class='dropdown-item'>Join Rare Book Exhibition</a>";
                                 echo "<a href='../Includes/logout.php' class='dropdown-item'>Logout</a>";
                             } else {
                                 echo "<a href='../auth/UserLogin.php' class='dropdown-item'>Login</a>";
