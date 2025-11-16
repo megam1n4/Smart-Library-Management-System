@@ -13,13 +13,17 @@ $buyer_phone = $_SESSION['phonenumber'];
 
 // Handle Reserve button submission
 if (isset($_POST['reserve_book'])) {
+    $product_id = mysqli_real_escape_string($con, $_POST['product_id']);
     $product_name = mysqli_real_escape_string($con, $_POST['product_name']);
     $product_description = mysqli_real_escape_string($con, $_POST['product_description']);
     $product_image = mysqli_real_escape_string($con, $_POST['product_image']);
     
-    // Insert reservation into bids table
-    $query = "INSERT INTO bids (product_name, product_description, product_image, buyer_phone, reserved_date) 
-              VALUES ('$product_name', '$product_description', '$product_image', '$buyer_phone', NOW())";
+    // Get buyer information from session
+    $buyer_address = $buyer_phone; // Using phone as buyer address
+    
+    // Insert reservation into bids table (matching the actual table structure)
+    $query = "INSERT INTO bids (product_id, product_name, product_description, product_image, farmer_phone, buyer_address) 
+              VALUES ('$product_id', '$product_name', '$product_description', '$product_image', '', '$buyer_address')";
     $result = mysqli_query($con, $query);
     
     if ($result) {
@@ -606,6 +610,7 @@ if (isset($_POST['reserve_book'])) {
                                     <td>" . $image_html . "</td>
                                     <td>
                                         <form method='post' action=''>
+                                            <input type='hidden' name='product_id' value='" . htmlspecialchars($row['product_id']) . "'>
                                             <input type='hidden' name='product_name' value='" . htmlspecialchars($row['product_name']) . "'>
                                             <input type='hidden' name='product_description' value='" . htmlspecialchars($row['product_description']) . "'>
                                             <input type='hidden' name='product_image' value='" . htmlspecialchars($row['product_image']) . "'>
