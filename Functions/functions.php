@@ -241,6 +241,7 @@ function getProducts()
     // Checkout System Functions
 
 // UPDATED cart() FUNCTION
+// In functions.php, locate the cart() function and update it:
 function cart()
 {
     if (isset($_SESSION['phonenumber'])) {
@@ -252,21 +253,24 @@ function cart()
             $sess_phone_number = $_SESSION['phonenumber'];
             $product_id = $_GET['add_cart'];
 
-            $check_pro = "select * from cart where phonenumber = $sess_phone_number and product_id='$product_id' ";
+            // FIX: Added quotes around $sess_phone_number to ensure correct SQL syntax.
+            $check_pro = "select * from cart where phonenumber = '$sess_phone_number' and product_id='$product_id' ";
 
             $run_check = mysqli_query($con, $check_pro);
 
             if (mysqli_num_rows($run_check) > 0) {
                 echo "";
             } else {
-                $insert_pro = "insert into cart (product_id,phonenumber) values ('$product_id','$sess_phone_number')";
+                // FIX: Added 'subtotal' column to the INSERT statement, initialized to 0. 
+                // This ensures consistency, as the cart table has a NOT NULL constraint on subtotal.
+                $insert_pro = "insert into cart (product_id,phonenumber, qty, subtotal) values ('$product_id','$sess_phone_number', '$qty', 0)";
                 $run_insert_pro = mysqli_query($con, $insert_pro);
             }
 
             echo "<script>window.open('bhome.php','_self')</script>";
         }
     } else {
-        // echo "<script>alert('Please Login First! ');</script>";
+        // Optionally, you can add an alert here to notify the user to log in.
     }
 }
 
@@ -296,7 +300,6 @@ function cart()
 
                         <div>
                             <p><b>$product_title</b></p>
-                            <p><b>Price : USD $price</b></p>
                         </div>
 
                     </div>";

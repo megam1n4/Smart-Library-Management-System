@@ -4,6 +4,7 @@ include("../Includes/db.php");
 
 // Check if user is logged in
 if (!isset($_SESSION['phonenumber'])) {
+    // Corrected path for external file
     echo "<script>alert('You must be logged in to reserve books.');</script>";
     echo "<script>window.open('../auth/UserLogin.php','_self')</script>";
     exit();
@@ -16,14 +17,16 @@ if (isset($_POST['reserve_book'])) {
     $product_id = mysqli_real_escape_string($con, $_POST['product_id']);
     $product_name = mysqli_real_escape_string($con, $_POST['product_name']);
     $product_description = mysqli_real_escape_string($con, $_POST['product_description']);
-    $product_image = mysqli_real_escape_string($con, $_POST['product_image']);
+    // Image is now passed as a simple path/filename string
+    $product_image_filename = mysqli_real_escape_string($con, $_POST['product_image']);
     
     // Get buyer information from session
     $buyer_address = $buyer_phone; // Using phone as buyer address
     
     // Insert reservation into bids table (matching the actual table structure)
+    // NOTE: The 'bids' table schema seems to be reused for 'reservations' here.
     $query = "INSERT INTO bids (product_id, product_name, product_description, product_image, farmer_phone, buyer_address) 
-              VALUES ('$product_id', '$product_name', '$product_description', '$product_image', '', '$buyer_address')";
+              VALUES ('$product_id', '$product_name', '$product_description', '$product_image_filename', '', '$buyer_address')";
     $result = mysqli_query($con, $query);
     
     if ($result) {
@@ -458,15 +461,12 @@ if (isset($_POST['reserve_book'])) {
 
 <body>
 
-    <!-- Modern Navbar -->
     <nav class="navbar navbar-expand-xl navbar-dark">
         <div class="container-fluid">
-            <!-- Logo -->
             <a class="navbar-brand" href="bhome.php">
                 <img src="logo2.jpg" alt="Smart Library Logo">
             </a>
 
-            <!-- Mobile Icons -->
             <div class="d-xl-none" style="display: flex; align-items: center; gap: 15px;">
                 <i class='far fa-user-circle user-icon'></i>
                 <a href="CartPage.php" style="position: relative;">
@@ -475,14 +475,11 @@ if (isset($_POST['reserve_book'])) {
                 </a>
             </div>
 
-            <!-- Navbar Toggler -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
                 <i class="fas fa-bars" style="color:#28a745; font-size:28px;"></i>
             </button>
 
-            <!-- Collapsible Content -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Search Box -->
                 <div class="mx-auto searchbox">
                     <form action="SearchResult.php" method="get" enctype="multipart/form-data">
                         <div class="input-group mb-1">
@@ -496,10 +493,8 @@ if (isset($_POST['reserve_book'])) {
                     </form>
                 </div>
 
-                <!-- Username Display -->
                 <?php getUsername(); ?>
 
-                <!-- Mobile Menu List -->
                 <div class="list-group moblists">
                     <?php
                     if (isset($_SESSION['phonenumber'])) {
@@ -518,14 +513,11 @@ if (isset($_POST['reserve_book'])) {
                     ?>
                 </div>
 
-                <!-- Desktop Right Icons -->
                 <div class="ml-auto d-none d-xl-flex" style="display: flex; align-items: center; gap: 20px;">
-                    <!-- Voice Search -->
                     <a href="voice_search.php" class="voice-search-btn">
                         <i class="fas fa-microphone"></i> Voice Search
                     </a>
 
-                    <!-- Explore Dropdown -->
                     <div class="dropdown">
                         <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
                             Explore
@@ -549,10 +541,8 @@ if (isset($_POST['reserve_book'])) {
                         </div>
                     </div>
 
-                    <!-- User Icon -->
                     <i class='far fa-user-circle user-icon'></i>
 
-                    <!-- Cart Icon -->
                     <a href="CartPage.php" style="position: relative;">
                         <i class="fa fa-shopping-cart cart-icon"></i>
                         <span id="icon"><?php echo totalItems(); ?></span>
@@ -562,21 +552,17 @@ if (isset($_POST['reserve_book'])) {
         </div>
     </nav>
 
-    <!-- Page Header -->
     <div class="page-header">
         <h1>📚 Rare Book Collection</h1>
         <p>Discover and reserve exclusive rare books</p>
     </div>
 
-    <!-- Main Content -->
     <div class="container">
         <div class="table-container">
             <h2>Available Rare Books</h2>
 
-            <!-- Display message -->
             <?php if (isset($message)) echo $message; ?>
 
-            <!-- Rare Books Table -->
             <div class="table-responsive">
                 <table class="rare-books-table">
                     <thead>
@@ -594,33 +580,30 @@ if (isset($_POST['reserve_book'])) {
                         $result = mysqli_query($con, $query);
 
                         if (mysqli_num_rows($result) > 0) {
+                            // Define the base path for product images. This assumes `display.php` is inside a folder 
+                            // (e.g., 'farmer' or 'user') and images are in `../Admin/product_images/`
+                            $image_base_path = '../Admin/product_images/'; 
+
                             while ($row = mysqli_fetch_assoc($result)) {
                                 $image_html = '';
+                                $image_filename = htmlspecialchars($row['product_image']);
                                 
-                                // Check if product_image is blob data or file path
-                                if (!empty($row['product_image'])) {
-                                    // If it's blob data (binary), convert to base64
-                                    if (is_string($row['product_image']) && strpos($row['product_image'], '/') === false && strpos($row['product_image'], '\\') === false) {
-                                        // Likely blob data - convert to base64
-                                        $image_data = base64_encode($row['product_image']);
-                                        $image_html = "<img src='data:image/jpeg;base64," . $image_data . "' alt='Book Cover' class='book-image'>";
-                                    } else {
-                                        // It's a file path
-                                        $image_path = htmlspecialchars($row['product_image']);
-                                        if (file_exists($image_path)) {
-                                            $image_html = "<img src='" . $image_path . "' alt='Book Cover' class='book-image'>";
-                                        } else {
-                                            // File doesn't exist, show placeholder
-                                            $image_html = "<div class='book-image-placeholder'><i class='fas fa-book'></i></div>";
-                                        }
-                                    }
+                                // --- FIX: Assume product_image stores a filename/path ---
+                                if (!empty($image_filename)) {
+                                    $image_src = $image_base_path . $image_filename;
+                                    
+                                    // Note: file_exists() check is good for local debugging but might not work on shared hosting
+                                    // if relative paths are complex. We'll rely on the path structure matching other files.
+                                    
+                                    // Use the constructed path for display
+                                    $image_html = "<img src='" . $image_src . "' alt='Book Cover' class='book-image'>";
                                 } else {
                                     // No image data, show placeholder
                                     $image_html = "<div class='book-image-placeholder'><i class='fas fa-book'></i></div>";
                                 }
                                 
-                                // Store image reference (could be blob or path)
-                                $image_value = !empty($row['product_image']) ? base64_encode($row['product_image']) : '';
+                                // --- FIX: Pass the filename/path directly in the hidden field ---
+                                $image_value = $image_filename;
                                 
                                 echo "<tr>
                                     <td class='book-name'>" . htmlspecialchars($row['product_name']) . "</td>
@@ -655,7 +638,6 @@ if (isset($_POST['reserve_book'])) {
         </div>
     </div>
 
-    <!-- Footer -->
     <section id="footer" class="myfooter">
         <div class="container">
             <div class="row">
