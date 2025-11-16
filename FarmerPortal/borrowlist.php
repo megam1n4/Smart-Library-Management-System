@@ -1,6 +1,6 @@
 <?php
      include("../Functions/functions.php");
-     // Assuming db.php is in the Includes directory based on Transactions.php
+     // db.php must be included to establish the connection stored in $con
      include("../Includes/db.php");
      ?>
 
@@ -34,7 +34,7 @@
                color: #333;
           }
 
-          /* --- Navbar Styling (Replicated from Transactions.php) --- */
+          /* --- Navbar Styling (Replicated) --- */
           nav.navbar {
                background: linear-gradient(135deg, #292b2c 0%, #1a1a2e 100%);
                padding: 15px 30px;
@@ -124,7 +124,7 @@
                }
           }
 
-          /* --- Main Navigation Buttons (Replicated from Transactions.php) --- */
+          /* --- Main Navigation Buttons (Replicated) --- */
           .main-nav-section {
                margin-top: 30px;
                margin-bottom: 50px;
@@ -154,7 +154,7 @@
                box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
           }
           
-          /* --- Content & Table Styling (Replicated from Transactions.php) --- */
+          /* --- Content & Table Styling (Replicated) --- */
           .content_item {
                text-align: center;
                margin-bottom: 30px;
@@ -252,7 +252,7 @@
                .moblogo { display: none; }
           }
           
-          /* --- Footer (Replicated from Transactions.php) --- */
+          /* --- Footer (Replicated) --- */
           .myfooter {
                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
                color: #ffc107;
@@ -318,7 +318,7 @@
                     echo "<a href='FarmerProfile2.php' class='list-group-item list-group-item-action ' >Profile</a>"; 
                     echo "<a href='MyProducts.php' class='list-group-item list-group-item-action'>My Books</a>";
                     echo "<a href='Transactions.php' class='list-group-item list-group-item-action'>My Transactions (Orders)</a>";
-                    echo "<a href='borrowlist.php' class='list-group-item list-group-item-action'>Book Borrow List</a>"; // Added link
+                    echo "<a href='borrowlist.php' class='list-group-item list-group-item-action'>Book Borrow List</a>";
                     echo "<a href='bid_insert.php' class='dropdown-item'>Bid</a>";
                     echo "<a href='display_bids2.php' class='dropdown-item'>Bid Message</a>";
                     echo "<a href='online_class.php' class='dropdown-item'>Post Meet & Greet</a>";
@@ -397,58 +397,52 @@
             <tbody>
                 <?php
 
-                // Check if the farmer is logged in
+                global $con;
+                // We do not need the farmer's ID, as we are showing ALL borrowed books (Librarian overview)
+                
                 if (isset($_SESSION['phonenumber'])) {
-                    $farmer_phone_number = $_SESSION['phonenumber'];
-                    
-                    // 1. Get the farmer's ID using their phone number (assuming farmerregistration)
-                    $get_farmer_id = "SELECT farmer_id FROM farmerregistration WHERE farmer_phone = '$farmer_phone_number'";
-                    $run_farmer_id = mysqli_query($con, $get_farmer_id);
-                    $farmer_row = mysqli_fetch_array($run_farmer_id);
-                    $farmer_id = $farmer_row['farmer_id'];
-                    
-                    if ($farmer_id) {
-                        // 2. Query the cart and products tables
-                        // We use a JOIN to link product_id in cart to product_id in products 
-                        // and filter for books posted by the logged-in farmer (farmer_fk)
-                        // AND where borrow_date is NOT NULL (confirmed borrowing)
-                        $sel_borrow_list = "
-                            SELECT
-                                c.phonenumber AS borrower_phone,
-                                c.qty,
-                                c.borrow_date,
-                                c.return_date,
-                                p.product_title
-                            FROM cart c
-                            JOIN products p ON c.product_id = p.product_id
-                            WHERE p.farmer_fk = '$farmer_id'
-                            AND c.borrow_date IS NOT NULL
-                        ";
+                        
+                    // Query the cart and products tables
+                    // Filters only by whether the book has been borrowed (borrow_date is not NULL).
+                    // This shows ALL active borrowings in the system.
+                    $sel_borrow_list = "
+                        SELECT
+                            c.phonenumber AS borrower_phone,
+                            c.qty,
+                            c.borrow_date,
+                            c.return_date,
+                            p.product_title
+                        FROM cart c
+                        JOIN products p ON c.product_id = p.product_id
+                        WHERE c.borrow_date IS NOT NULL
+                    ";
 
-                        $run_borrow_list = mysqli_query($con, $sel_borrow_list);
+                    $run_borrow_list = mysqli_query($con, $sel_borrow_list);
 
-                        if (mysqli_num_rows($run_borrow_list) > 0) {
-                            while ($row = mysqli_fetch_array($run_borrow_list)) {
-                                $product_title = $row['product_title'];
-                                $borrower_phone = $row['borrower_phone'];
-                                $qty = $row['qty'];
-                                $borrow_date = $row['borrow_date'];
-                                $return_date = $row['return_date'];
+                    if ($run_borrow_list && mysqli_num_rows($run_borrow_list) > 0) {
+                        while ($row = mysqli_fetch_array($run_borrow_list)) {
+                            $product_title = $row['product_title'];
+                            $borrower_phone = $row['borrower_phone'];
+                            $qty = $row['qty'];
+                            $borrow_date = $row['borrow_date'];
+                            $return_date = $row['return_date'];
 
-                                // Output the table row
-                                echo "<tr>";
-                                echo "<td data-label='Book Title'>$product_title</td>";
-                                echo "<td data-label='Borrower Phone'>$borrower_phone</td>";
-                                echo "<td data-label='Quantity'>$qty</td>";
-                                echo "<td data-label='Borrow Date'>$borrow_date</td>";
-                                echo "<td data-label='Return Date'>$return_date</td>";
-                                echo "</tr>";
-                            }
-                        } else {
-                            echo "<tr><td colspan='5'><h4 align='center'>No active book borrowing records found.</h4></td></tr>";
+                            // Output the table row
+                            echo "<tr>";
+                            echo "<td data-label='Book Title'>$product_title</td>";
+                            echo "<td data-label='Borrower Phone'>$borrower_phone</td>";
+                            echo "<td data-label='Quantity'>$qty</td>";
+                            echo "<td data-label='Borrow Date'>$borrow_date</td>";
+                            echo "<td data-label='Return Date'>$return_date</td>";
+                            echo "</tr>";
                         }
                     } else {
-                        echo "<tr><td colspan='5'><h4 align='center'>Error: Farmer ID not found.</h4></td></tr>";
+                        // Check if the query itself failed, or just returned no rows
+                        if (mysqli_error($con)) {
+                             echo "<tr><td colspan='5'><h4 align='center'>Database Error: " . mysqli_error($con) . "</h4></td></tr>";
+                        } else {
+                             echo "<tr><td colspan='5'><h4 align='center'>No active book borrowing records found.</h4></td></tr>";
+                        }
                     }
 
                 } else {
