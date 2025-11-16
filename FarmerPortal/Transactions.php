@@ -388,7 +388,6 @@
                 <th>Phone Number</th>
                 <th>Delivery Address</th>
                 <th>Quantity</th>
-                <th>Amount</th>
             </thead>
 
 
@@ -432,7 +431,6 @@
                                         <td data-label="Phone Number"><?php echo $phone; ?></td>
                                         <td data-label="Delivery Address"><?php echo $address; ?></td>
                                         <td data-label="Quantity"><?php echo $qty; ?></td>
-                                        <td data-label="Amount"><?php echo $total; ?></td>
                                     </tr>
 
 
