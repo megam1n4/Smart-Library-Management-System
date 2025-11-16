@@ -27,11 +27,10 @@ $sessphonenumber = $_SESSION['phonenumber'];
             font-family: 'Inter', sans-serif;
             background: #f8f9fa;
             color: #333;
-            /* Removed original animated background to match site theme */
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            padding: 0; /* Adjusted for full screen layout */
+            padding: 0;
         }
         
         /* --- Navbar Styling (Copied from farmerHomepage.php) --- */
@@ -62,7 +61,6 @@ $sessphonenumber = $_SESSION['phonenumber'];
             color: goldenrod;
             font-size: 28px;
             cursor: pointer;
-            transition: all 0.3s ease;
             position: relative;
         }
 
@@ -152,15 +150,14 @@ $sessphonenumber = $_SESSION['phonenumber'];
             border-radius: 15px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             padding: 40px;
-            margin: 50px auto; /* Centered, generous margin */
+            margin: 50px auto;
             text-align: center;
-            /* Removed original animations, using modern CSS */
         }
         
         .website-name {
             font-size: 28px;
             font-weight: bold;
-            color: #292b2c; /* Dark text for header */
+            color: #292b2c;
             margin-bottom: 20px;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -233,7 +230,7 @@ $sessphonenumber = $_SESSION['phonenumber'];
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             color: #ffc107;
             padding: 40px 0 20px 0;
-            margin-top: auto; /* Push footer to bottom */
+            margin-top: auto;
         }
 
         .myfooter h5 {
@@ -346,17 +343,20 @@ if (isset($_POST['insert_pro'])) {    // when button is clicked
     $product_description = $_POST['product_description'];
     $lowest_bid = $_POST['lowest_bid'];
     $bid_ending_time = $_POST['bid_ending_time'];
-    $farmer_phone = $_POST['farmer_phone'];
+    $farmer_phone = $_POST['farmer_phone']; // Note: This value comes from the hidden/readonly field in the form
 
     // getting image
     $product_image = $_FILES['product_image']['name'];
     $product_image_tmp = $_FILES['product_image']['tmp_name'];  // for server
 
     if (isset($_SESSION['phonenumber'])) {
+        // --- CORRECTED IMAGE UPLOAD PATH based on InsertProduct.php ---
+        // This line moves the uploaded image file to the specified directory on the server
         move_uploaded_file($product_image_tmp, "../Admin/product_images/$product_image");
+        // ----------------------------------------------------------------
 
         $phone = $_SESSION['phonenumber'];
-        $getting_id = "select * from farmerregistration where farmer_phone = $sessphonenumber";
+        $getting_id = "select * from farmerregistration where farmer_phone = '$sessphonenumber'"; // Added quotes for string
         $run = mysqli_query($con, $getting_id);
         $row = mysqli_fetch_array($run);
         $id = $row['farmer_id'];

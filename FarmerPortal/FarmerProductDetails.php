@@ -1,5 +1,13 @@
 <?php
 include("../Functions/functions.php");
+include("../Includes/db.php");
+
+// FIX: Conditionally start the session to avoid the "Ignoring session_start()" notice.
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+$sess_phone_number = $_SESSION['phonenumber']; // Moved this line down since session is now guaranteed to be active.
 ?>
 
 <!DOCTYPE html>
@@ -9,821 +17,233 @@ include("../Functions/functions.php");
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <meta http-equiv="X-UA-Compatible" content="ie=edge">
-     <title>OnlineFarmersMarket</title>
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-     <script src="https://kit.fontawesome.com/c587fc1763.js" crossorigin="anonymous"></script>
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <title>Librarian Product Details</title>
+     
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-
-     <link rel="stylesheet" href="../portal_files/bootstrap.min.css">
-     <script src="../portal_files/jquery.min.js.download"></script>
-     <script src="../portal_files/popper.min.js.download"></script>
-     <script src="../portal_files/bootstrap.min.js.download"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+     <script src="https://kit.fontawesome.com/c587fc1763.js" crossorigin="anonymous"></script>
+     
      <style>
-          * {
-               margin: 0;
-               box-sizing: border-box;
-          }
-
-
-          .header {
-               position: sticky;
-               z-index: 100;
-               top: 0rem;
-               height: 69px;
-               width: 100%;
-               background-color: #00b300;
-          }
-
-          .select_element {
-               width: 20px;
-               background-color: transparent;
-               border: none;
-               text: none;
-          }
-
-
-          #logo {
-               height: 66px;
-               width: 100px;
-               text-align: left;
-               float: left;
-          }
-
-          .search_input {
-               float: left;
-               margin-left: 50px;
-               margin-top: 20px;
-
-          }
-
-          .proicon {
-               float: right;
-               margin-right: 10px;
-               margin-top: 20px;
-          }
-
-          .dropdown {
-               float: right;
-               margin-right: 35px;
-               margin-top: 20px;
-
-          }
-
-          .options {
-               color: yellow;
-               margin-left: 20px;
-               /* width: 25px; */
-               margin-right: 50px;
-               display: inline;
-          }
-
-          .icon2 {
-               float: right;
-               margin-right: 10px;
-               margin-top: 20px;
-
-          }
-
-          .loginz {
-               float: right;
-               margin-right: 20px;
-               margin-top: 20px;
-          }
-
-          .headerdown {
-               margin-left: 15%;
-               height: 50px;
-               width: 80%;
-          }
-
-          .makeitgreen {
-               color: #00b300;
-          }
-
-          .sel1 {
-               color: green;
-               float: left;
-               margin-top: 3px;
-          }
-
-          .sel2 {
-               border-color: green;
-               color: green;
-               float: left;
-               margin-left: 600px;
-               margin-top: 3px;
-          }
-
-          .sel3 {
-               font-size: 20px;
-               margin-top: 3px;
-               float: right;
-               margin-right: 5px;
-          }
-
-
-
-          #input1 {
-               width: 220px;
-               border: none;
-          }
-
-
-          #input1:active {
-               background-color: tomato;
-          }
-
-
-          .wrapper {
-               display: grid;
-               grid-template-columns: 20% 20% 20% 20%;
-               grid-column-gap: 20px;
-               grid-row-gap: 10px;
-               grid-column-gap: 20px;
-               grid-row-gap: 10px;
-               margin-left: 30px;
-          }
-
-          .inputwrapper {
-               float: left;
-               border-style: double;
-               text-align: center;
-               margin-left: 80px;
-               width: 280px;
-               margin-bottom: 20px;
-               clear: auto;
-          }
-
-
-          .inputwrapper:last-child {
-               margin-right: 30px;
-          }
-
-          .addtocart {
-               background-color: #FFD700;
-          }
-
-          .numberinput {
-               width: 35px;
-          }
-
-          .content_item {
-               text-align: center;
-               justify-content: center;
-          }
-
-          .etc {
-               margin-left: -40px;
-               min-width: 90px;
-               font-size: 20px;
-          }
-
-          .crop_items {
-               color: green;
-          }
-
-          .footer {
-               height: 70px;
-               width: 100%;
-               clear: both;
-          }
-
-          .payment {
-               float: left;
-               margin-left: 520px;
-               font-size: 20px;
-               margin-top: 25px;
-          }
-
-          .cash {
-               float: left;
-               margin-top: 0px;
-               margin-left: 20px;
-               margin-right: 20px;
-          }
-
-          .paytm {
-               float: left;
-          }
-
-          .morefooter {
-               height: 100px;
-               width: 100%;
-               background-color: white;
-
-          }
-
-          .call {
-               float: left;
-               font-size: 20px;
-               margin-left: 150px;
-               margin-top: 25px;
-          }
-
-          .gmail {
-               margin-top: 10px;
-               float: right;
-               margin-right: 150px;
-
-          }
-
-
-          .text {
-               float: left;
-               margin-left: 735px;
-               margin-top: -50px;
-          }
-
+          /* --- Global & Layout Styling (Based on donate_book.php) --- */
           body {
-               margin: 0;
-               padding: 0;
-               font-family: sans-serif;
-               background-size: cover;
-               background-position: center;
-               box-sizing: border-box;
-          }
-
-          .wrapper {
-               background-image: 100px;
-          }
-
-          .add_button {
-               float: right;
-               text-align: center;
-          }
-
-          .lost {
-               /* <font-fam></font-fam>; */
-               color: black;
-               text-align: center;
-               height: 8%;
-               margin-top: 150px;
-               border-radius: 30px;
-               font-size: 30px;
-               /* margin-top: 5em; */
-               background-color: olive;
-               margin-top: 120px;
-               margin: auto;
-          }
-
-          .new {
-               text-align: center;
-          }
-
-          .button {
-               position: relative;
-               float: right;
-          }
-
-
-          .hii {
-               float: right;
-               margin-right: 5em;
-          }
-
-          .ribbon {
-               position: relative;
-               top: -16px;
-               right: -706px;
-               float: left;
-               top: 0px;
-               left: 0px;
-               height: 74px;
-               background-color: green;
-          }
-
-          .over {
-               background-color: green;
-               border: 1px;
-               width: 100%;
-               white-space: nowrap;
-               height: 70px;
-
-
-          }
-
-          .subtract {
-               float: right;
-               border-color: olive;
-               margin-top: 2%;
-               text-align: center;
-               border-radius: 25px;
-          }
-
-
-          .wrapper {
-               background-image: 100px;
-          }
-
-          .add_button {
-               float: right;
-               text-align: center;
-          }
-
-
-          .lost {
-               font-family: Verdana, Geneva, Tahoma, sans-serif;
-               color: black;
-               text-align: center;
-               margin-top: 220px;
-               margin: auto;
-          }
-
-
-          .new {
-               text-align: center;
-          }
-
-          .button {
-               position: relative;
-               float: right;
-          }
-
-          .hii {
-               float: right;
-               margin-right: 5em;
-          }
-
-          .ribbon {
-               position: relative;
-               top: -16px;
-               right: -706px;
-               float: left;
-               top: 0px;
-               left: 0px;
-               height: 74px;
-               background-color: green;
-          }
-
-          .over {
-               background-color: green;
-               border: 1px;
-               width: 100%;
-               white-space: nowrap;
-               height: 70px;
-
-
-          }
-
-          .subtract {
-               float: right;
-               border-color: olive;
-               margin-right: 12%;
-               background-color: #00b300;
-               text-align: center;
-               /* border-radius: 25px; */
-               width: 9%;
-               height: 8%;
-               margin-top: -5%;
-               padding: 5px;
-
-          }
-
-          .items {
-               width: 100%;
-               margin: auto;
-               height: auto;
-          }
-
-          .productbox {
-               float: left;
-               margin: 15px;
-               margin-left: 30px;
-               padding: 15px;
-               border-style: outline;
-               border: 2px solid;
-               border-color: green;
-               border-radius: 10px;
-          }
-
-          .productbox:hover {
-               float: left;
-               margin: 25px;
-               margin-left: 30px;
-               padding: 20px;
-               border-style: outline;
-               border: 2px solid;
-               border-color: green;
-               border-radius: 5px;
-               font-weight: bolder;
-               height: 325px;
-               width: 240px;
-
-          }
-
-          .slideshow {
-               margin-top: 10px;
-               margin-left: 100px;
-               margin-bottom: 20px;
-               float: left;
-               border-style: solid;
-          }
-
-          #navbar {
-
-               padding: 20px;
-               color: green;
-               text-decoration: none;
-               margin: 20px;
-               font-size: 25px;
-               padding-top: 10px;
-          }
-
-          #navbar:hover {
-               padding: 20px;
-               color: green;
-               text-decoration: underline;
-               margin: 15px;
-               font-size: 25px;
-               font-weight: bolder;
-               padding-top: 10px;
-          }
-
-          #navbar i {
-               padding-right: 1%;
-          }
-
-          .time {
-               background-color: red;
-               /* margin-left: 20px; */
-          }
-
-          .whats {
-               text-align: center;
-               margin-left: 30%;
-          }
-
-          .f1 {
-               float: left;
-               background-color: #fff;
-               border: 1px solid red;
-               height: 200px;
-               border-radius: 50%;
-               width: 200px;
-               padding-top: 20px;
-               border-style: solid;
-               background-image: url("../Images/Website/f2.jpg");
-               background-size: 200px 200px;
-               background-repeat: no-repeat;
-               border-color: #000;
-               /* opacity: 5%; */
-          }
-
-          .t1 {
-               padding-top: 70px;
-               text-align: center;
-               justify-items: center;
-               color: black;
-               font-weight: bold;
-          }
-
-          .t5 {
-               margin-top: -13px;
-          }
-
-          .t4 {
-               margin-top: -13px;
-
-          }
-
-          .whatsnew {
-               /* background-image: url("../Images/Website/back.jpeg"); */
-
-               background-color: red;
-
-          }
-
-          .f2 {
-               margin-left: 130px;
-               margin-right: 150px;
-          }
-
-          .f3 {
-               margin-right: 150px;
-
-          }
-
-          .f4 {
-               margin-right: 150px;
-          }
-
-
-
-          .aligncenter {
-               text-align: center;
-          }
-
-          .myfooter {
-               background-color: #292b2c;
-               color: goldenrod;
-               margin-top: 15px;
-          }
-
-          a {
-               color: goldenrod;
-          }
-
-          .navbar-inverse {
-               background: #00cc00;
-               color: black;
-          }
-
-          .navbar-inverse .navbar-brand,
-          .navbar-inverse a {
-               color: black;
-          }
-
-          .navbar-inverse .navbar-nav>li>a {
-               color: clack;
-          }
-
-          .caros {
-               margin-top: 30px;
-
-          }
-
-          hr {
-               border: 0;
-               height: 0.5px;
-               clear: both;
-               display: block;
-               width: 99%;
-               background-color: black;
-               margin-left: 0.5em;
-          }
-
-          img {
-               max-width: 100%;
-               display: inline-block;
-          }
-
-          * {
-               margin: 0;
-               padding: 0;
-               box-sizing: border-box;
-          }
-
-          nav {
-               background-color: #292b2c;
-          }
-
-          .navbar-custom {
-               background-color: #292b2c;
-          }
-
-          /* change the brand and text color */
-          .navbar-custom .navbar-brand,
-          .navbar-custom .navbar-text {
-               background-color: #292b2c;
-          }
-
-          .navbar-custom .navbar-nav .nav-link {
-               background-color: #292b2c;
-          }
-
-          .navbar-custom .nav-item.active .nav-link,
-          .navbar-custom .nav-item:hover .nav-link {
-               background-color: #292b2c;
-          }
-
-          .firstimage {
-               height: 500px;
-               width: 100%;
-          }
-
-          .mybtn {
-               border-color: green;
-               border-style: solid;
-          }
-
-          .card {
-               width: 100%;
-               height: 100%;
-               margin: 10px;
-          }
-
-          .right {
+               font-family: 'Inter', sans-serif;
+               background: #f8f9fa;
+               color: #333;
+               min-height: 100vh;
                display: flex;
+               flex-direction: column;
           }
 
-          .left {
-               display: none;
+          /* --- Top Logo Bar Styling (From donate_book.php) --- */
+          .top-logo-bar {
+               background: linear-gradient(135deg, #292b2c 0%, #1a1a2e 100%);
+               padding: 10px 20px;
+               box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+               width: 100%;
+               z-index: 100;
           }
-
-          .cart {
-               /* margin-left:10px; */
-               margin-right: -9px;
-          }
-
-          .profile {
-               margin-right: 2px;
-
-          }
-
-          .login {
-               margin-right: -2px;
-               margin-top: 12px;
-               display: none;
-          }
-
-          .searchbox {
-               width: 60%;
-          }
-
-          .lists {
+          
+          .top-logo-bar a {
                display: inline-block;
           }
-
-          .moblists {
-               display: none;
+          
+          .top-logo-bar img {
+               height: 50px;
+               width: auto;
+               object-fit: contain;
+               background: white;
+               padding: 5px;
+               border-radius: 8px;
+               transition: transform 0.3s ease;
           }
 
-          .logins {
+          .top-logo-bar img:hover {
+               transform: scale(1.05);
+          }
+
+          /* --- Main Content Styling --- */
+          .container {
+               margin-top: 30px;
+               padding: 0 15px;
+          }
+
+          .product-details-card {
+               background-color: #ffffff;
+               border-radius: 15px;
+               box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+               overflow: hidden;
+               margin-bottom: 30px;
+          }
+
+          .product-image-container {
+               padding: 20px;
                text-align: center;
-               margin-right: -30%;
-               margin-left: 35%;
+          }
+          
+          .product-image-container img {
+               max-height: 350px;
+               width: auto;
+               object-fit: contain;
+               border-radius: 10px;
+               box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
           }
 
-          .blackgoldie {
-               background-color: #292b2c;
-
+          .product-info {
+               padding: 20px;
+               background: linear-gradient(135deg, #292b2c 0%, #1a1a2e 100%); /* Use blackgoldie style */
+               color: white;
           }
 
-          /* For medium devices (e.g. tablets) */
-          /* @media (min-width: 420px) {
-               img {
-               max-width: 48%;
-               }
-          } */
-          /* For large devices (e.g. desktops) */
-          @media (min-width: 760px) {
-               .resizing {
-                    height: 500px;
-               }
+          .product-info h1 {
+               color: #ffc107; /* goldenrod */
+               font-weight: 800;
+               padding: 10px 0;
+               border-bottom: 1px solid rgba(255, 193, 7, 0.3);
+               margin-bottom: 15px;
+               text-align: center;
+          }
+          
+          .product-info h3 {
+               color: white;
+               font-size: 1.2rem;
+               padding: 5px 0;
+          }
+          
+          .stock-status {
+               color: #20c997; /* Use green color for stock status */
+               font-weight: 700;
+               text-align: center;
+               font-size: 1.5rem;
+               margin-bottom: 15px;
+          }
+          
+          .delivery-info {
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               gap: 10px;
+               margin-bottom: 20px;
           }
 
-          @media only screen and (min-device-width:320px) and (max-device-width:480px) {
-               .image {
-                    max-width: 48%;
+          .delivery-info i {
+               color: #ffc107; /* goldenrod */
+          }
+          
+          .action-buttons {
+               display: flex;
+               justify-content: space-around;
+               padding: 10px 0;
+               gap: 15px;
+          }
+
+          .action-buttons a {
+               font-weight: 700;
+               padding: 10px 20px;
+               border-radius: 8px;
+               transition: all 0.3s ease;
+               color: black;
+               text-decoration: none;
+          }
+
+          .action-buttons .btn-warning {
+               background-color: #ffc107;
+               border: none;
+          }
+          
+          .action-buttons .btn-warning:hover {
+               background-color: #e0a800;
+               transform: translateY(-2px);
+               box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+          }
+          
+          .product-description-box {
+               padding: 30px;
+               background: #ffffff;
+               border-radius: 15px;
+               box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+               margin-top: 30px;
+          }
+          
+          .product-description-box h3 {
+               font-weight: 700;
+               color: #292b2c;
+               margin-bottom: 15px;
+               border-bottom: 2px solid #e0e0e0;
+               padding-bottom: 5px;
+          }
+          
+          .product-description-box h5 {
+               color: #555;
+               line-height: 1.6;
+          }
+
+
+          /* --- Footer Styling (From donate_book.php) --- */
+          .myfooter {
+               background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+               color: #ffc107;
+               padding: 40px 0 20px 0;
+               margin-top: auto;
+          }
+
+          .myfooter h5 {
+               color: #ffc107;
+               font-weight: 700;
+               margin-bottom: 20px;
+          }
+
+          .myfooter img {
+               margin: 10px;
+               border-radius: 8px;
+               max-height: 35px;
+               width: auto;
+               background-color: white; /* Ensure payment logos are visible */
+               padding: 5px;
+          }
+
+          .social li a {
+               color: #ffc107;
+               font-size: 24px;
+               transition: all 0.3s ease;
+          }
+          
+          .social li a:hover {
+               color: #28a745;
+          }
+
+          /* Responsive Adjustments */
+          @media (max-width: 992px) {
+               .product-info {
+                    border-radius: 0 0 15px 15px;
                }
-
-               .firstimage {
-                    height: auto;
-                    width: 90%;
+               .action-buttons {
+                    flex-direction: column;
                }
-
-               .card {
-                    width: 80%;
-                    margin-left: 10%;
-                    margin-right: 10%;
-
+          }
+          @media (min-width: 992px) {
+               .product-info {
+                    border-radius: 0 15px 15px 0;
                }
-
-               .col {
-                    margin-top: 20px;
-               }
-
-               .right {
-                    display: none;
-                    background-color: #ff5500;
-               }
-
-
-               .left {
-                    display: flex;
-               }
-
-               .moblogo {
-                    display: none;
-               }
-
-               .logins {
-                    text-align: center;
-                    margin-right: 35%;
-                    padding: 15px;
-               }
-
-               .desc {
-                    margin-top: 15px;
-                    height: 100px;
-
-               }
-
-               .searchbox {
-                    width: 95%;
-                    margin-right: 5%;
-                    margin-left: 0%;
-               }
-
-               .moblists {
-                    display: inline-block;
-                    text-align: center;
-                    width: 100%;
-               }
-
-
           }
      </style>
 </head>
 
 <body>
-     <nav class="navbar navbar-expand-xl ">
-          <!-- <a href="#" class="navbar-brand">Academind</a> -->
-          <div class=" flex-row-reverse left ">
-
-               <div class="p-2">
-                    <!-- <div class="icon2">
-                    <a href="CartPage.php"> <i class="fa" style=" color:green ;font-size:20px;margin-top:-20px;margin-bottom:20px;">&#61562;</i></a> -->
-                    <!-- <span id="icon" style="color:green"> 5 </span>
-                </div>  -->
-               </div>
-               <!-- <div class="p-2 ml-5"><i class='far fa-user-circle' style='font-size:30px; color: green;'></i></div> -->
-               <a class="float-left" href="#">
-                    <img src="v1.png" class="float-left mr-5 ml-0 " alt="Logo" style="height:50px;">
-               </a>
-          </div>
-          <button class="navbar-toggler" data-toggle="collapse" style="margin-left:-20px;" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-               <span class="navbar-toggler-icon"><i class="fas fa-bars p-1 " style="color:green;font-size:20px; "></i></span>
-          </button>
-          <a class="float-left" href="farmerHomepage.php">
-               <img src="v1.png" class="float-left mr-2 moblogo" alt="Logo" style="height:50px;">
+     <div class="top-logo-bar">
+          <a href="farmerHomepage.php">
+               <img src="logo2.jpg" alt="Smart Library Logo">
           </a>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-
-
-               <div class="proicon">
-
-                    <?php
-                    if (!isset($_SESSION['phonenumber'])) {
-                         echo "<a href='../auth/FarmerLogin.php'> <div class='text-success  logins '></div></a>";
-                    }
-                    ?>
-               </div>
-
-               <div class="list-group moblists">
-
-                    <?php
-                    if (isset($_SESSION['phonenumber'])) {
-
-                         echo "<a href='FarmerProfile.php' class='list-group-item list-group-item-action ' style='background-color:#292b2c;text-align:center;color:goldenrod'>Profile</a>";
-                         echo "<a href='Orders.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Orders</a>";
-                         echo "<a href='logout.php' class='list-group-item list-group-item-action ' style='background-color:#292b2c;text-align:center;color:goldenrod'>Logout</a>";
-                    } else {
-                         echo "<a href='../auth/FarmerLogin.php'> <div class='text-success  logins '>Login</div></a>";
-                    }
-                    ?>
-                    <div class='loginz' style="text-align:center;">
-                         <?php getFarmerUsername(); ?>
-                    </div>
-               </div>
-          </div>
-
-
-
-
-          <div class=" flex-row-reverse right ">
-               <div class="p-2 cart">
-                    <!-- <div class="icon2">
-                    <a href="CartPage.php"> <i class="fa" style="font-size:30px; color:green;margin-top:-20px;">&#61562;</i></a>
-                    <span id="icon" style="color:green"> 5 </span>
-                </div> -->
-                    <div class='loginz'>
-                         <?php getFarmerUsername(); ?>
-                    </div>
-               </div>
-               <div class="dropdown p-2 settings ">
-                    <button class="btn  dropdown-toggle text-success" style="margin-top:-20px;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                         Settings
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                         <?php
-                         if (isset($_SESSION['phonenumber'])) {
-                              echo "<a href='FarmerProfile.php' class='dropdown-item' style='padding-right:-20px;'>Profile</a>";
-                              echo "<a href='transactions.php' class='dropdown-item' style='padding-right:-20px;'>Orders</a>";
-                              echo "<a href='logout.php' class='dropdown-item' style='padding-right:-20px;'>Logout</a>";
-                         } else {
-                              echo "<a href='../auth/FarmerLogin.php'> <div class='dropdown-item' style='padding-right:-20px;'>Login</div></a>";
-                         }
-                         ?>
-                    </div>
-               </div>
-          </div>
-     </nav>
-     <br>
-
+     </div>
 
      <?php
-     include("../Includes/db.php");
-     $sess_phone_number = $_SESSION['phonenumber'];
-     // getFarmerProductDetails();
-     global $con;
+     
      if (isset($_GET['id'])) {
           $prod_id = $_GET['id'];
           $query = "select * from products where product_id=" . $prod_id;
           $run_query = mysqli_query($con, $query);
           $resultCheck = mysqli_num_rows($run_query);
+          
           if ($resultCheck > 0) {
                while ($rows = mysqli_fetch_array($run_query)) {
                     $product_title = $rows['product_title'];
@@ -832,136 +252,90 @@ include("../Functions/functions.php");
                     $product_stock = $rows['product_stock'];
                     $product_description = $rows['product_desc'];
                     $product_price = $rows['product_price'];
-                    $product_base_price = $rows['product_price'];
                     $product_delivery = $rows['product_delivery'];
-                    $product_cat = $rows['product_cat'];
+                    // $product_cat = $rows['product_cat']; // Not displayed, omitting for brevity
 
-                    // echo "<div class='row'>
-                    //         <div class='col col-md-6'>
-                    //             <img src='../Admin/product_images/$product_image' class='rounded mx-auto d-block bord' style='float:left;' height='250px' width='300px' >
-                    //             <h4>$product_type</h4>
-                    //         </div>
-                    //         <div class='col col-md-6'><br>
-                    //           <h3 style='font-weight:bold;'>" . $product_title."</h3><br>"  
-                    //             . " product type  :  " . $product_type."<br>" 
-                    //             . " product stock  :  " . $product_stock."<br>"
-                    //             . " product Description  :  " . $product_description."<br>" 
-                    //             . " product price  :  " . $product_price."<br>" 
-                    //             . " product Delivery  :  " . $product_delivery."<br>"
-                    //             . " product category  :  " . $product_cat ."<br>".
-                    //         "</div> </div>";
-                    if ($product_stock == 0) {
-                         $str = "Not In Stock";
-                    } else {
-                         $str = "In Stock";
-                    }
-                    if ($product_delivery == "no") {
-                         $del = "Not Applicable";
-                    } else {
-                         $del = "Yes,Applicable";
-                    }
+                    $stock_str = ($product_stock == 0) ? "Not In Stock" : "In Stock";
+                    $delivery_str = ($product_delivery == "no") ? "Not Applicable" : "Yes, Applicable";
+                    $space = "...."; // Used for indentation/design in original code
 
-                    $space = "....";
-                    echo "<div class='container'>
+                    echo "
+                    <div class='container'>
+                         <div class='row product-details-card'>
+                              
+                              <div class='col-lg-6 product-image-container'>
+                                   <img src='../Admin/product_images/$product_image' alt='$product_title' class='img-fluid'>      
+                                   <h3 class='text-center mt-3' style='color:#1a1a2e; font-weight:700;'>$product_type</h3>
+                              </div>
+
+                              <div class='col-lg-6 product-info'>
                                    <div class='row'>
-                                        <div class='col-md-6' style='padding:7px; margin-top:15px;'>
-                                             <img src='../Admin/product_images/$product_image' class='rounded mx-auto d-block bord' height='250px' width='300px' >      
-                                             <br>
-                                             <div class='row'>
-                                                  <div class='col-md-12'>
-                                                       <h3 class='text-center' style='font-weight:bold;'>$product_type</h3>
-                                                  </div>
-                                             </div>
+                                        <div class='col-md-12'>
+                                             <h1>$product_title</h1>
                                         </div>
-                                        <div class='col-md-6 blackgoldie'>
-                                             <div class='row'>
-                                                  <div class='col-md-12 bottom-rule aligncenter'>
-                                                       <h1 style='color:goldenrod;padding:10px;'>$product_title</h1>
-                                                  </div>
-                                             </div>
-                                             <h3  style='color:white;padding:7px;'>USD. " . $product_price . ".00 per Kg</h3>
-                                             <hr/>
-                                             <div class='row'>
-                                                  <div class='col-md-12 text-center'>
-                                                       <h3 style='color:green;padding:7px;'>$str<h3>
-                                                  </div>
-                                             </div>
-                                             <div class='row'>
-                                                  <div class='col-md-12 text-center'>
-                                                       <h3 style='color:white;padding:7px;'><span class='monospaced'>product stock  : " . $product_stock . " Kgs" . "</span><h3>
-                                                  </div>
-                                             </div>
-                                             <div class='row' style='padding:7px;'>
-                                                  <div class='row text-center ml-4 mt-3' >
-                                                       <i class='fa fa-truck fa-2x' aria-hidden='true' style='color:goldenrod;'> </i>
-                                                       <h3 style='color:white;'>   Product Delivery : " . $del . "<h3>
-                                                  </div>
-                                             </div>
+                                   </div>
+                                   
+                                   <div class='stock-status'>$stock_str</div>
 
-                                             <div class='row' style='padding:7px; margin-bottom:15px;' >
-                                                  <div class='col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12 aligncenter'> <a href='EditProduct.php?id=$prod_id' class='btn btn-warning border-secondary' style='color:black'><b>Edit Product</b></a></div>
-                                                  <div class='col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12 aligncenter'> <a href='Transactions.php' class='btn btn-warning border-secondary' style='color:black'><b>My Transaction</b></a></div>
-                                             </div>
-                                        </div>         
+                                   <div class='row'>
+                                        <div class='col-md-12 text-center'>
+                                             <h3>Product Stock: " . $product_stock . " units</h3>
+                                        </div>
+                                   </div>
+                                   
+                                   <div class='delivery-info'>
+                                        <i class='fa fa-truck fa-2x'></i>
+                                        <h3>Product Delivery: " . $delivery_str . "</h3>
+                                   </div>
+
+                                   <div class='action-buttons'>
+                                        <a href='EditProduct.php?id=$prod_id' class='btn btn-warning'><b><i class='fas fa-edit'></i> Edit Book</b></a>
+                                        <a href='Transactions.php' class='btn btn-warning'><b><i class='fas fa-receipt'></i> My Transactions</b></a>
+                                   </div>
+                              </div>         
+                         </div>
+                         
+                         <div class='row'>
+                              <div class='col-12'>
+                                   <div class='product-description-box'>
+                                        <h3><u><b>Book Description:</b></u></h3>
+                                        <h5><span class='monospaced'>" . $space . $product_description . "</span></h5>
                                    </div>
                               </div>
-                              <div class='container'>
-                                   <div class='desc'>
-                                        <div class='row'>
-                                             <div class='col-md-12'>
-                                             <h3><span class='monospaced'><u><b>Product Description:-</b></u></span><h3>
-                                             </div>
-                                        </div>
-                                        <div class='row'>
-                                                  <div class='col-md-12'>
-                                                       <h5><span class='monospaced'>" . $space . $product_description . "</span><h5>
-                                                  </div>
-                                             </div>
-                                        </div>
-                                   </div>
-                              </div>";
+                         </div>
+                    </div>";
                }
           }
      } else {
-          echo "<br><br><hr><h1 align = center>Product Not Uploaded !</h1><br><br><hr>";
+          echo "<br><br><hr><h1 align = center>Product Not Uploaded!</h1><br><br><hr>";
      }
      ?>
 
-
-
-     <br><br>
      <section id="footer" class="myfooter">
-          <div class="container">
-               <div class="row text-center text-xs-center text-sm-left text-md-left">
-                    <div class="col aligncenter">
-                         <br>
-                         <h5>Payment Option</h5>
-                         <img src="../Images/Website/paytm1.jpg" alt="paytm">
-                         <img src="../Images/Website/cod.jpg" alt="paytm" style="height:37px">
-                    </div>
-               </div>
+          <div class="container-fluid">
                <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
                          <ul class="list-unstyled list-inline social text-center">
-                              <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-facebook"></i></a></li>
-                              <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-twitter"></i></a></li>
-                              <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-instagram"></i></a></li>
-                              <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-google-plus"></i></a></li>
+                              <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-facebook"></i></a></li>
+                              <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-twitter"></i></a></li>
+                              <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-instagram"></i></a></li>
+                              <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-google-plus"></i></a></li>
                               <li class="list-inline-item"><a href="javascript:void();" target="_blank"><i class="fa fa-envelope"></i></a></li>
                          </ul>
                     </div>
-
                </div>
                <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center">
-                         <p><u><a href=""></a>Online Famers Market</u> Online Website for farmers and traders</p>
-                         <p class="h6">Copy All right Reversed.<a class="text-green ml-2" href="https://www.google.com" target="_blank">Deadlock</a></p>
+                         <p>Smart Library Management System is a Online Management System for Book Lovers!</p>
+                         <p class="h6">Copy All right Reversed. Foreign Key Friends</p>
                     </div>
-                    </hr>
                </div>
           </div>
      </section>
 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>
