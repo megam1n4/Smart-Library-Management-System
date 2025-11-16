@@ -593,16 +593,32 @@ if (isset($_POST['reserve_book'])) {
 
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
-                                // Check if image exists and is not empty
-                                $image_path = htmlspecialchars($row['product_image']);
                                 $image_html = '';
                                 
-                                if (!empty($image_path) && file_exists($image_path)) {
-                                    $image_html = "<img src='" . $image_path . "' alt='Book Cover' class='book-image'>";
+                                // Check if product_image is blob data or file path
+                                if (!empty($row['product_image'])) {
+                                    // If it's blob data (binary), convert to base64
+                                    if (is_string($row['product_image']) && strpos($row['product_image'], '/') === false && strpos($row['product_image'], '\\') === false) {
+                                        // Likely blob data - convert to base64
+                                        $image_data = base64_encode($row['product_image']);
+                                        $image_html = "<img src='data:image/jpeg;base64," . $image_data . "' alt='Book Cover' class='book-image'>";
+                                    } else {
+                                        // It's a file path
+                                        $image_path = htmlspecialchars($row['product_image']);
+                                        if (file_exists($image_path)) {
+                                            $image_html = "<img src='" . $image_path . "' alt='Book Cover' class='book-image'>";
+                                        } else {
+                                            // File doesn't exist, show placeholder
+                                            $image_html = "<div class='book-image-placeholder'><i class='fas fa-book'></i></div>";
+                                        }
+                                    }
                                 } else {
-                                    // Show placeholder icon if image doesn't exist
+                                    // No image data, show placeholder
                                     $image_html = "<div class='book-image-placeholder'><i class='fas fa-book'></i></div>";
                                 }
+                                
+                                // Store image reference (could be blob or path)
+                                $image_value = !empty($row['product_image']) ? base64_encode($row['product_image']) : '';
                                 
                                 echo "<tr>
                                     <td class='book-name'>" . htmlspecialchars($row['product_name']) . "</td>
@@ -613,7 +629,7 @@ if (isset($_POST['reserve_book'])) {
                                             <input type='hidden' name='product_id' value='" . htmlspecialchars($row['product_id']) . "'>
                                             <input type='hidden' name='product_name' value='" . htmlspecialchars($row['product_name']) . "'>
                                             <input type='hidden' name='product_description' value='" . htmlspecialchars($row['product_description']) . "'>
-                                            <input type='hidden' name='product_image' value='" . htmlspecialchars($row['product_image']) . "'>
+                                            <input type='hidden' name='product_image' value='" . $image_value . "'>
                                             <button type='submit' name='reserve_book' class='btn-reserve'>
                                                 <i class='fas fa-bookmark'></i> Reserve
                                             </button>
