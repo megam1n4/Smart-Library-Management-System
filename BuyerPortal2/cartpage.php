@@ -518,27 +518,33 @@ global $con;
     <?php
     // Handle Submit Borrow Request
     if (isset($_POST['submit_borrow_request'])) {
-        // NOTE: We rely on functions.php to include db.php and globalize $con
-        // We ensure $con is available via the global keyword if it's not visible here.
         global $con; 
 
         if (isset($_SESSION['phonenumber'])) {
-            $sess_phone_number = $_SESSION['phonenumber'];
+            $sess_phone_number = mysqli_real_escape_string($con, $_SESSION['phonenumber']);
             $success = true;
             $error_message = "";
             
-            // Get all cart items for the current session user
-            $sel_cart = "SELECT * FROM cart WHERE phonenumber = '$sess_phone_number'";
+            // Step 1: Get all cart items for the current session user
+            $sel_cart = "SELECT c.*, p.product_price, p.farmer_fk 
+                         FROM cart c 
+                         JOIN products p ON c.product_id = p.product_id
+                         WHERE c.phonenumber = '$sess_phone_number'";
             $run_cart = mysqli_query($con, $sel_cart);
             
             if (!$run_cart) {
                 $success = false;
                 $error_message = "Database error fetching cart items: " . mysqli_error($con);
             } else {
-                while ($cart_item = mysqli_fetch_array($run_cart)) {
+                $items_to_order = [];
+                $temp_run_cart = mysqli_query($con, $sel_cart); // Rerun query to keep the original for loop integrity if needed
+
+                while ($cart_item = mysqli_fetch_array($temp_run_cart)) {
                     $product_id = $cart_item['product_id'];
-                    
-                    // Construct the unique POST field names
+                    $qty = $cart_item['qty'];
+                    $product_price = $cart_item['product_price'];
+                    $farmer_fk = $cart_item['farmer_fk'];
+
                     $borrow_date_field = 'borrow_date_' . $product_id;
                     $return_date_field = 'return_date_' . $product_id;
                     
@@ -546,51 +552,101 @@ global $con;
                         $borrow_date = mysqli_real_escape_string($con, $_POST[$borrow_date_field]);
                         $return_date = mysqli_real_escape_string($con, $_POST[$return_date_field]);
                         
-                        // Validate dates
-                        if (!empty($borrow_date) && !empty($return_date)) {
-                            // Check if return date is on or after borrow date
-                            if (strtotime($return_date) >= strtotime($borrow_date)) {
-                                
-                                // Update cart with borrow and return dates
-                                $update_query = "UPDATE cart 
-                                                 SET borrow_date = '$borrow_date', return_date = '$return_date' 
-                                                 WHERE product_id = '$product_id' AND phonenumber = '$sess_phone_number'";
-                                
-                                if (!mysqli_query($con, $update_query)) {
-                                    $success = false;
-                                    $error_message = "Failed to update borrow dates for product ID $product_id: " . mysqli_error($con);
-                                    break;
-                                }
-                            } else {
-                                $success = false;
-                                $error_message = "Return date must be on or after borrow date for book ID $product_id.";
-                                break;
-                            }
+                        // Validate dates and update cart (Original Step: Update dates in cart)
+                        if (!empty($borrow_date) && !empty($return_date) && strtotime($return_date) >= strtotime($borrow_date)) {
+                            
+                            $items_to_order[] = [
+                                'product_id' => $product_id,
+                                'qty' => $qty,
+                                'total' => $product_price * $qty, // Simple total calculation
+                                'farmer_phone' => $farmer_fk, // Assuming farmer_fk is the farmer's ID
+                                'buyer_phone' => $sess_phone_number,
+                                'borrow_date' => $borrow_date,
+                                'return_date' => $return_date
+                            ];
+
+                            // Update cart with dates (required to keep the data temporarily consistent)
+                            $update_query = "UPDATE cart 
+                                             SET borrow_date = '$borrow_date', return_date = '$return_date' 
+                                             WHERE product_id = '$product_id' AND phonenumber = '$sess_phone_number'";
+                            mysqli_query($con, $update_query);
+
                         } else {
                             $success = false;
-                            $error_message = "Please select both borrow and return dates for all books.";
+                            $error_message = "Invalid dates for book ID $product_id.";
                             break;
                         }
                     } else {
                         $success = false;
-                        $error_message = "Missing date fields for a book. Please select dates for all books.";
+                        $error_message = "Missing dates for book ID $product_id.";
                         break;
                     }
                 }
             }
             
-            if ($success) {
-                echo "<script>alert('Borrow request submitted successfully! Dates have been saved to your cart.');</script>";
-                // The cart items remain in the cart table but now have dates attached.
-                // Redirecting to the homepage as per original logic.
+            // Step 2: Move items to orders table and clear cart
+            if ($success && !empty($items_to_order)) {
+                $order_insert_success = true;
+                
+                // Fetch buyer's address from buyerregistration table
+                $buyer_info_query = "SELECT buyer_addr FROM buyerregistration WHERE buyer_phone = '$sess_phone_number'";
+                $buyer_info_result = mysqli_query($con, $buyer_info_query);
+                $buyer_info = mysqli_fetch_assoc($buyer_info_result);
+                $buyer_address = mysqli_real_escape_string($con, $buyer_info['buyer_addr'] ?? 'N/A');
+
+                // Hardcoded defaults for missing orders columns (since cartpage doesn't collect them)
+                $delivery_method = 'Farmer'; // Default delivery
+                $payment_method = 'cod'; // Default payment
+                
+                foreach ($items_to_order as $item) {
+                    
+                    // Fetch farmer's phone for the orders table
+                    $farmer_phone_query = "SELECT farmer_phone FROM farmerregistration WHERE farmer_id = '{$item['farmer_phone']}'";
+                    $farmer_phone_result = mysqli_query($con, $farmer_phone_query);
+                    $farmer_row = mysqli_fetch_assoc($farmer_phone_result);
+                    $farmer_phone = $farmer_row['farmer_phone'] ?? '0';
+
+
+                    // NOTE: The orders table uses BIGINT for 'phonenumber' (farmer's phone) and 'buyer_phonenumber'.
+                    // We need to ensure the quantity, total, and phone numbers are inserted correctly.
+                    $insert_order = "INSERT INTO orders (product_id, qty, address, delivery, phonenumber, total, payment, buyer_phonenumber) 
+                                     VALUES (
+                                         '{$item['product_id']}', 
+                                         '{$item['qty']}', 
+                                         '$buyer_address', 
+                                         '$delivery_method', 
+                                         '{$farmer_phone}', 
+                                         '{$item['total']}', 
+                                         '$payment_method', 
+                                         '$sess_phone_number'
+                                     )";
+                    
+                    if (!mysqli_query($con, $insert_order)) {
+                        $order_insert_success = false;
+                        $error_message = "Failed to finalize order for product ID {$item['product_id']}: " . mysqli_error($con);
+                        break;
+                    }
+                }
+
+                if ($order_insert_success) {
+                    // Step 3: Clear cart
+                    emptyCart(); 
+                    echo "<script>alert('Borrow request submitted successfully! Your items are now being processed.');</script>";
+                    echo "<script>window.open('Transaction.php','_self')</script>"; // Redirect to transactions
+                } else {
+                    echo "<script>alert('Transaction failed: $error_message');</script>";
+                    echo "<script>window.open('CartPage.php','_self')</script>"; 
+                }
+
+            } else if ($success && empty($items_to_order)) {
+                // Should not happen if there are items in the cart, but a safety net
+                echo "<script>alert('Your cart is empty or no changes were made.');</script>";
                 echo "<script>window.open('bhome.php','_self')</script>";
             } else {
-                echo "<script>alert('Submission Error: $error_message');</script>";
-                // Reload the cart page to let the user try again
+                // Dates were invalid or partial. Error already displayed in alert.
                 echo "<script>window.open('CartPage.php','_self')</script>";
             }
         } else {
-            // This case should be caught by the outer session check, but for redundancy:
             echo "<script>alert('You must be logged in to submit a request.');</script>";
             echo "<script>window.open('../auth/UserLogin.php','_self')</script>";
         }

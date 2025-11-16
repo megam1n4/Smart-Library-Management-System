@@ -15,338 +15,388 @@ include("../Functions/functions.php");
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <a href="https://icons8.com/icon/83325/roman-soldier"></a>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/c587fc1763.js" crossorigin="anonymous"></script>
-</head>
-<style>
-    body {
-        margin: 0;
-        padding: 0px;
-        font-family: sans-serif;
-    }
 
-    * {
-        box-sizing: border-box;
-    }
-
-    .table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .table td,
-    .table th {
-        padding: 12px 15px;
-        border: 0px solid #ddd;
-        text-align: center;
-        font-size: 16px;
-    }
-
-    .table th {
-        background-color: #292b2c;
-        color: goldenrod;
-    }
-
-    .table tbody tr:nth-child(even) {
-        background-color: #f5f5f5;
-    }
-
-    .myfooter {
-        background-color: #292b2c;
-
-        color: goldenrod;
-        margin-top: 15px;
-    }
-
-    .aligncenter {
-        text-align: center;
-    }
-
-    a {
-        color: goldenrod;
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    nav {
-        background-color: #292b2c;
-    }
-
-    .navbar-custom {
-        background-color: #292b2c;
-    }
-
-    /* change the brand and text color */
-    .navbar-custom .navbar-brand,
-    .navbar-custom .navbar-text {
-        background-color: #292b2c;
-    }
-
-    .navbar-custom .navbar-nav .nav-link {
-        background-color: #292b2c;
-    }
-
-    .navbar-custom .nav-item.active .nav-link,
-    .navbar-custom .nav-item:hover .nav-link {
-        background-color: #292b2c;
-    }
-
-
-    .mybtn {
-        border-color: green;
-        border-style: solid;
-    }
-
-
-    .right {
-        display: flex;
-    }
-
-    .left {
-        display: none;
-    }
-
-    .cart {
-        /* margin-left:10px; */
-        margin-right: -9px;
-    }
-
-    .profile {
-        margin-right: 2px;
-
-    }
-
-    .login {
-        margin-right: -2px;
-        margin-top: 12px;
-        display: none;
-    }
-
-    .searchbox {
-        width: 60%;
-    }
-
-    .lists {
-        display: inline-block;
-    }
-
-    .moblists {
-        display: none;
-    }
-
-    .logins {
-        text-align: center;
-        margin-right: -30%;
-        margin-left: 35%;
-    }
-
-    @media only screen and (min-device-width:320px) and (max-device-width:480px) {
-
-        .table thead {
-            display: none;
+    <style>
+        /* --- Styles copied from bhome.php for consistent look --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .table,
-        .table tbody,
-        .table tr,
-        .table td {
-            display: block;
-            width: 100%;
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        .table tr {
-            margin-bottom: 15px;
+        /* Modern Navbar Styling */
+        nav.navbar {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 15px 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        .table td {
-            text-align: right;
-            padding-left: 50%;
-            text-align: right;
+        .navbar-brand img {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+            background: white;
+            padding: 5px;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Search Box Styling */
+        .searchbox .input-group {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .searchbox .input-group-text {
+            background-color: white;
+            border: 2px solid #28a745;
+            border-right: none;
+            border-radius: 25px 0 0 25px;
+            color: #28a745;
+        }
+
+        .searchbox .form-control {
+            border: 2px solid #28a745;
+            border-left: none;
+            border-radius: 0 25px 25px 0;
+            padding: 10px 20px;
+        }
+
+        .searchbox .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+            border-color: #28a745;
+        }
+
+        /* User Icons */
+        .user-icon,
+        .cart-icon {
+            color: #28a745;
+            font-size: 28px;
+            cursor: pointer;
+            transition: all 0.3s ease;
             position: relative;
         }
 
-        .table td::before {
-            content: attr(data-label);
+        .user-icon:hover,
+        .cart-icon:hover {
+            color: #20c997;
+            transform: scale(1.1);
+        }
+
+        #icon {
             position: absolute;
-            left: 0;
-            width: 50%;
-            padding-left: 15px;
-            font-size: 15px;
-            font-weight: bold;
-            text-align: left;
-        }
-
-        .right {
-            display: none;
-            background-color: #ff5500;
-        }
-
-        /* 
-            .settings{
-            margin-left:79%;
-        } */
-        .left {
+            top: -8px;
+            right: -10px;
+            background-color: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
             display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
         }
 
-        .moblogo {
-            display: none;
+        /* Dropdown Button */
+        .btn-success {
+            background: #28a745;
+            border: none;
+            font-weight: 600;
+            padding: 8px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
         }
 
-        .logins {
+        .btn-success:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        /* Table Styling */
+        .container {
+            flex-grow: 1;
+            margin-top: 30px;
+        }
+
+        .transactions-header {
             text-align: center;
-            margin-right: 35%;
-            padding: 15px;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .transactions-header h3 {
+            font-size: 2.2rem;
+            font-weight: 800;
         }
 
-        .searchbox {
-            width: 95%;
-            margin-right: 5%;
-            margin-left: 0%;
-        }
 
-        .moblists {
-            display: inline-block;
-            text-align: center;
+        .table-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            overflow-x: auto;
+            margin-bottom: 30px;
+        }
+        
+        .table {
             width: 100%;
+            border-collapse: collapse;
         }
 
-        /* .pic{
-        height:auto;
-    } */
+        .table td,
+        .table th {
+            padding: 12px 15px;
+            border: none;
+            text-align: center;
+            font-size: 16px;
+            vertical-align: middle;
+        }
 
-        /* .mobtext{
-        display:none;
-    }
-    .destext{
-        display:inline-block;
-        width:90%;
-        margin-left: 5%;
-        margin-right: 5%;
-    } */
-    }
-</style>
+        .table thead th {
+            background-color: #292b2c;
+            color: goldenrod;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #f5f5f5;
+        }
+        
+        .table tbody tr:hover {
+            background-color: #e9ecef;
+        }
+        
+        /* Continue Shopping Button */
+        .btn-shopping {
+            background-color:#FFD700;
+            color:#1a1a2e;
+            border: 2px solid #1a1a2e;
+            font-weight: 700;
+            padding: 12px 25px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-shopping:hover {
+            background-color: #e0b000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            color: #1a1a2e;
+            text-decoration: none;
+        }
+
+
+        /* Footer Styling */
+        .myfooter {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #ffc107;
+            padding: 40px 0 20px 0;
+            margin-top: auto;
+        }
+
+        .social li {
+            margin: 0 10px;
+        }
+
+        .social a {
+            color: #ffc107;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .social a:hover {
+            color: #28a745;
+            transform: scale(1.2);
+        }
+
+        /* Responsive Table */
+        @media only screen and (max-device-width:768px) {
+            .table thead {
+                display: none;
+            }
+
+            .table,
+            .table tbody,
+            .table tr,
+            .table td {
+                display: block;
+                width: 100%;
+            }
+
+            .table tr {
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            }
+
+            .table td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+                border: none;
+                border-bottom: 1px solid #eee;
+            }
+
+            .table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 50%;
+                padding-left: 15px;
+                font-size: 15px;
+                font-weight: bold;
+                text-align: left;
+                color: #1a1a2e;
+            }
+            .table tbody tr td:last-child {
+                border-bottom: none;
+            }
+        }
+        
+        /* Mobile Navbar Icons */
+        .left { display: flex; }
+        .right { display: none; }
+        .moblogo { display: none; }
+
+        @media (min-width: 1200px) {
+            .left { display: none; }
+            .right { display: flex; }
+            .d-none { display: none !important; }
+            .d-xl-flex { display: flex !important; }
+        }
+    </style>
+</head>
 
 <body>
 
-    <nav class="navbar navbar-expand-xl ">
-
-        <div class=" flex-row-reverse left ">
-
-            <div class="p-2">
-                <div class="icon2">
-                    <a href="CartPage.php"> <i class="fa" style="font-size:30px; color:green ;margin-top:2px;">&#61562;</i></a>
-                    <span id="icon" style="color:green"> <?php echo totalItems(); ?> </span>
-                </div>
-            </div>
-            <div class="p-2 ml-5"><i class='far fa-user-circle' style='font-size:30px; color: green;margin-top:2px;'></i></div>
-            <a class="float-left" href="bhome.php">
-                <img src="f4.png" class="float-left mr-5 ml-0 " alt="Logo" style="height:35px;">
+    <nav class="navbar navbar-expand-xl navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="bhome.php">
+                <img src="logo2.jpg" alt="Smart Library Logo">
             </a>
-        </div>
-        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"><i class="fas fa-bars p-1 " style="color:green;margin-right:-9%;font-size:28px;"></i></span>
-        </button>
-        <a class="float-left" href="bhome.php">
-            <img src="f4.png" class="float-left mr-2 moblogo" alt="Logo" style="height:35px;">
-        </a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-            <div class="input-group mb-1 ml-2 searchbox">
-                <div class="input-group-prepend">
-                    <div class="input-group-text"><i class="fas fa-search" style="font-size:20px;color:green; "></i></div>
+            <div class="d-xl-none" style="display: flex; align-items: center; gap: 15px;">
+                <i class='far fa-user-circle user-icon'></i>
+                <a href="CartPage.php" style="position: relative;">
+                    <i class="fa fa-shopping-cart cart-icon"></i>
+                    <span id="icon"><?php echo totalItems(); ?></span>
+                </a>
+            </div>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                <i class="fas fa-bars" style="color:#28a745; font-size:28px;"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="mx-auto searchbox">
+                    <form action="SearchResult.php" method="get" enctype="multipart/form-data">
+                        <div class="input-group mb-1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-search" style="font-size:20px;"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="search" placeholder="Search for education, romance books" style="width:500px;">
+                        </div>
+                    </form>
                 </div>
-                <form action="SearchResult.php" method="get" enctype="multipart/form-data">
-                    <input type="text" class="form-control " id="inlineFormInputGroup" name="search" placeholder="Search for Books " style="width:500px;">
-                </form>
-            </div>
-            <?php
-            getUsername();
-            ?>
-            <div class="list-group moblists">
 
-                <?php
-                if (isset($_SESSION['phonenumber'])) {
-                    echo "<a href='productsdetails.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Profile</a>";
-                    echo "<a href= 'Transaction.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Transactions</a>";
-                    echo "<a href='tour.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Live Farm Tour</a>";
-                    echo "<a href='display.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Bid Product</a>";
-                    echo "<a href='customersupport.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Customer Support</a>";
-                    echo "<a href='../Includes/logout.php' class='list-group-item list-group-item-action ' style='background-color:#292b2c;text-align:center;color:goldenrod'>Logout</a>";
-                } else {
-                    echo "<a href='../auth/BuyerLogin.php' class='list-group-item list-group-item-action ' style='background-color:#292b2c;text-align:center;color:goldenrod'>Login</a>";
-                }
-                ?>
+                <?php getUsername(); ?>
 
-            </div>
-        </div>
+                <div class="ml-auto d-none d-xl-flex" style="display: flex; align-items: center; gap: 20px;">
+                    <a href="voice_search.php" class="btn btn-success" style="padding: 8px 20px;">
+                        <i class="fas fa-microphone"></i>
+                    </a>
 
+                    <div class="dropdown">
+                        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                            Explore
+                        </button>
+                        <div class="dropdown-menu">
+                            <?php
+                            if (isset($_SESSION['phonenumber'])) {
+                                echo "<a href='UserProfile.php' class='dropdown-item'>Profile</a>";
+                                
+                                echo "<a href='display.php' class='dropdown-item'>Reserve Rare Book</a>";
+                                echo "<a href='chat.php' class='dropdown-item'>Group chat</a>";
+                                
+                                echo "<a href='genre.php' class='dropdown-item'>Join Quiz</a>";
+                                echo "<a href='Donate.php' class='dropdown-item'>Book Donation</a>";
+                                echo "<a href='exhibition.php' class='dropdown-item'>Join Rare Book Exhibition</a>";
+                                echo "<a href='../Includes/logout.php' class='dropdown-item'>Logout</a>";
+                            } else {
+                                echo "<a href='../auth/UserLogin.php' class='dropdown-item'>Login</a>";
+                            }
+                            ?>
+                        </div>
+                    </div>
 
+                    <i class='far fa-user-circle user-icon'></i>
 
-
-        <div class=" flex-row-reverse right ">
-            <div class="p-2 cart">
-                <div class="icon2">
-                    <a href="CartPage.php"> <i class="fa" style="font-size:30px; color:green">&#61562;</i></a>
-                    <span id="icon" style="color:green"> <?php echo totalItems(); ?> </span>
-                </div>
-            </div>
-            <div class="dropdown p-2 settings ">
-                <button class="btn  dropdown-toggle text-success" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Settings
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <?php
-                    if (isset($_SESSION['phonenumber'])) {
-                        echo "<a href='productsdetails.php' class='dropdown-item  ' style='padding-right:-20px;'>Profile</a>";
-                        echo "<a href='Transaction.php' class='dropdown-item ' style='padding-right:-20px;'>Transactions</a>";
-                        echo "<a href='display.php' class='dropdown-item'  style='padding-right:-20px;'>Bid Product</a>";
-                        echo "<a href='tour.php' class='dropdown-item' style='padding-right:-20px;'>Live Farm Tour</a>";
-                        echo "<a href='customersupport.php' class='dropdown-item' style='padding-right:-20px;' >Customer Support</a>";
-                        echo "<a href='../Includes/logout.php' class='dropdown-item ' style='padding-right:-20px;'>Logout</a>";
-                    } else {
-                        echo "<a href='../auth/BuyerLogin.php' class='dropdown-item ' style='padding-right:-20px;'>Login</a>";
-                    }
-                    ?>
+                    <a href="CartPage.php" style="position: relative;">
+                        <i class="fa fa-shopping-cart cart-icon"></i>
+                        <span id="icon"><?php echo totalItems(); ?></span>
+                    </a>
                 </div>
             </div>
-
-
-            <div class="text-success  login">Login</div>
         </div>
-
     </nav>
-    <br>
+    
     <div class="container">
-        <div class="text-left">
-            <h3 class="mt-2">Your Transactions </h3>
-            <hr style="margin-top:-0.5%">
+        <div class="transactions-header">
+            <h3>Your Borrowing History and Transactions</h3>
         </div>
-        <br>
 
-        <table class="table">
-            <thead>
-                <th>Farmer Name</th>
-                <th>Phone</th>
-                <th>Delivery Address</th>
-                <th>Product</th>
-                <th>Quantity</th>
-                <!-- <th>Delivary mode</th> -->
-                <th>Payment mode</th>
-                <th>Amount</th>
-            </thead>
+        <?php
+        // Ensure user is logged in before proceeding
+        if (!isset($_SESSION['phonenumber'])) {
+            echo "<h1 align = center>Please Login First!</h1><br><br><hr>";
+        } else {
+            // Transaction Table Content
+        ?>
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Librarian Name</th>
+                        <th>Librarian Phone</th>
+                        <th>Delivery Address</th>
+                        <th>Book</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
 
-            <tbody>
-                <?php
-
-                global $con;
-                if (isset($_SESSION['phonenumber'])) {
+                <tbody>
+                    <?php
+                    global $con;
                     $sess_phone_number = $_SESSION['phonenumber'];
                     $sel_price = "select * from orders where buyer_phonenumber = '$sess_phone_number'";
                     $run_price = mysqli_query($con, $sel_price);
@@ -355,10 +405,8 @@ include("../Functions/functions.php");
                     while ($p_price = mysqli_fetch_array($run_price)) {
                         $product_id = $p_price['product_id'];
                         $qty = $p_price['qty'];
-                        $total = $p_price['total'];
                         $address = $p_price['address'];
                         $delivery = $p_price['delivery'];
-                        $payment = $p_price['payment'];
 
                         $pro_price = "select * from products where product_id='$product_id'";
                         $run_pro_price = mysqli_query($con, $pro_price);
@@ -371,74 +419,57 @@ include("../Functions/functions.php");
                             while ($names = mysqli_fetch_array($run_query_name)) {
                                 $farmer_name = $names['farmer_name'];
                                 $farmer_phone = $names['farmer_phone'];
-
-                ?>
-                                <tr>
-                                    <td data-label="Farmer name"><?php echo $farmer_name; ?> </td>
-                                    <td data-label="Phone"><?php echo $farmer_phone; ?> </td>
-                                    <td data-label="Address"><?php echo $address; ?> </td>
-                                    <td data-label="Product"><?php echo $product_title; ?> </td>
-                                    <td data-label="Quantity"><?php echo $qty; ?> </td>
-                                    <!-- <td data-label="Delivary mode"><?php echo $delivery; ?> </td> -->
-                                    <td data-label="Payment mode"><?php echo $payment; ?> </td>
-                                    <td data-label="Amount"><?php echo $total; ?> </td>
-                                </tr>
-            </tbody>
-<?php
                             }
+                    ?>
+                            <tr>
+                                <td data-label="Librarian Name"><?php echo htmlspecialchars($farmer_name); ?> </td>
+                                <td data-label="Librarian Phone"><?php echo htmlspecialchars($farmer_phone); ?> </td>
+                                <td data-label="Delivery Address"><?php echo htmlspecialchars($address); ?> </td>
+                                <td data-label="Book"><?php echo htmlspecialchars($product_title); ?> </td>
+                                <td data-label="Quantity"><?php echo htmlspecialchars($qty); ?> </td>
+                            </tr>
+                    <?php
                         }
                         $i++;
                     }
-                } else {
-                    echo "<h1 align = center>Please Login First!</h1><br><br><hr>";
-                } ?>
-        </table>
-        <br><br>
-        <a href="bhome.php">
-            <button type="button" class="btn  btn-lg border border-dark" style="background-color:#FFD700;color:black;">Continue Shopping
-                <i class="fas fa-shopping-bag ml-2" aria-hidden="true"></i></button>
-        </a>
+                    ?>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="text-left mt-3">
+            <a href="bhome.php" class="btn btn-shopping">
+                Continue Browsing Books
+                <i class="fas fa-shopping-bag ml-2" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <?php } // End of session check else block ?>
     </div>
-
-
-
-
-
-
-
-    <br><br>
 
 
     <section id="footer" class="myfooter">
         <div class="container">
-            <div class="row text-center text-xs-center text-sm-left text-md-left">
-                <div class="col aligncenter">
-                    <br>
-                    <h5>Payment Option</h5>
-                    <img src="../Images/Website/paytm1.jpg" alt="paytm">
-                    <img src="../Images/Website/cod.jpg" alt="paytm" style="height:37px">
-                </div>
-            </div>
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
+                <div class="col-12 mt-4">
                     <ul class="list-unstyled list-inline social text-center">
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-facebook"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-twitter"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-instagram"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-google-plus"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();" target="_blank"><i class="fa fa-envelope"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-facebook"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-instagram"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-google-plus"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-envelope"></i></a></li>
                     </ul>
                 </div>
-                </hr>
             </div>
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center">
-                    <p><u><a href="https://www.agrocraft.com/">Online Farmers Market</a></u> Online Website for farmers and traders</p>
-                    <p class="h6">Copy All right Reversed.<a class="text-green ml-2" href="https://www.google.com" target="_blank">Deadlock</a></p>
+                <div class="col-12 mt-2 text-center">
+                    <p><strong>Smart Library Management System</strong> - An Advanced Digital Library Management System</p>
+                    <p class="h6">Copyright © All Rights Reserved. Foreign Key Friends</p>
                 </div>
-                </hr>
             </div>
         </div>
+    </section>
+
 </body>
 
 </html>
