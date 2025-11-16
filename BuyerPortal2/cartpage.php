@@ -499,10 +499,10 @@ include("../Functions/functions.php");
                                 
                                 echo "<a href='display.php' class='dropdown-item'>Reserve Rare Book</a>";
                                 echo "<a href='chat.php' class='dropdown-item'>Group chat</a>";
-                                echo "<a href='debate.php' class='dropdown-item'>Join Debate</a>";
-                                echo "<a href='genre.php' class='dropdown-item'>Join Quiz</a>";
                                 
-                                echo "<a href='customersupport.php' class='dropdown-item'>Join Rare Book Exhibition</a>";
+                                echo "<a href='genre.php' class='dropdown-item'>Join Quiz</a>";
+                                echo "<a href='Donate.php' class='dropdown-item'>Book Donation</a>";
+                                echo "<a href='exhibition.php' class='dropdown-item'>Join Rare Book Exhibition</a>";
                                 echo "<a href='../Includes/logout.php' class='dropdown-item'>Logout</a>";
                             } else {
                                 echo "<a href='../auth/UserLogin.php' class='dropdown-item'>Login</a>";
@@ -682,7 +682,7 @@ include("../Functions/functions.php");
                     
                     <a href="bhome.php">
                         <button type="button" class="action-btn">
-                            <i class="fas fa-shopping-bag"></i> Continue Shopping
+                            <i class="fas fa-shopping-bag"></i> Continue Browsing Books
                         </button>
                     </a>
                     
