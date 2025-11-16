@@ -160,7 +160,7 @@
 
                 if ($days_diff > 0) {
                     // Due in the future
-                    $message = "<strong>$product_title:</strong> Due in $days_diff days.";
+                    $message = "<strong>$product_title:</strong> Due in $days_diff day(s).";
                     $alert_class = 'borrow-alert-success'; // Green
                 } elseif ($days_diff == 0) {
                     // Due today
@@ -169,7 +169,7 @@
                 } else {
                     // Overdue
                     $days_overdue = abs($days_diff);
-                    $message = "<strong>$product_title:</strong> Overdue by $days_overdue days.";
+                    $message = "<strong>$product_title:</strong> Overdue by $days_overdue day(s).";
                     $alert_class = 'borrow-alert-danger'; // Red
                 }
 
