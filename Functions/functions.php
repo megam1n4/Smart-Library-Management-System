@@ -394,6 +394,66 @@ function cart()
     {
         global $con;
     }
+
+    /**
+     * Gets the total number of registered users (buyers).
+     * @return int The total count of users.
+     */
+    function getTotalUsers() {
+        global $con;
+        $count = 0;
+        $query_users = "SELECT COUNT(*) as total FROM buyerregistration";
+        $run_users = mysqli_query($con, $query_users);
+        if ($run_users) {
+            $count = mysqli_fetch_assoc($run_users)['total'];
+        }
+        return (int)$count;
+    }
+
+    /**
+     * Gets the total number of books (products).
+     * @return int The total count of books.
+     */
+    function getTotalBooks() {
+        global $con;
+        $count = 0;
+        $query_books = "SELECT COUNT(*) as total FROM products";
+        $run_books = mysqli_query($con, $query_books);
+        if ($run_books) {
+            $count = mysqli_fetch_assoc($run_books)['total'];
+        }
+        return (int)$count;
+    }
+
+    /**
+     * Gets the total number of rare books (bids).
+     * @return int The total count of rare books.
+     */
+    function getTotalRareBooks() {
+        global $con;
+        $count = 0;
+        $query_rare = "SELECT COUNT(*) as total FROM bid";
+        $run_rare = mysqli_query($con, $query_rare);
+        if ($run_rare) {
+            $count = mysqli_fetch_assoc($run_rare)['total'];
+        }
+        return (int)$count;
+    }
+
+    /**
+     * Gets the total number of borrowed books (completed loans in cart).
+     * @return int The total count of borrowed books.
+     */
+    function getTotalBorrowedBooks() {
+        global $con;
+        $count = 0;
+        $query_borrowed = "SELECT COUNT(*) as total FROM cart WHERE borrow_date IS NOT NULL AND return_date IS NOT NULL";
+        $run_borrowed = mysqli_query($con, $query_borrowed);
+        if ($run_borrowed) {
+            $count = mysqli_fetch_assoc($run_borrowed)['total'];
+        }
+        return (int)$count;
+    }
     ?>
 
 
