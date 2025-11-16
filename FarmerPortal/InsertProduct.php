@@ -15,10 +15,13 @@ $sessphonenumber = $_SESSION['phonenumber'];
     <script src="https://kit.fontawesome.com/c587fc1763.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="../portal_files/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 
     <title>Farmer - Insert Product</title>
     <style>
+        /* Styles from InsertProduct.php */
         @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 
         body {
@@ -29,6 +32,10 @@ $sessphonenumber = $_SESSION['phonenumber'];
             color: #212529;
             text-align: left;
             background-color: #f5f8fa;
+            font-family: 'Inter', sans-serif; /* Added Inter font */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .my-form,
@@ -39,6 +46,7 @@ $sessphonenumber = $_SESSION['phonenumber'];
         .my-form {
             padding-top: 1.5rem;
             padding-bottom: 1.5rem;
+            flex-grow: 1; /* Allows container to fill space */
         }
 
         .my-form .row {
@@ -55,10 +63,73 @@ $sessphonenumber = $_SESSION['phonenumber'];
             margin-left: 0;
             margin-right: 0;
         }
+
+        /* Styles copied from donate_book.php for top bar and footer */
+        .top-logo-bar {
+            background: linear-gradient(135deg, #292b2c 0%, #1a1a2e 100%);
+            padding: 10px 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            z-index: 100;
+        }
+        
+        .top-logo-bar a {
+            display: inline-block;
+        }
+        
+        .top-logo-bar img {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+            background: white;
+            padding: 5px;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .top-logo-bar img:hover {
+            transform: scale(1.05);
+        }
+
+        .myfooter {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #ffc107;
+            padding: 40px 0 20px 0;
+            margin-top: auto;
+        }
+
+        .myfooter h5 {
+            color: #ffc107;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .myfooter img {
+            margin: 10px;
+            border-radius: 8px;
+            max-height: 35px;
+            width: auto;
+        }
+
+        .social li a {
+            color: #ffc107;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+        
+        .social li a:hover {
+            color: #28a745;
+        }
     </style>
 </head>
 
 <body>
+    <div class="top-logo-bar">
+        <a href="farmerHomepage.php">
+            <img src="logo2.jpg" alt="Smart Library Logo">
+        </a>
+    </div>
+
     <div class="container">
         <main class="my-form">
             <div class="cotainer">
@@ -115,29 +186,15 @@ $sessphonenumber = $_SESSION['phonenumber'];
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="nid_number" class="col-md-4 col-form-label text-md-right text-center font-weight-bolder">Book USD : </label>
-                                        <div class="col-md-6">
-                                            <input type="text" id="nid_number" class="form-control" name="product_price" placeholder="Enter Product price" required>
-                                        </div>
-                                    </div>
-
-                                    <!-- <div class="form-group row">
-                                        <label for="nid_number1" class="col-md-4 col-form-label text-md-right text-center font-weight-bolder">Product Base Price:(Per kg)</label>
-                                        <div class="col-md-6">
-                                            <input type="text" id="nid_number1" class="form-control" name="product_baseprice" placeholder="Enter Product base price" required>
-                                        </div>
-                                    </div> -->
-
-                                    <div class="form-group row">
                                         <label for="nid_number2" class="col-md-4 col-form-label text-md-right text-center font-weight-bolder"> Book Description:</label>
                                         <div class="col-md-6">
-                                            <textarea name="product_desc" id="nid_number2" class="form-control" name="product_desc" rows="3" required></textarea>
+                                            <textarea name="product_desc" id="nid_number2" class="form-control" rows="3" required></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="nid_number2" class="col-md-4 col-form-label text-md-right text-center font-weight-bolder"> Book Type:</label>
                                         <div class="col-md-6">
-                                            <textarea name="product_type" id="nid_number2" class="form-control" name="product_type" rows="3" required></textarea>
+                                            <textarea name="product_type" id="nid_number2" class="form-control" rows="3" required></textarea>
                                         </div>
                                     </div>
 
@@ -166,11 +223,35 @@ $sessphonenumber = $_SESSION['phonenumber'];
                     </div>
                 </div>
             </div>
+        </main>
     </div>
-    </main>
-    </div>
+    
+    <section id="footer" class="myfooter">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
+                    <ul class="list-unstyled list-inline social text-center">
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-facebook"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-instagram"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-google-plus"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();" target="_blank"><i class="fa fa-envelope"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center">
+                    <p>Smart Library Management System is a Online Management System for Book Lovers!</p>
+                    <p class="h6"><a class="text-green ml-2" target="_blank">Foreign Key Friends</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <body>
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </html>
 
@@ -184,7 +265,7 @@ if (isset($_POST['insert_pro'])) {    // when button is clicked
     $product_type = $_POST['product_type'];
     $product_stock = $_POST['product_stock'];
     $product_price = $_POST['product_price'];
-    $product_expiry = $_POST['product_expiry'];
+    $product_expiry = $_POST['product_expiry']; // This field does not exist in the form, but keeping logic for existing functionality
     $product_desc = $_POST['product_desc'];
     $product_keywords = $_POST['product_keywords'];
     $product_delivery = $_POST['product_delivery'];
@@ -194,13 +275,19 @@ if (isset($_POST['insert_pro'])) {    // when button is clicked
     $product_image_tmp = $_FILES['product_image']['tmp_name'];  // for server
 
     if (isset($_SESSION['phonenumber'])) {
+        // NOTE: The upload path is relative to the PHP file. 
+        // Based on the file structure, the correct path is assumed to be "../Admin/product_images/"
         move_uploaded_file($product_image_tmp, "../Admin/product_images/$product_image");
 
         $phone = $_SESSION['phonenumber'];
-        $getting_id = "select * from farmerregistration where farmer_phone = $sessphonenumber";
+        
+        // This query uses $sessphonenumber (from the top of the file) which is $_SESSION['phonenumber']
+        $getting_id = "select * from farmerregistration where farmer_phone = '$sessphonenumber'"; 
         $run = mysqli_query($con, $getting_id);
         $row = mysqli_fetch_array($run);
         $id = $row['farmer_id'];
+        
+        // The SQL query includes 'product_expiry' which is not in the form, but kept for logic consistency.
         $insert_product = "insert into products (farmer_fk,product_title, product_cat, 
                                 product_type,product_expiry,product_image, product_stock, product_price,
                                 product_desc,  product_keywords, product_delivery) 
