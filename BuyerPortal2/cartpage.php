@@ -1,5 +1,9 @@
 <?php
+// Note: We rely on functions.php to include db.php and start the session.
 include("../Functions/functions.php");
+
+// Ensure the database connection is available for the POST request logic
+global $con; 
 ?>
 
 <!DOCTYPE html>
@@ -420,15 +424,12 @@ include("../Functions/functions.php");
 
 <body>
 
-    <!-- Modern Navbar -->
     <nav class="navbar navbar-expand-xl navbar-dark">
         <div class="container-fluid">
-            <!-- Logo -->
             <a class="navbar-brand" href="bhome.php">
                 <img src="logo2.jpg" alt="Smart Library Logo">
             </a>
 
-            <!-- Mobile Icons -->
             <div class="d-xl-none" style="display: flex; align-items: center; gap: 15px;">
                 <i class='far fa-user-circle user-icon'></i>
                 <a href="CartPage.php" style="position: relative;">
@@ -437,14 +438,11 @@ include("../Functions/functions.php");
                 </a>
             </div>
 
-            <!-- Navbar Toggler -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
                 <i class="fas fa-bars" style="color:#28a745; font-size:28px;"></i>
             </button>
 
-            <!-- Collapsible Content -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Search Box -->
                 <div class="mx-auto searchbox">
                     <form action="SearchResult.php" method="get" enctype="multipart/form-data">
                         <div class="input-group mb-1">
@@ -458,10 +456,8 @@ include("../Functions/functions.php");
                     </form>
                 </div>
 
-                <!-- Username Display -->
                 <?php getUsername(); ?>
 
-                <!-- Mobile Menu List -->
                 <div class="list-group moblists">
                     <?php
                     if (isset($_SESSION['phonenumber'])) {
@@ -480,14 +476,11 @@ include("../Functions/functions.php");
                     ?>
                 </div>
 
-                <!-- Desktop Right Icons -->
                 <div class="ml-auto d-none d-xl-flex" style="display: flex; align-items: center; gap: 20px;">
-                    <!-- Voice Search -->
                     <a href="voice_search.php" class="voice-search-btn" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px;">
                         <i class="fas fa-microphone"></i> Voice Search
                     </a>
 
-                    <!-- Explore Dropdown -->
                     <div class="dropdown">
                         <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
                             Explore
@@ -511,10 +504,8 @@ include("../Functions/functions.php");
                         </div>
                     </div>
 
-                    <!-- User Icon -->
                     <i class='far fa-user-circle user-icon'></i>
 
-                    <!-- Cart Icon -->
                     <a href="CartPage.php" style="position: relative;">
                         <i class="fa fa-shopping-cart cart-icon"></i>
                         <span id="icon"><?php echo totalItems(); ?></span>
@@ -524,67 +515,88 @@ include("../Functions/functions.php");
         </div>
     </nav>
 
-    <!-- Cart Header -->
     <?php
     // Handle Submit Borrow Request
     if (isset($_POST['submit_borrow_request'])) {
+        // NOTE: We rely on functions.php to include db.php and globalize $con
+        // We ensure $con is available via the global keyword if it's not visible here.
+        global $con; 
+
         if (isset($_SESSION['phonenumber'])) {
             $sess_phone_number = $_SESSION['phonenumber'];
             $success = true;
             $error_message = "";
             
-            // Get all cart items
-            $sel_cart = "select * from cart where phonenumber = '$sess_phone_number'";
+            // Get all cart items for the current session user
+            $sel_cart = "SELECT * FROM cart WHERE phonenumber = '$sess_phone_number'";
             $run_cart = mysqli_query($con, $sel_cart);
             
-            while ($cart_item = mysqli_fetch_array($run_cart)) {
-                $product_id = $cart_item['product_id'];
-                
-                // Get borrow and return dates from POST
-                $borrow_date_field = 'borrow_date_' . $product_id;
-                $return_date_field = 'return_date_' . $product_id;
-                
-                if (isset($_POST[$borrow_date_field]) && isset($_POST[$return_date_field])) {
-                    $borrow_date = mysqli_real_escape_string($con, $_POST[$borrow_date_field]);
-                    $return_date = mysqli_real_escape_string($con, $_POST[$return_date_field]);
+            if (!$run_cart) {
+                $success = false;
+                $error_message = "Database error fetching cart items: " . mysqli_error($con);
+            } else {
+                while ($cart_item = mysqli_fetch_array($run_cart)) {
+                    $product_id = $cart_item['product_id'];
                     
-                    // Validate dates
-                    if (!empty($borrow_date) && !empty($return_date)) {
-                        if (strtotime($return_date) >= strtotime($borrow_date)) {
-                            // Update cart with borrow and return dates
-                            $update_query = "UPDATE cart SET borrow_date = '$borrow_date', return_date = '$return_date' WHERE product_id = '$product_id' AND phonenumber = '$sess_phone_number'";
-                            
-                            if (!mysqli_query($con, $update_query)) {
+                    // Construct the unique POST field names
+                    $borrow_date_field = 'borrow_date_' . $product_id;
+                    $return_date_field = 'return_date_' . $product_id;
+                    
+                    if (isset($_POST[$borrow_date_field]) && isset($_POST[$return_date_field])) {
+                        $borrow_date = mysqli_real_escape_string($con, $_POST[$borrow_date_field]);
+                        $return_date = mysqli_real_escape_string($con, $_POST[$return_date_field]);
+                        
+                        // Validate dates
+                        if (!empty($borrow_date) && !empty($return_date)) {
+                            // Check if return date is on or after borrow date
+                            if (strtotime($return_date) >= strtotime($borrow_date)) {
+                                
+                                // Update cart with borrow and return dates
+                                $update_query = "UPDATE cart 
+                                                 SET borrow_date = '$borrow_date', return_date = '$return_date' 
+                                                 WHERE product_id = '$product_id' AND phonenumber = '$sess_phone_number'";
+                                
+                                if (!mysqli_query($con, $update_query)) {
+                                    $success = false;
+                                    $error_message = "Failed to update borrow dates for product ID $product_id: " . mysqli_error($con);
+                                    break;
+                                }
+                            } else {
                                 $success = false;
-                                $error_message = "Failed to update borrow dates for some items.";
+                                $error_message = "Return date must be on or after borrow date for book ID $product_id.";
                                 break;
                             }
                         } else {
                             $success = false;
-                            $error_message = "Return date must be on or after borrow date.";
+                            $error_message = "Please select both borrow and return dates for all books.";
                             break;
                         }
                     } else {
                         $success = false;
-                        $error_message = "Please select both borrow and return dates for all books.";
+                        $error_message = "Missing date fields for a book. Please select dates for all books.";
                         break;
                     }
-                } else {
-                    $success = false;
-                    $error_message = "Please select dates for all books in your cart.";
-                    break;
                 }
             }
             
             if ($success) {
-                echo "<script>alert('Borrow request submitted successfully!');</script>";
+                echo "<script>alert('Borrow request submitted successfully! Dates have been saved to your cart.');</script>";
+                // The cart items remain in the cart table but now have dates attached.
+                // Redirecting to the homepage as per original logic.
                 echo "<script>window.open('bhome.php','_self')</script>";
             } else {
-                echo "<script>alert('$error_message');</script>";
+                echo "<script>alert('Submission Error: $error_message');</script>";
+                // Reload the cart page to let the user try again
+                echo "<script>window.open('CartPage.php','_self')</script>";
             }
+        } else {
+            // This case should be caught by the outer session check, but for redundancy:
+            echo "<script>alert('You must be logged in to submit a request.');</script>";
+            echo "<script>window.open('../auth/UserLogin.php','_self')</script>";
         }
     }
     
+    // Display Cart Header
     if (isset($_SESSION['phonenumber'])) {
         $temp = totalItems();
         echo "
@@ -600,6 +612,9 @@ include("../Functions/functions.php");
         <?php
         if (isset($_SESSION['phonenumber'])) {
             $sess_phone_number = $_SESSION['phonenumber'];
+            // Using global $con here to ensure connection is available
+            global $con; 
+
             $sel_price = "select * from cart where phonenumber = '$sess_phone_number'";
             $run_price = mysqli_query($con, $sel_price);
             $count = mysqli_num_rows($run_price);
@@ -626,6 +641,9 @@ include("../Functions/functions.php");
                             
                             while ($p_price = mysqli_fetch_array($run_price)) {
                                 $product_id = $p_price['product_id'];
+                                $borrow_date_val = $p_price['borrow_date']; // Fetch existing dates
+                                $return_date_val = $p_price['return_date']; // Fetch existing dates
+
                                 $_SESSION['qtycart'][$i] = $p_price['qty'];
 
                                 $pro_price = "select * from products where product_id='$product_id'";
@@ -640,23 +658,33 @@ include("../Functions/functions.php");
                                         <td data-label="Quantity">
                                             <div class="qty-control">
                                                 <a href="MinusQty.php?id=<?php echo $product_id; ?>">
-                                                    <button class="qty-btn">
+                                                    <button type="button" class="qty-btn">
                                                         <i class="fas fa-minus"></i>
                                                     </button>
                                                 </a>
                                                 <input type="number" class="qty-input" value="<?php echo $_SESSION['qtycart'][$i]; ?>" readonly>
                                                 <a href="AddQty.php?id=<?php echo $product_id; ?>">
-                                                    <button class="qty-btn">
+                                                    <button type="button" class="qty-btn">
                                                         <i class="fas fa-plus"></i>
                                                     </button>
                                                 </a>
                                             </div>
                                         </td>
                                         <td data-label="Borrow Date">
-                                            <input type="date" class="date-input" name="borrow_date_<?php echo $product_id; ?>" id="borrow_date_<?php echo $product_id; ?>" min="<?php echo date('Y-m-d'); ?>" required>
+                                            <input type="date" class="date-input" 
+                                                   name="borrow_date_<?php echo $product_id; ?>" 
+                                                   id="borrow_date_<?php echo $product_id; ?>" 
+                                                   min="<?php echo date('Y-m-d'); ?>" 
+                                                   value="<?php echo htmlspecialchars($borrow_date_val); ?>"
+                                                   required>
                                         </td>
                                         <td data-label="Return Date">
-                                            <input type="date" class="date-input" name="return_date_<?php echo $product_id; ?>" id="return_date_<?php echo $product_id; ?>" min="<?php echo date('Y-m-d'); ?>" required>
+                                            <input type="date" class="date-input" 
+                                                   name="return_date_<?php echo $product_id; ?>" 
+                                                   id="return_date_<?php echo $product_id; ?>" 
+                                                   min="<?php echo date('Y-m-d'); ?>" 
+                                                   value="<?php echo htmlspecialchars($return_date_val); ?>"
+                                                   required>
                                         </td>
                                         <td data-label="Delete">
                                             <a href="DeleteProductCart.php?id=<?php echo $product_id; ?>" class="delete-btn">
@@ -725,7 +753,6 @@ include("../Functions/functions.php");
         ?>
     </div>
 
-    <!-- Footer -->
     <section id="footer" class="myfooter">
         <div class="container">
             <div class="row">
