@@ -1,5 +1,7 @@
 <?php
 include("../Functions/functions.php");
+
+borrowedBooksAlerts();
 ?>
 
 <!DOCTYPE html>
