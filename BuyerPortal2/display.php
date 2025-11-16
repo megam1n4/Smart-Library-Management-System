@@ -299,6 +299,20 @@ if (isset($_POST['reserve_book'])) {
             transform: scale(1.05);
         }
 
+        /* Placeholder for missing images */
+        .book-image-placeholder {
+            width: 120px;
+            height: 160px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+        }
+
         /* Reserve Button */
         .btn-reserve {
             background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
@@ -575,12 +589,21 @@ if (isset($_POST['reserve_book'])) {
 
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
+                                // Check if image exists and is not empty
+                                $image_path = htmlspecialchars($row['product_image']);
+                                $image_html = '';
+                                
+                                if (!empty($image_path) && file_exists($image_path)) {
+                                    $image_html = "<img src='" . $image_path . "' alt='Book Cover' class='book-image'>";
+                                } else {
+                                    // Show placeholder icon if image doesn't exist
+                                    $image_html = "<div class='book-image-placeholder'><i class='fas fa-book'></i></div>";
+                                }
+                                
                                 echo "<tr>
                                     <td class='book-name'>" . htmlspecialchars($row['product_name']) . "</td>
                                     <td class='book-description'>" . htmlspecialchars($row['product_description']) . "</td>
-                                    <td>
-                                        <img src='" . htmlspecialchars($row['product_image']) . "' alt='Book Cover' class='book-image'>
-                                    </td>
+                                    <td>" . $image_html . "</td>
                                     <td>
                                         <form method='post' action=''>
                                             <input type='hidden' name='product_name' value='" . htmlspecialchars($row['product_name']) . "'>
