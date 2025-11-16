@@ -364,6 +364,11 @@ if (isset($_POST['register'])) {
     $password = mysqli_real_escape_string($con, $_POST['password']);
     $confirmpassword = mysqli_real_escape_string($con, $_POST['confirmpassword']);
 
+    $company_name = !empty($_POST['company_name']) ? $company_name : null;
+    $license = !empty($_POST['license']) ? $license : null;
+    $account = !empty($_POST['account']) ? $account : null;
+    $pan = !empty($_POST['pan']) ? $pan : null;
+
     $ciphering = "AES-128-CTR";
     $iv_length = openssl_cipher_iv_length($ciphering);
     $options = 0;
