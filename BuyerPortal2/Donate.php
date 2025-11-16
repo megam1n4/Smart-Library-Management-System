@@ -1,97 +1,48 @@
 <?php
-include("../Functions/functions.php");
+session_start();
+// Removed: include("../Functions/functions.php"); to avoid duplicate session_start() call
 include("../Includes/db.php");
 
+// Check if the farmer is logged in
 if (!isset($_SESSION['phonenumber'])) {
-    echo "<script>alert('You must be logged in to take the quiz.');</script>";
+    echo "<script>alert('You must be logged in to donate books.');</script>";
     echo "<script>window.open('../auth/UserLogin.php','_self')</script>";
     exit();
 }
 
-$phonenumber = $_SESSION['phonenumber'];
+$farmer_phone = $_SESSION['phonenumber'];
 
-// Fetch buyer's name based on phone number
-$name_query = "SELECT buyer_name FROM buyerregistration WHERE buyer_phone = '$phonenumber'";
-$name_result = mysqli_query($con, $name_query);
-$buyer_data = mysqli_fetch_assoc($name_result);
-$buyer_name = $buyer_data['buyer_name'] ?? 'Unknown User';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $book_title = mysqli_real_escape_string($con, $_POST['book_title']);
+    $book_description = mysqli_real_escape_string($con, $_POST['book_description']);
+    $condition = mysqli_real_escape_string($con, $_POST['condition']);
+    $image_path = null;
 
-if (!isset($_SESSION['quiz2_start_time'])) {
-    $_SESSION['quiz2_start_time'] = time(); // Record the start time in session
-}
+    // Handle image upload
+    if (!empty($_FILES['book_image']['name'])) {
+        $image_name = $_FILES['book_image']['name'];
+        $image_tmp = $_FILES['book_image']['tmp_name'];
+        $upload_dir = 'uploads/';
 
-// Define SQL quiz questions
-$sql_questions = [
-    [
-        'id' => 1,
-        'question' => 'Which SQL statement is used to extract data from a database?',
-        'option_a' => 'GET',
-        'option_b' => 'SELECT',
-        'option_c' => 'EXTRACT',
-        'option_d' => 'OPEN',
-        'correct_option' => 'B'
-    ],
-    [
-        'id' => 2,
-        'question' => 'Which SQL keyword is used to sort the result-set?',
-        'option_a' => 'SORT BY',
-        'option_b' => 'ARRANGE',
-        'option_c' => 'ORDER BY',
-        'option_d' => 'SORT',
-        'correct_option' => 'C'
-    ],
-    [
-        'id' => 3,
-        'question' => 'What does the SQL COUNT() function do?',
-        'option_a' => 'Adds all values in a column',
-        'option_b' => 'Returns the number of rows',
-        'option_c' => 'Multiplies column values',
-        'option_d' => 'Divides column values',
-        'correct_option' => 'B'
-    ],
-    [
-        'id' => 4,
-        'question' => 'Which JOIN returns all records when there is a match in either left or right table?',
-        'option_a' => 'INNER JOIN',
-        'option_b' => 'LEFT JOIN',
-        'option_c' => 'RIGHT JOIN',
-        'option_d' => 'FULL OUTER JOIN',
-        'correct_option' => 'D'
-    ],
-    [
-        'id' => 5,
-        'question' => 'What is the correct SQL syntax to delete all records from a table named "users"?',
-        'option_a' => 'DELETE FROM users',
-        'option_b' => 'REMOVE * FROM users',
-        'option_c' => 'DROP TABLE users',
-        'option_d' => 'DELETE * FROM users',
-        'correct_option' => 'A'
-    ]
-];
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $score = 0;
-    $start_time = $_SESSION['quiz2_start_time'];
-    $end_time = time();
-    $time_taken = $end_time - $start_time; // Time taken in seconds
-    
-    // Loop through questions and check answers
-    foreach ($_POST['answers'] as $question_id => $selected_option) {
-        foreach ($sql_questions as $question) {
-            if ($question['id'] == $question_id && $selected_option === $question['correct_option']) {
-                $score++;
-                break;
-            }
+        // Create upload directory if it doesn't exist
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0777, true);
         }
+
+        $image_path = $upload_dir . basename($image_name);
+        move_uploaded_file($image_tmp, $image_path);
     }
 
-    // Insert result into `quiz_results` table (reusing the same table with a different identifier)
-    $quiz_type = 'SQL Quiz';
-    $insert_query = "INSERT INTO quiz_results (buyer_phone, buyer_name, score, time_taken) VALUES ('$phonenumber', '$buyer_name ($quiz_type)', '$score', '$time_taken')";
-    mysqli_query($con, $insert_query);
+    // Insert into the book_donations table
+    $query = "INSERT INTO book_donations (farmer_phone, book_title, book_description, `condition`, image_path) 
+              VALUES ('$farmer_phone', '$book_title', '$book_description', '$condition', '$image_path')";
+    $result = mysqli_query($con, $query);
 
-    // Clear the start time from session
-    unset($_SESSION['quiz2_start_time']);
+    if ($result) {
+        $message = "<div class='alert alert-success'><i class='fas fa-check-circle'></i> Book donated successfully!</div>";
+    } else {
+        $message = "<div class='alert alert-danger'><i class='fas fa-exclamation-circle'></i> Error: Could not donate the book.</div>";
+    }
 }
 ?>
 
@@ -101,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SQL Quiz - Smart Library</title>
+    <title>Donate a Book - Smart Library</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -243,8 +194,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             text-decoration: none;
         }
 
-        /* Quiz Header */
-        .quiz-header {
+        /* Donation Header */
+        .donation-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 60px 0;
             text-align: center;
@@ -252,72 +203,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             margin-bottom: 50px;
         }
 
-        .quiz-header h1 {
+        .donation-header h1 {
             font-size: 3rem;
             font-weight: 800;
             margin-bottom: 10px;
         }
 
-        .quiz-header p {
+        .donation-header p {
             font-size: 1.2rem;
             opacity: 0.95;
         }
 
-        /* Score Alert */
-        .score-alert {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(40, 167, 69, 0.3);
-            margin-bottom: 40px;
-            text-align: center;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .score-alert h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 15px;
-        }
-
-        .score-alert p {
-            font-size: 1.3rem;
-            margin: 0;
-        }
-
-        .retry-btn {
-            background: white;
-            color: #28a745;
-            padding: 12px 40px;
-            border: none;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin-top: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .retry-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Quiz Container */
-        .quiz-container {
-            max-width: 900px;
+        /* Donation Container */
+        .donation-container {
+            max-width: 800px;
             margin: 0 auto 50px auto;
             background: white;
             border-radius: 15px;
@@ -325,81 +224,126 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
         }
 
-        .quiz-container h2 {
-            color: #1a1a2e;
-            font-weight: 800;
-            text-align: center;
-            margin-bottom: 40px;
-            font-size: 2rem;
-        }
-
-        /* Question Card */
-        .question-card {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 25px;
+        /* Form Groups */
+        .form-group {
             margin-bottom: 25px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
         }
 
-        .question-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .question-card p {
+        .form-group label {
             font-weight: 700;
-            font-size: 1.15rem;
             color: #1a1a2e;
-            margin-bottom: 20px;
-        }
-
-        /* Radio Options */
-        .form-check {
-            padding: 12px 15px;
             margin-bottom: 10px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .form-check:hover {
-            background: white;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-check input[type="radio"] {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
-
-        .form-check label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             font-size: 1rem;
-            margin-left: 12px;
+        }
+
+        .form-group label i {
+            color: #28a745;
+            font-size: 1.1rem;
+        }
+
+        .form-control,
+        select.form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 12px 15px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus,
+        select.form-control:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.15);
+            outline: none;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* File Upload Styling */
+        .custom-file-upload {
+            border: 2px dashed #28a745;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
             cursor: pointer;
-            color: #333;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .custom-file-upload:hover {
+            background: #e9f7ef;
+            border-color: #20c997;
+        }
+
+        .custom-file-upload i {
+            font-size: 3rem;
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+
+        .custom-file-upload p {
+            margin: 10px 0 0 0;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .file-name {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #28a745;
+            font-weight: 600;
         }
 
         /* Submit Button */
-        .submit-quiz-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .btn-donate {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
             color: white;
-            padding: 15px;
+            padding: 15px 50px;
             border: none;
             border-radius: 12px;
             font-size: 1.2rem;
             font-weight: 700;
-            width: 100%;
             cursor: pointer;
             transition: all 0.3s ease;
+            width: 100%;
             margin-top: 20px;
         }
 
-        .submit-quiz-btn:hover {
+        .btn-donate:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+        }
+
+        /* Alert Messages */
+        .alert {
+            border-radius: 10px;
+            border: none;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
         }
 
         /* Footer */
@@ -427,17 +371,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         /* Responsive */
         @media (max-width: 768px) {
-            .quiz-header h1 {
+            .donation-header h1 {
                 font-size: 2rem;
             }
 
-            .quiz-container {
-                padding: 20px;
+            .donation-container {
+                padding: 25px;
                 margin: 0 15px 30px 15px;
             }
 
-            .question-card {
-                padding: 15px;
+            .btn-donate {
+                padding: 12px 30px;
+                font-size: 1.1rem;
             }
         }
 
@@ -471,31 +416,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body>
 
-    <!-- Modern Navbar -->
     <nav class="navbar navbar-expand-xl navbar-dark">
         <div class="container-fluid">
-            <!-- Logo -->
             <a class="navbar-brand" href="bhome.php">
                 <img src="logo2.jpg" alt="Smart Library Logo">
             </a>
 
-            <!-- Mobile Icons -->
             <div class="d-xl-none" style="display: flex; align-items: center; gap: 15px;">
                 <i class='far fa-user-circle user-icon'></i>
                 <a href="CartPage.php" style="position: relative;">
                     <i class="fa fa-shopping-cart cart-icon"></i>
-                    <span id="icon"><?php echo totalItems(); ?></span>
+                    <span id="icon">0</span> 
                 </a>
             </div>
 
-            <!-- Navbar Toggler -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
                 <i class="fas fa-bars" style="color:#28a745; font-size:28px;"></i>
             </button>
 
-            <!-- Collapsible Content -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Search Box -->
                 <div class="mx-auto searchbox">
                     <form action="SearchResult.php" method="get" enctype="multipart/form-data">
                         <div class="input-group mb-1">
@@ -509,14 +448,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </form>
                 </div>
 
-                <!-- Username Display -->
-                <?php getUsername(); ?>
-
-                <!-- Mobile Menu List -->
                 <div class="list-group moblists">
                     <?php
+                    // Links assume the user is a Buyer, based on original file context
                     if (isset($_SESSION['phonenumber'])) {
-                        echo "<a href='BuyerProfile.php' class='list-group-item list-group-item-action'>Profile</a>";
+                        echo "<a href='UserProfile.php' class='list-group-item list-group-item-action'>Profile</a>";
                         echo "<a href='Transaction.php' class='list-group-item list-group-item-action'>Transactions</a>";
                         echo "<a href='claimbook.php' class='list-group-item list-group-item-action'>Claim Book</a>";
                         echo "<a href='display.php' class='list-group-item list-group-item-action'>Bid Rare Book</a>";
@@ -531,14 +467,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     ?>
                 </div>
 
-                <!-- Desktop Right Icons -->
                 <div class="ml-auto d-none d-xl-flex" style="display: flex; align-items: center; gap: 20px;">
-                    <!-- Voice Search -->
                     <a href="voice_search.php" class="voice-search-btn">
                         <i class="fas fa-microphone"></i> Voice Search
                     </a>
 
-                    <!-- Explore Dropdown -->
                     <div class="dropdown">
                         <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
                             Explore
@@ -561,78 +494,77 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             ?>
                         </div>
                     </div>
-                    <!-- User Icon -->
+
                     <i class='far fa-user-circle user-icon'></i>
 
-                    <!-- Cart Icon -->
                     <a href="CartPage.php" style="position: relative;">
                         <i class="fa fa-shopping-cart cart-icon"></i>
-                        <span id="icon"><?php echo totalItems(); ?></span>
+                        <span id="icon">0</span>
                     </a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Quiz Header -->
-    <div class="quiz-header">
-        <h1>💻 SQL Quiz</h1>
-        <p>Test your knowledge of SQL and database queries</p>
+    <div class="donation-header">
+        <h1>📚 Donate a Book</h1>
+        <p>Share knowledge and help others discover great books</p>
     </div>
 
-    <!-- Quiz Content -->
     <div class="container">
-        <?php if (isset($score)): ?>
-            <!-- Score Display -->
-            <div class="score-alert">
-                <h2>🎉 Quiz Completed!</h2>
-                <p>You scored <strong><?php echo $score; ?></strong> out of <strong>5</strong></p>
-                <p>Time taken: <strong><?php echo gmdate("i:s", $time_taken); ?></strong> minutes</p>
-                <button class="retry-btn" onclick="window.location.href='quiz2.php'">
-                    <i class="fas fa-redo"></i> Try Again
+        <div class="donation-container">
+            <?php if (isset($message)) echo $message; ?>
+
+            <form action="" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="book_title">
+                        <i class="fas fa-book"></i>
+                        Book Title
+                    </label>
+                    <input type="text" name="book_title" id="book_title" class="form-control" placeholder="Enter book title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="book_description">
+                        <i class="fas fa-align-left"></i>
+                        Book Description
+                    </label>
+                    <textarea name="book_description" id="book_description" class="form-control" placeholder="Provide a brief description of the book" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="condition">
+                        <i class="fas fa-star"></i>
+                        Condition
+                    </label>
+                    <select name="condition" id="condition" class="form-control" required>
+                        <option value="New">New</option>
+                        <option value="Used - Good">Used - Good</option>
+                        <option value="Used - Acceptable">Used - Acceptable</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-image"></i>
+                        Upload Book Image (Optional)
+                    </label>
+                    <label for="book_image" class="custom-file-upload">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p><strong>Click to upload</strong> or drag and drop</p>
+                        <p>PNG, JPG up to 10MB</p>
+                    </label>
+                    <input type="file" name="book_image" id="book_image" accept="image/*" onchange="displayFileName()">
+                    <div id="file-name" class="file-name"></div>
+                </div>
+
+                <button type="submit" class="btn-donate">
+                    <i class="fas fa-heart"></i> Donate Book
                 </button>
-            </div>
-        <?php else: ?>
-            <!-- Quiz Form -->
-            <div class="quiz-container">
-                <h2>Answer the following questions:</h2>
-                <form action="quiz2.php" method="POST">
-                    <?php 
-                    $question_num = 1;
-                    foreach ($sql_questions as $question): 
-                    ?>
-                        <div class="question-card">
-                            <p><strong>Question <?php echo $question_num; ?>:</strong> <?php echo htmlspecialchars($question['question']); ?></p>
-                            <div class="form-check">
-                                <input type="radio" id="q<?php echo $question['id']; ?>_a" name="answers[<?php echo $question['id']; ?>]" value="A" required>
-                                <label for="q<?php echo $question['id']; ?>_a"><?php echo htmlspecialchars($question['option_a']); ?></label>
-                            </div>
-                            <div class="form-check">
-                                <input type="radio" id="q<?php echo $question['id']; ?>_b" name="answers[<?php echo $question['id']; ?>]" value="B">
-                                <label for="q<?php echo $question['id']; ?>_b"><?php echo htmlspecialchars($question['option_b']); ?></label>
-                            </div>
-                            <div class="form-check">
-                                <input type="radio" id="q<?php echo $question['id']; ?>_c" name="answers[<?php echo $question['id']; ?>]" value="C">
-                                <label for="q<?php echo $question['id']; ?>_c"><?php echo htmlspecialchars($question['option_c']); ?></label>
-                            </div>
-                            <div class="form-check">
-                                <input type="radio" id="q<?php echo $question['id']; ?>_d" name="answers[<?php echo $question['id']; ?>]" value="D">
-                                <label for="q<?php echo $question['id']; ?>_d"><?php echo htmlspecialchars($question['option_d']); ?></label>
-                            </div>
-                        </div>
-                    <?php 
-                    $question_num++;
-                    endforeach; 
-                    ?>
-                    <button type="submit" class="submit-quiz-btn">
-                        <i class="fas fa-check-circle"></i> Submit Quiz
-                    </button>
-                </form>
-            </div>
-        <?php endif; ?>
+            </form>
+        </div>
     </div>
 
-    <!-- Footer -->
     <section id="footer" class="myfooter">
         <div class="container">
             <div class="row">
@@ -654,6 +586,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </div>
     </section>
+
+    <script>
+        function displayFileName() {
+            const input = document.getElementById('book_image');
+            const fileNameDiv = document.getElementById('file-name');
+            
+            if (input.files && input.files[0]) {
+                fileNameDiv.textContent = '✓ ' + input.files[0].name;
+            } else {
+                fileNameDiv.textContent = '';
+            }
+        }
+    </script>
 
 </body>
 

@@ -9,120 +9,276 @@ $sessphonenumber = $_SESSION['phonenumber'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Library Management System  - Submit Rare Book Details</title>
+    <title>Smart Library Management System - Submit Rare Book Details</title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        /* Body background styling */
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #f8c291, #6a89cc); /* Gradient background */
+            box-sizing: border-box;
+        }
+
+        /* --- Global Body Styling (From FarmerHomepage) --- */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
             color: #333;
-            animation: backgroundAnimation 10s ease infinite alternate; /* Animated gradient */
+            /* Removed original animated background to match site theme */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 0; /* Adjusted for full screen layout */
+        }
+        
+        /* --- Navbar Styling (Copied from farmerHomepage.php) --- */
+        nav.navbar {
+            background: linear-gradient(135deg, #292b2c 0%, #1a1a2e 100%);
+            padding: 15px 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-brand img {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+            background: white;
+            padding: 5px;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
         }
 
-        /* Background animation */
-        @keyframes backgroundAnimation {
-            0% { background: linear-gradient(135deg, #f8c291, #6a89cc); }
-            100% { background: linear-gradient(135deg, #78e08f, #60a3bc); }
+        .navbar-brand img:hover {
+            transform: scale(1.05);
         }
 
-        /* Container styling */
+        .user-icon {
+            color: goldenrod;
+            font-size: 28px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .user-icon:hover {
+            color: #ffcc66;
+            transform: scale(1.1);
+        }
+
+        .btn-custom {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 8px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .moblists {
+            display: none;
+        }
+
+        @media (max-width: 1200px) {
+            .moblists {
+                display: block;
+                margin-top: 20px;
+            }
+
+            .moblists .list-group-item,
+            .moblists .dropdown-item {
+                background-color: #1a1a2e !important;
+                color: goldenrod !important;
+                border: none;
+                text-align: center;
+                padding: 15px;
+                transition: all 0.3s ease;
+            }
+
+            .moblists .list-group-item:hover,
+            .moblists .dropdown-item:hover {
+                background-color: #28a745 !important;
+                color: white !important;
+            }
+        }
+        
+        /* --- Main Navigation Buttons (The required "button" block) --- */
+        .main-nav-section {
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        .main-nav-btn {
+            background: white;
+            border: 2px solid #28a745;
+            color: #28a745;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-decoration: none !important;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .main-nav-btn:hover {
+            background: #28a745;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+        }
+        
+        /* --- Form Container Styling (Updated to look modern/centered) --- */
         .container {
             max-width: 600px;
             width: 100%;
-            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
-            border-radius: 8px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background-color: #ffffff; 
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             padding: 40px;
-            margin: 20px;
+            margin: 50px auto; /* Centered, generous margin */
             text-align: center;
-            animation: fadeIn 1.5s ease-in-out; /* Fade-in effect */
+            /* Removed original animations, using modern CSS */
         }
-
-        /* Fade-in animation for the container */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Website Name Styling with Animation */
+        
         .website-name {
             font-size: 28px;
             font-weight: bold;
-            color: #f1c40f; /* Golden color */
+            color: #292b2c; /* Dark text for header */
             margin-bottom: 20px;
             text-transform: uppercase;
-            animation: slideIn 1s ease-in-out; /* Slide-in animation */
-        }
-
-        /* Slide-in animation for the website name */
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-50px); }
-            to { opacity: 1; transform: translateX(0); }
+            letter-spacing: 1px;
+            border-bottom: 2px solid #ffc107;
+            padding-bottom: 10px;
         }
 
         h1 {
-            color: #007bff;
             font-size: 24px;
-            margin-bottom: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
         }
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            text-align: left;
         }
         label {
-            display: block;
-            font-weight: bold;
-            color: #333;
+            font-weight: 600;
+            color: #1a1a2e;
             margin-bottom: 5px;
         }
         input[type="text"],
         input[type="number"],
         input[type="datetime-local"],
-        textarea {
+        textarea,
+        input[type="file"] {
             width: 100%;
             padding: 12px;
-            border: 1px solid #ced4da;
-            border-radius: 4px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
             box-sizing: border-box;
             font-size: 16px;
             color: #495057;
+            transition: border-color 0.3s;
         }
-        input[type="file"] {
-            padding: 8px;
+        input:focus, textarea:focus {
+            border-color: #667eea !important;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
+        
         button {
-            background-color: #007bff;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
             color: #ffffff;
             padding: 12px;
             width: 100%;
-            font-size: 16px;
+            font-size: 17px;
             font-weight: bold;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            margin-top: 15px;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #218838;
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+            transform: translateY(-2px);
         }
         .info {
             font-size: 14px;
             color: #888;
             margin-top: 5px;
+            display: block;
+        }
+
+        /* --- Footer Styling (Copied from farmerHomepage.php) --- */
+        .myfooter {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #ffc107;
+            padding: 40px 0 20px 0;
+            margin-top: auto; /* Push footer to bottom */
+        }
+
+        .myfooter h5 {
+            color: #ffc107;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .myfooter img {
+            margin: 10px;
+            border-radius: 8px;
+            max-height: 35px;
+            width: auto;
+        }
+
+        .social li a {
+            color: #ffc107;
+            font-size: 24px;
         }
     </style>
 </head>
 <body>
+    
+    <nav class="navbar navbar-expand-xl">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="farmerHomepage.php">
+                <img src="logo2.jpg" alt="Smart Library Logo">
+            </a>
+
+            <div class="d-xl-none" style="display: flex; align-items: center; gap: 15px;">
+                <i class='far fa-user-circle user-icon'></i>
+            </div>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                <i class="fas fa-bars" style="color:goldenrod; font-size:28px;"></i>
+            </button>
+        </div>
+    </nav>
+    <hr>
+
+
     <div class="container">
-        <!-- Website Name as Header with Animation -->
-        <div class="website-name">Smart Library Management System</div>
+        <div class="website-name"><h1>Smart Library Management System</h1></div>
         
-        <h1>Submit Rare Book Details</h1>
+        <h1>Insert Rare Book Details</h1>
         
         <form action="" method="POST" enctype="multipart/form-data" onsubmit="return confirm('Are you sure you want to submit?')">
             <div class="form-group">
@@ -131,7 +287,7 @@ $sessphonenumber = $_SESSION['phonenumber'];
             </div>
 
             <div class="form-group">
-                <label for="farmer_phone">Seller Phone</label>
+                <label for="farmer_phone">Phone</label>
                 <input type="text" id="farmer_phone" name="farmer_phone" value="<?php echo $sessphonenumber; ?>" readonly>
             </div>
 
@@ -141,23 +297,44 @@ $sessphonenumber = $_SESSION['phonenumber'];
             </div>
 
             <div class="form-group">
-                <label for="product_description">Book Amount and Description</label>
-                <textarea id="product_description" name="product_description" rows="4" required placeholder="Enter the amount and a brief description..."></textarea>
+                <label for="product_description">Book Description</label>
+                <textarea id="product_description" name="product_description" rows="4" required placeholder="Enter a brief description..."></textarea>
             </div>
 
             <div class="form-group">
-                <label for="lowest_bid">Lowest Bid (USD)</label>
-                <input type="number" id="lowest_bid" name="lowest_bid" min="1" required placeholder="Enter minimum bid amount">
-            </div>
-
-            <div class="form-group">
-                <label for="bid_ending_time">Bid Ending Time</label>
+                <label for="bid_ending_time">Ending Time</label>
                 <input type="datetime-local" id="bid_ending_time" name="bid_ending_time" required>
             </div>
 
-            <button type="submit" name="insert_pro">Submit Book for Bidding</button>
+            <button type="submit" name="insert_pro">Submit Book</button>
         </form>
     </div>
+
+    <section id="footer" class="myfooter">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
+                    <ul class="list-unstyled list-inline social text-center">
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-facebook"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-instagram"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fab fa-google-plus"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();" target="_blank"><i class="fa fa-envelope"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center">
+                    <p>Smart Library Management System is a Online Management System for Book Lovers!</p>
+                    <p class="h6"><a class="text-green ml-2" target="_blank">Foreign Key Friends</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </body>
 </html>
 
