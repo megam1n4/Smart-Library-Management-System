@@ -632,8 +632,7 @@ global $con;
                 if ($order_insert_success) {
                     // Step 3: Clear cart
                     emptyCart(); 
-                    echo "<script>alert('Borrow request submitted successfully! Your items are now being processed.');</script>";
-                    echo "<script>window.open('Transaction.php','_self')</script>"; // Redirect to transactions
+                    echo "<script>window.open('Transaction.php?borrowed=1','_self')</script>"; // Redirect to transactions
                 } else {
                     echo "<script>alert('Transaction failed: $error_message');</script>";
                     echo "<script>window.open('CartPage.php','_self')</script>"; 
