@@ -353,16 +353,17 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <?php
                         if (isset($_SESSION['phonenumber'])) {
-                            echo "<a href='FarmerProfile2.php' class='dropdown-item'>Profile</a>"; // Updated link for consistency
-                            echo "<a href='Transactions.php' class='dropdown-item'>Orders</a>";
-                            echo "<a href='bid_insert.php' class='dropdown-item'>Post A Rare Book</a>";
-                            echo "<a href='online_class.php' class='dropdown-item'>Post Rare Book Exhibition</a>";
-                            echo "<a href='leaderboard.php' class='dropdown-item'>See Quiz Results</a>";
-                            echo "<a href='donate_book.php' class='dropdown-item'>Donation</a>";
-                            echo "<a href='../auth/FarmerLogin.php' class='dropdown-item'>Logout</a>";
-                        } else {
-                            echo "<a href='../auth/FarmerLogin.php' class='dropdown-item'>Login</a>";
-                        }
+                                echo "<a href='FarmerProfile2.php' class='dropdown-item'>Profile</a>";
+                                echo "<a href='Transactions.php' class='dropdown-item'>Orders</a>";
+                                echo "<a href='bid_insert.php' class='dropdown-item'>Post A Rare Book</a>";
+                                echo "<a href='online_class.php' class='dropdown-item'>Post Rare Book Exhibition</a>";
+                                echo "<a href='leaderboard.php' class='dropdown-item'>See Quiz Results</a>";
+                                echo "<a href='donate_book.php' class='dropdown-item'>Donation</a>";
+                                echo "<a href='reservelist.php' class='dropdown-item'>Rare Book Reservation List</a>";
+                                echo "<a href='../auth/FarmerLogin.php' class='dropdown-item'>Logout</a>";
+                            } else {
+                                echo "<a href='../auth/FarmerLogin.php' class='dropdown-item'>Login</a>";
+                            }
                         ?>
                     </div>
                 </div>
