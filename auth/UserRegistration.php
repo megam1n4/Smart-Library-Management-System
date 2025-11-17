@@ -355,14 +355,20 @@ if (isset($_POST['register'])) {
     $name = mysqli_real_escape_string($con, $_POST['name']);
     $phonenumber = mysqli_real_escape_string($con, $_POST['phonenumber']);
     $address = mysqli_real_escape_string($con, $_POST['address']);
-    $company_name = mysqli_real_escape_string($con, $_POST['company_name']);
+    $company_name = mysqli_real_escape_string($con, $_POST["company_name"] ?? "");
     $license = mysqli_real_escape_string($con, $_POST['license']);
-    $account = mysqli_real_escape_string($con, $_POST['account']);
+    $buyer_bank = mysqli_real_escape_string($con, $_POST["buyer_bank"] ?? null);
+    $buyer_bank = $buyer_bank !== null ? intval($buyer_bank) : "NULL";
     $pan = mysqli_real_escape_string($con, $_POST['pan']);
     $mail = mysqli_real_escape_string($con, $_POST['mail']);
     $username = mysqli_real_escape_string($con, $_POST['username']);
     $password = mysqli_real_escape_string($con, $_POST['password']);
     $confirmpassword = mysqli_real_escape_string($con, $_POST['confirmpassword']);
+
+    $company_name = !empty($_POST['company_name']) ? $company_name : null;
+    $license = !empty($_POST['license']) ? $license : null;
+    $account = !empty($_POST['account']) ? $account : null;
+    $pan = !empty($_POST['pan']) ? $pan : null;
 
     $ciphering = "AES-128-CTR";
     $iv_length = openssl_cipher_iv_length($ciphering);
@@ -382,7 +388,7 @@ if (isset($_POST['register'])) {
 
         $query = "insert into buyerregistration (buyer_name,buyer_phone,buyer_addr,buyer_comp,
         buyer_license,buyer_bank,buyer_pan,buyer_mail,buyer_username,buyer_password) 
-        values ('$name','$phonenumber','$address','$company_name','$license','$account','$pan',
+        values ('$name','$phonenumber','$address','$company_name','$license','$buyer_bank','$pan',
         '$mail','$username','$encryption')";
 
         $run_register_query = mysqli_query($con, $query);

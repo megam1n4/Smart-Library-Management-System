@@ -106,7 +106,16 @@
         }
     }
 
+    /**
+     * Displays auto-disappearing alerts for borrowed items.
+     * Checks the 'cart' table for items with a borrow_date and return_date
+     * for the currently logged-in user.
+     * - Green Alert: Item is due in the future.
+     * - Yellow Alert: Item is due today.
+     * - Red Alert: Item is overdue.
+     */
     function borrowedBooksAlerts() {
+        // Only run if a user is logged in
         if (!isset($_SESSION['phonenumber'])) {
             return;
         }
@@ -120,11 +129,11 @@
                     p.product_title, 
                     c.return_date 
                 FROM 
-                    cart c
+                    orders c
                 JOIN 
                     products p ON c.product_id = p.product_id
                 WHERE 
-                    c.phonenumber = '$phonenumber' 
+                    c.buyer_phonenumber = '$phonenumber' 
                     AND c.borrow_date IS NOT NULL
                     AND c.return_date IS NOT NULL";
 
@@ -212,9 +221,9 @@
                                     if (alert.parentNode) {
                                         alert.parentNode.removeChild(alert);
                                     }
-                                }, 600);
+                                }, 600); // 0.6s (must be > transition duration)
 
-                            }, 5000 + (index * 1000));
+                            }, 5000 + (index * 1000)); // 5s base, +1s for each additional alert
                         });
                     });
                 </script>
@@ -392,7 +401,7 @@ function cart()
                 $run_insert_pro = mysqli_query($con, $insert_pro);
             }
 
-            echo "<script>window.open('bhome.php','_self')</script>";
+            echo "<script>window.open('bhome.php?added=$product_id','_self')</script>";
         }
     } else {
         // Optionally, you can add an alert here to notify the user to log in.

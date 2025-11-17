@@ -292,10 +292,67 @@ include("../Functions/functions.php");
             .d-none { display: none !important; }
             .d-xl-flex { display: flex !important; }
         }
+
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 99999;
+        }
+
+        .toast {
+            min-width: 300px;
+            background: #28a745;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-top: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            font-size: 16px;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: slideIn 0.5s forwards, fadeOut 0.5s 4s forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+        }
     </style>
 </head>
 
+<script>
+    function showToast(message) {
+        const container = document.getElementById('toastContainer');
+
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerText = message;
+
+        container.appendChild(toast);
+
+        setTimeout(() => { toast.remove(); }, 5000);
+    }
+</script>
+
 <body>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <?php
+        if (isset($_GET['borrowed']) && $_GET['borrowed'] == 1) {
+            echo "<script>showToast('Borrow request submitted successfully! Your items are now being processed.');</script>";
+        }
+    ?>
 
     <nav class="navbar navbar-expand-xl navbar-dark">
         <div class="container-fluid">
