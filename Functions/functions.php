@@ -574,7 +574,7 @@ function cart()
     function getTotalBorrowedBooks() {
         global $con;
         $count = 0;
-        $query_borrowed = "SELECT COUNT(*) as total FROM cart WHERE borrow_date IS NOT NULL AND return_date IS NOT NULL";
+        $query_borrowed = "SELECT COUNT(*) as total FROM orders WHERE borrow_date IS NOT NULL AND return_date IS NOT NULL";
         $run_borrowed = mysqli_query($con, $query_borrowed);
         if ($run_borrowed) {
             $count = mysqli_fetch_assoc($run_borrowed)['total'];
