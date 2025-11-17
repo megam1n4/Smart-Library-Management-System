@@ -401,7 +401,7 @@ function cart()
                 $run_insert_pro = mysqli_query($con, $insert_pro);
             }
 
-            echo "<script>window.open('bhome.php','_self')</script>";
+            echo "<script>window.open('bhome.php?added=$product_id','_self')</script>";
         }
     } else {
         // Optionally, you can add an alert here to notify the user to log in.
