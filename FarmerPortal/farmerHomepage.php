@@ -378,6 +378,7 @@
                                 echo "<a href='online_class.php' class='dropdown-item'>Post Rare Book Exhibition</a>";
                                 echo "<a href='leaderboard.php' class='dropdown-item'>See Quiz Results</a>";
                                 echo "<a href='donate_book.php' class='dropdown-item'>Donation</a>";
+                                echo "<a href='reservelist.php' class='dropdown-item'>Rare Book Reservation List</a>";
                                 echo "<a href='../auth/FarmerLogin.php' class='dropdown-item'>Logout</a>";
                             } else {
                                 echo "<a href='../auth/FarmerLogin.php' class='dropdown-item'>Login</a>";
@@ -408,6 +409,9 @@
             </a>
             <a href="Transactions.php" class="main-nav-btn">
                 <i class="fa fa-exchange" aria-hidden="true"></i>My Transactions
+            </a>
+            <a href="borrowlist.php" class="main-nav-btn">
+                <i class="fa fa-list" aria-hidden="true"></i>Book Borrow List
             </a>
         </div>
     </div>
