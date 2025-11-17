@@ -11,7 +11,7 @@
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Librarian - Book Borrow List</title>
+     <title>Librarian - Book Borrow List (All Orders)</title>
      
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -224,7 +224,6 @@
                .table td {
                     text-align: right;
                     padding-left: 50%;
-                    text-align: right;
                     position: relative;
                     border: none;
                     border-bottom: 1px dashed #eee;
@@ -398,23 +397,22 @@
                 <?php
 
                 global $con;
-                // We do not need the farmer's ID, as we are showing ALL borrowed books (Librarian overview)
                 
                 if (isset($_SESSION['phonenumber'])) {
-                        
-                    // Query the cart and products tables
-                    // Filters only by whether the book has been borrowed (borrow_date is not NULL).
-                    // This shows ALL active borrowings in the system.
+                    
+                    // --- REVISED QUERY: Selects ALL records from orders, joining with products.
+                    // The filter for borrow_date IS NOT NULL is REMOVED to include all 27 entries.
                     $sel_borrow_list = "
                         SELECT
-                            c.phonenumber AS borrower_phone,
-                            c.qty,
-                            c.borrow_date,
-                            c.return_date,
+                            o.buyer_phonenumber AS borrower_phone,
+                            o.qty,
+                            o.borrow_date,
+                            o.return_date,
                             p.product_title
-                        FROM cart c
-                        JOIN products p ON c.product_id = p.product_id
-                        WHERE c.borrow_date IS NOT NULL
+                        FROM orders o
+                        JOIN products p ON o.product_id = p.product_id
+                        -- WHERE clause is intentionally omitted to return all rows 
+                        -- as specified by the user's updated condition.
                     ";
 
                     $run_borrow_list = mysqli_query($con, $sel_borrow_list);
@@ -441,7 +439,7 @@
                         if (mysqli_error($con)) {
                              echo "<tr><td colspan='5'><h4 align='center'>Database Error: " . mysqli_error($con) . "</h4></td></tr>";
                         } else {
-                             echo "<tr><td colspan='5'><h4 align='center'>No active book borrowing records found.</h4></td></tr>";
+                             echo "<tr><td colspan='5'><h4 align='center'>No borrowing records found.</h4></td></tr>";
                         }
                     }
 
