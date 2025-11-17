@@ -129,11 +129,11 @@
                     p.product_title, 
                     c.return_date 
                 FROM 
-                    cart c
+                    orders c
                 JOIN 
                     products p ON c.product_id = p.product_id
                 WHERE 
-                    c.phonenumber = '$phonenumber' 
+                    c.buyer_phonenumber = '$phonenumber' 
                     AND c.borrow_date IS NOT NULL
                     AND c.return_date IS NOT NULL";
 
