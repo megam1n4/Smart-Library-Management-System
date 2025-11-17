@@ -607,19 +607,19 @@ global $con;
                     $farmer_phone = $farmer_row['farmer_phone'] ?? '0';
 
 
-                    // NOTE: The orders table uses BIGINT for 'phonenumber' (farmer's phone) and 'buyer_phonenumber'.
-                    // We need to ensure the quantity, total, and phone numbers are inserted correctly.
-                    $insert_order = "INSERT INTO orders (product_id, qty, phonenumber, buyer_phonenumber, borrow_date, return_date) 
+                    // FIXED: Now including borrow_date and return_date in the INSERT query
+                    $insert_order = "INSERT INTO orders (product_id, qty, address, delivery, phonenumber, total, payment, buyer_phonenumber, borrow_date, return_date) 
                                      VALUES (
                                          '{$item['product_id']}', 
                                          '{$item['qty']}', 
-                                          
+                                         '$buyer_address', 
+                                         '$delivery_method', 
                                          '{$farmer_phone}', 
-                                         
-                                          
+                                         '{$item['total']}', 
+                                         '$payment_method', 
                                          '$sess_phone_number',
-                                         '$borrow_date_field',
-                                         '$return_date_field'
+                                         '{$item['borrow_date']}',
+                                         '{$item['return_date']}'
                                      )";
                     
                     if (!mysqli_query($con, $insert_order)) {
