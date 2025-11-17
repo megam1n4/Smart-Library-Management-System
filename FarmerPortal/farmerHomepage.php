@@ -1,6 +1,11 @@
 <?php
      include("../Functions/functions.php");
-     ?>
+
+     $user_count = getTotalUsers();
+     $book_count = getTotalBooks();
+     $rare_book_count = getTotalRareBooks();
+     $borrowed_count = getTotalBorrowedBooks();
+     // ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -205,6 +210,54 @@
             background: linear-gradient(90deg, transparent, goldenrod, transparent);
             z-index: 0;
         }
+
+        /* === NEW: DASHBOARD STYLES === */
+        .dashboard-section {
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            padding: 30px 25px;
+            text-align: center;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            border: 1px solid #eee;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .dashboard-card i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-card-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1a1a2e;
+            line-height: 1.2;
+        }
+
+        .dashboard-card-label {
+            font-size: 1.1rem;
+            color: #555;
+            font-weight: 600;
+        }
+
+        /* Icon Colors for Dashboard */
+        .card-users i { color: #007bff; }
+        .card-books i { color: #28a745; }
+        .card-rare i { color: #dc3545; }
+        .card-borrowed i { color: #ffc107; }
+        /* === END: DASHBOARD STYLES === */
+
 
         /* Feature Cards */
         .card-deck .card {
@@ -417,29 +470,38 @@
     </div>
 
 
-    <div class="container">
-        <div id="authorCarousel" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="d-block w-100" src="splash.jpg" alt="Author Welcome" style="height: 400px; object-fit: cover; border-radius: 15px;">
+    <div class="container dashboard-section">
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="dashboard-card card-users">
+                    <i class="fas fa-users"></i>
+                    <div class="dashboard-card-number"><?php echo $user_count; ?></div>
+                    <div class="dashboard-card-label">Total Users</div>
                 </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="../Images/Homepage/61RRVLcRyQL.jpg" alt="Book Feature" style="height: 400px; object-fit: cover; border-radius: 15px;">
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="dashboard-card card-books">
+                    <i class="fas fa-book-open"></i>
+                    <div class="dashboard-card-number"><?php echo $book_count; ?></div>
+                    <div class="dashboard-card-label">Total Books</div>
                 </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="dashboard-card card-rare">
+                    <i class="fas fa-gem"></i>
+                    <div class="dashboard-card-number"><?php echo $rare_book_count; ?></div>
+                    <div class="dashboard-card-label">Rare Books</div>
                 </div>
-            <a class="carousel-control-prev" href="#authorCarousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#authorCarousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="dashboard-card card-borrowed">
+                    <i class="fas fa-handshake"></i>
+                    <div class="dashboard-card-number"><?php echo $borrowed_count; ?></div>
+                    <div class="dashboard-card-label">Borrowed Books</div>
+                </div>
+            </div>
         </div>
     </div>
-    
-    <br> 
-
     <div class="features container">
         <div class="section-header">
             <h2>✨ Standout Features</h2>
