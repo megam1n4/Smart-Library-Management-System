@@ -4,18 +4,18 @@
      include("../Includes/db.php");
      
      // Handle Delete Action
-     if (isset($_GET['delete_order_id'])) {
+     if (isset($_GET['delete_bid_id'])) {
           global $con;
-          $order_id = mysqli_real_escape_string($con, $_GET['delete_order_id']);
+          $bid_id = mysqli_real_escape_string($con, $_GET['delete_bid_id']);
           
-          $delete_query = "DELETE FROM orders WHERE order_id = '$order_id'";
+          $delete_query = "DELETE FROM bids WHERE bid_id = '$bid_id'";
           $delete_result = mysqli_query($con, $delete_query);
           
           if ($delete_result) {
-               echo "<script>alert('Order marked as done and removed successfully!');</script>";
-               echo "<script>window.location.href='borrowlist.php';</script>";
+               echo "<script>alert('Reservation marked as done and removed successfully!');</script>";
+               echo "<script>window.location.href='reservelist.php';</script>";
           } else {
-               echo "<script>alert('Error removing order: " . mysqli_error($con) . "');</script>";
+               echo "<script>alert('Error removing reservation: " . mysqli_error($con) . "');</script>";
           }
      }
      ?>
@@ -27,7 +27,7 @@
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Librarian - Book Borrow List (All Orders)</title>
+     <title>Librarian - Rare Book Reservation List</title>
      
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -216,6 +216,22 @@
                transition: background-color 0.3s ease;
           }
 
+          /* Book Cover Image Styling */
+          .book-cover-img {
+               max-width: 100px;
+               max-height: 150px;
+               object-fit: cover;
+               border-radius: 8px;
+               box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+          }
+
+          /* Book Description Styling */
+          .book-description {
+               max-width: 300px;
+               text-align: left;
+               line-height: 1.5;
+          }
+
           /* Mark as Done Button */
           .btn-mark-done {
                background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
@@ -283,6 +299,10 @@
                     color: #292b2c;
                }
 
+               .book-description {
+                    max-width: 100%;
+               }
+
                /* Hide desktop navigation in mobile */
                .right { display: none; }
                .left { display: flex; }
@@ -324,9 +344,9 @@
      </style>
 
      <script>
-          function confirmDelete(orderId) {
-               if (confirm('Are you sure you want to mark this order as done? This action cannot be undone.')) {
-                    window.location.href = 'borrowlist.php?delete_order_id=' + orderId;
+          function confirmDelete(bidId) {
+               if (confirm('Are you sure you want to mark this reservation as done? This action cannot be undone.')) {
+                    window.location.href = 'reservelist.php?delete_bid_id=' + bidId;
                }
                return false;
           }
@@ -365,6 +385,7 @@
                     echo "<a href='MyProducts.php' class='list-group-item list-group-item-action'>My Books</a>";
                     echo "<a href='Transactions.php' class='list-group-item list-group-item-action'>My Transactions (Orders)</a>";
                     echo "<a href='borrowlist.php' class='list-group-item list-group-item-action'>Book Borrow List</a>";
+                    echo "<a href='reservelist.php' class='list-group-item list-group-item-action'>Rare Book Reservation List</a>";
                     echo "<a href='bid_insert.php' class='dropdown-item'>Bid</a>";
                     echo "<a href='display_bids2.php' class='dropdown-item'>Bid Message</a>";
                     echo "<a href='online_class.php' class='dropdown-item'>Post Meet & Greet</a>";
@@ -419,13 +440,14 @@
             <a href="borrowlist.php" class="main-nav-btn">
                 <i class="fa fa-list" aria-hidden="true"></i>Book Borrow List
             </a>
+
         </div>
     </div>
     <hr>
     <br>
 
     <div class="content_item">
-        <label><b>BOOK BORROW LIST</b></label>
+        <label><b>RARE BOOK RESERVATION LIST</b></label>
     </div>
 
 
@@ -434,10 +456,8 @@
         <table class="table">
             <thead>
                 <th>Book Title</th>
+                <th>Book Description</th>
                 <th>Borrower Phone</th>
-                <th>Quantity</th>
-                <th>Borrow Date</th>
-                <th>Return Date</th>
                 <th>Action</th>
             </thead>
 
@@ -449,39 +469,32 @@
                 
                 if (isset($_SESSION['phonenumber'])) {
                     
-                    // REVISED QUERY: Now includes order_id for deletion
-                    $sel_borrow_list = "
+                    // Query to fetch rare book reservations from bids table
+                    $sel_reserve_list = "
                         SELECT
-                            o.order_id,
-                            o.buyer_phonenumber AS borrower_phone,
-                            o.qty,
-                            o.borrow_date,
-                            o.return_date,
-                            p.product_title
-                        FROM orders o
-                        JOIN products p ON o.product_id = p.product_id
+                            bid_id,
+                            product_name,
+                            product_description,
+                            buyer_phone
+                        FROM bids
                     ";
 
-                    $run_borrow_list = mysqli_query($con, $sel_borrow_list);
+                    $run_reserve_list = mysqli_query($con, $sel_reserve_list);
 
-                    if ($run_borrow_list && mysqli_num_rows($run_borrow_list) > 0) {
-                        while ($row = mysqli_fetch_array($run_borrow_list)) {
-                            $order_id = $row['order_id'];
-                            $product_title = $row['product_title'];
-                            $borrower_phone = $row['borrower_phone'];
-                            $qty = $row['qty'];
-                            $borrow_date = $row['borrow_date'];
-                            $return_date = $row['return_date'];
+                    if ($run_reserve_list && mysqli_num_rows($run_reserve_list) > 0) {
+                        while ($row = mysqli_fetch_array($run_reserve_list)) {
+                            $bid_id = $row['bid_id'];
+                            $product_name = $row['product_name'];
+                            $product_description = $row['product_description'];
+                            $buyer_phone = $row['buyer_phone'];
 
                             // Output the table row
                             echo "<tr>";
-                            echo "<td data-label='Book Title'>$product_title</td>";
-                            echo "<td data-label='Borrower Phone'>$borrower_phone</td>";
-                            echo "<td data-label='Quantity'>$qty</td>";
-                            echo "<td data-label='Borrow Date'>$borrow_date</td>";
-                            echo "<td data-label='Return Date'>$return_date</td>";
+                            echo "<td data-label='Book Title'><strong>$product_name</strong></td>";
+                            echo "<td data-label='Book Description'><div class='book-description'>$product_description</div></td>";
+                            echo "<td data-label='Borrower Phone'>$buyer_phone</td>";
                             echo "<td data-label='Action'>";
-                            echo "<a href='#' onclick='return confirmDelete($order_id)' class='btn-mark-done'>";
+                            echo "<a href='#' onclick='return confirmDelete($bid_id)' class='btn-mark-done'>";
                             echo "<i class='fas fa-check-circle'></i> Mark as Done";
                             echo "</a>";
                             echo "</td>";
@@ -490,14 +503,14 @@
                     } else {
                         // Check if the query itself failed, or just returned no rows
                         if (mysqli_error($con)) {
-                             echo "<tr><td colspan='6'><h4 align='center'>Database Error: " . mysqli_error($con) . "</h4></td></tr>";
+                             echo "<tr><td colspan='4'><h4 align='center'>Database Error: " . mysqli_error($con) . "</h4></td></tr>";
                         } else {
-                             echo "<tr><td colspan='6'><h4 align='center'>No borrowing records found.</h4></td></tr>";
+                             echo "<tr><td colspan='4'><h4 align='center'>No rare book reservations found.</h4></td></tr>";
                         }
                     }
 
                 } else {
-                    echo "<tr><td colspan='6'><h4 align='center'>Please Login First!</h4></td></tr>";
+                    echo "<tr><td colspan='4'><h4 align='center'>Please Login First!</h4></td></tr>";
                 } 
                 ?>
             </tbody>

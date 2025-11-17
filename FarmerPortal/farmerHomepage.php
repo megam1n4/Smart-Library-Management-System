@@ -378,6 +378,7 @@
                                 echo "<a href='online_class.php' class='dropdown-item'>Post Rare Book Exhibition</a>";
                                 echo "<a href='leaderboard.php' class='dropdown-item'>See Quiz Results</a>";
                                 echo "<a href='donate_book.php' class='dropdown-item'>Donation</a>";
+                                echo "<a href='reservelist.php' class='dropdown-item'>Rare Book Reservation List</a>";
                                 echo "<a href='../auth/FarmerLogin.php' class='dropdown-item'>Logout</a>";
                             } else {
                                 echo "<a href='../auth/FarmerLogin.php' class='dropdown-item'>Login</a>";
