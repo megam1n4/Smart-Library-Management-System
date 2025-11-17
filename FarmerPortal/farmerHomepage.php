@@ -409,6 +409,9 @@
             <a href="Transactions.php" class="main-nav-btn">
                 <i class="fa fa-exchange" aria-hidden="true"></i>My Transactions
             </a>
+            <a href="borrowlist.php" class="main-nav-btn">
+                <i class="fa fa-list" aria-hidden="true"></i>Book Borrow List
+            </a>
         </div>
     </div>
 
