@@ -2,6 +2,22 @@
      include("../Functions/functions.php");
      // db.php must be included to establish the connection stored in $con
      include("../Includes/db.php");
+     
+     // Handle Delete Action
+     if (isset($_GET['delete_order_id'])) {
+          global $con;
+          $order_id = mysqli_real_escape_string($con, $_GET['delete_order_id']);
+          
+          $delete_query = "DELETE FROM orders WHERE order_id = '$order_id'";
+          $delete_result = mysqli_query($con, $delete_query);
+          
+          if ($delete_result) {
+               echo "<script>alert('Order marked as done and removed successfully!');</script>";
+               echo "<script>window.location.href='borrowlist.php';</script>";
+          } else {
+               echo "<script>alert('Error removing order: " . mysqli_error($con) . "');</script>";
+          }
+     }
      ?>
 
 <!DOCTYPE html>
@@ -200,6 +216,28 @@
                transition: background-color 0.3s ease;
           }
 
+          /* Mark as Done Button */
+          .btn-mark-done {
+               background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+               color: white;
+               border: none;
+               padding: 8px 20px;
+               border-radius: 8px;
+               font-weight: 600;
+               cursor: pointer;
+               transition: all 0.3s ease;
+               text-decoration: none;
+               display: inline-block;
+          }
+
+          .btn-mark-done:hover {
+               background: linear-gradient(135deg, #218838 0%, #1a9d7d 100%);
+               transform: translateY(-2px);
+               box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+               color: white;
+               text-decoration: none;
+          }
+
           /* Mobile Table Responsiveness */
           @media only screen and (min-device-width:320px) and (max-device-width:480px) {
                .table thead {
@@ -284,6 +322,15 @@
           }
           
      </style>
+
+     <script>
+          function confirmDelete(orderId) {
+               if (confirm('Are you sure you want to mark this order as done? This action cannot be undone.')) {
+                    window.location.href = 'borrowlist.php?delete_order_id=' + orderId;
+               }
+               return false;
+          }
+     </script>
 
 </head>
 
@@ -390,6 +437,7 @@
                 <th>Quantity</th>
                 <th>Borrow Date</th>
                 <th>Return Date</th>
+                <th>Action</th>
             </thead>
 
 
@@ -400,10 +448,10 @@
                 
                 if (isset($_SESSION['phonenumber'])) {
                     
-                    // --- REVISED QUERY: Selects ALL records from orders, joining with products.
-                    // The filter for borrow_date IS NOT NULL is REMOVED to include all 27 entries.
+                    // REVISED QUERY: Now includes order_id for deletion
                     $sel_borrow_list = "
                         SELECT
+                            o.order_id,
                             o.buyer_phonenumber AS borrower_phone,
                             o.qty,
                             o.borrow_date,
@@ -411,14 +459,13 @@
                             p.product_title
                         FROM orders o
                         JOIN products p ON o.product_id = p.product_id
-                        -- WHERE clause is intentionally omitted to return all rows 
-                        -- as specified by the user's updated condition.
                     ";
 
                     $run_borrow_list = mysqli_query($con, $sel_borrow_list);
 
                     if ($run_borrow_list && mysqli_num_rows($run_borrow_list) > 0) {
                         while ($row = mysqli_fetch_array($run_borrow_list)) {
+                            $order_id = $row['order_id'];
                             $product_title = $row['product_title'];
                             $borrower_phone = $row['borrower_phone'];
                             $qty = $row['qty'];
@@ -432,19 +479,24 @@
                             echo "<td data-label='Quantity'>$qty</td>";
                             echo "<td data-label='Borrow Date'>$borrow_date</td>";
                             echo "<td data-label='Return Date'>$return_date</td>";
+                            echo "<td data-label='Action'>";
+                            echo "<a href='#' onclick='return confirmDelete($order_id)' class='btn-mark-done'>";
+                            echo "<i class='fas fa-check-circle'></i> Mark as Done";
+                            echo "</a>";
+                            echo "</td>";
                             echo "</tr>";
                         }
                     } else {
                         // Check if the query itself failed, or just returned no rows
                         if (mysqli_error($con)) {
-                             echo "<tr><td colspan='5'><h4 align='center'>Database Error: " . mysqli_error($con) . "</h4></td></tr>";
+                             echo "<tr><td colspan='6'><h4 align='center'>Database Error: " . mysqli_error($con) . "</h4></td></tr>";
                         } else {
-                             echo "<tr><td colspan='5'><h4 align='center'>No borrowing records found.</h4></td></tr>";
+                             echo "<tr><td colspan='6'><h4 align='center'>No borrowing records found.</h4></td></tr>";
                         }
                     }
 
                 } else {
-                    echo "<tr><td colspan='5'><h4 align='center'>Please Login First!</h4></td></tr>";
+                    echo "<tr><td colspan='6'><h4 align='center'>Please Login First!</h4></td></tr>";
                 } 
                 ?>
             </tbody>
