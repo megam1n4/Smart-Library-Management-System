@@ -25,7 +25,7 @@ if (isset($_POST['reserve_book'])) {
     
     // Insert reservation into bids table (matching the actual table structure)
     // NOTE: The 'bids' table schema seems to be reused for 'reservations' here.
-    $query = "INSERT INTO bids (product_id, product_name, product_description, product_image, farmer_phone, buyer_address) 
+    $query = "INSERT INTO bids (product_id, product_name, product_description, product_image, farmer_phone, buyer_phone) 
               VALUES ('$product_id', '$product_name', '$product_description', '$product_image_filename', '', '$buyer_address')";
     $result = mysqli_query($con, $query);
     

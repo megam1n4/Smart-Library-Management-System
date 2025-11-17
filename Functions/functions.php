@@ -1,8 +1,11 @@
- <?php
+<?php
 
     session_start();
 
     include("../Includes/db.php");
+    
+    // Ensure $con is globally accessible if needed outside functions
+    global $con; 
 
     function getUsername()
     {
@@ -10,7 +13,8 @@
             $phonenumber = $_SESSION['phonenumber'];
             global $con;
 
-            $query = "select * from buyerregistration where buyer_phone = $phonenumber";
+            // FIX: Ensure quoting for phone number when retrieving username
+            $query = "select * from buyerregistration where buyer_phone = '$phonenumber'";
             $run_query = mysqli_query($con, $query);
             if ($run_query) {
                 while ($row_cat = mysqli_fetch_array($run_query)) {
@@ -18,12 +22,10 @@
                     $buyer_name = 'Hello ,' . $buyer_name;
                 }
 
-                // echo @"<label>$buyer_name</label>";
                 echo @"<div class='text-success  logins mx-1 ml-5  '>$buyer_name</div>";
             }
         } else {
             echo "<a href = '../auth/UserLogin.php'><div class='text-success logins mx-5'>Login</div></a>";
-            // echo "<label><a href = '../auth/UserLogin.php' style = 'color:white' >Login/Sign up</a></label>";
         }
     }
 
@@ -34,7 +36,8 @@
             $phonenumber = $_SESSION['phonenumber'];
             global $con;
 
-            $query = "select * from farmerregistration where farmer_phone = $phonenumber";
+            // FIX: Ensure quoting for phone number when retrieving farmer username
+            $query = "select * from farmerregistration where farmer_phone = '$phonenumber'";
             $run_query = mysqli_query($con, $query);
             if ($run_query) {
                 while ($row_cat = mysqli_fetch_array($run_query)) {
@@ -84,9 +87,6 @@
 
         while ($row_cat = mysqli_fetch_array($run_query)) {
             $product_type = $row_cat['product_type'];
-            // echo "<li class='options' role='presentation'><a role='menuitem' tabindex='-1' href='../BuyerPortal/Categories.php?type=$product_type'> 
-            //         <label class='crop_items'>$product_type</label></a></li>";
-
             echo "<a class='dropdown-item' href='../BuyerPortal2/Categories.php?type=$product_type'>$product_type</a>";
         }
     }
@@ -123,10 +123,8 @@
         global $con;
         $phonenumber = $_SESSION['phonenumber'];
 
-        // Get today's date for comparison
         $today_dt = new DateTime(date('Y-m-d'));
 
-        // Query to get all 'borrowed' items for the user, joining with products to get the title
         $query = "SELECT 
                     p.product_title, 
                     c.return_date 
@@ -143,34 +141,29 @@
 
         if ($run_query && mysqli_num_rows($run_query) > 0) {
             
-            $alerts_html = ""; // To store our alert messages
+            $alerts_html = "";
 
             while ($row = mysqli_fetch_array($run_query)) {
                 $product_title = $row['product_title'];
                 $return_date_str = $row['return_date'];
 
-                // Skip if return date is invalid
                 if (empty($return_date_str)) continue;
 
                 $return_dt = new DateTime($return_date_str);
                 
-                // Calculate the difference in days
                 $interval = $today_dt->diff($return_dt);
-                $days_diff = (int)$interval->format('%r%a'); // %r gives sign (+/-), %a gives total days
+                $days_diff = (int)$interval->format('%r%a');
 
                 if ($days_diff > 0) {
-                    // Due in the future
                     $message = "<strong>$product_title:</strong> Due in $days_diff day(s).";
-                    $alert_class = 'borrow-alert-success'; // Green
+                    $alert_class = 'borrow-alert-success';
                 } elseif ($days_diff == 0) {
-                    // Due today
                     $message = "<strong>$product_title:</strong> Due today.";
-                    $alert_class = 'borrow-alert-warning'; // Yellow
+                    $alert_class = 'borrow-alert-warning';
                 } else {
-                    // Overdue
                     $days_overdue = abs($days_diff);
                     $message = "<strong>$product_title:</strong> Overdue by $days_overdue day(s).";
-                    $alert_class = 'borrow-alert-danger'; // Red
+                    $alert_class = 'borrow-alert-danger';
                 }
 
                 $alerts_html .= "<div class='borrow-alert $alert_class' role='alert'>$message</div>";
@@ -181,7 +174,7 @@
                 <style>
                     .borrow-alert-container {
                         position: fixed;
-                        top: 80px; /* Adjust as needed */
+                        top: 80px; 
                         right: 20px;
                         z-index: 1050;
                         width: 320px;
@@ -195,17 +188,17 @@
                         opacity: 1;
                         transition: opacity 0.5s ease-out;
                     }
-                    .borrow-alert-success { /* Green */
+                    .borrow-alert-success { 
                         color: #155724;
                         background-color: #d4edda;
                         border-color: #c3e6cb;
                     }
-                    .borrow-alert-warning { /* Yellow */
+                    .borrow-alert-warning { 
                         color: #856404;
                         background-color: #fff3cd;
                         border-color: #ffeeba;
                     }
-                    .borrow-alert-danger { /* Red */
+                    .borrow-alert-danger { 
                         color: #721c24;
                         background-color: #f8d7da;
                         border-color: #f5c6cb;
@@ -221,11 +214,9 @@
                         const alerts = document.querySelectorAll('.borrow-alert');
                         
                         alerts.forEach((alert, index) => {
-                            // Set a timeout to fade the alert
                             setTimeout(() => {
                                 alert.style.opacity = '0';
                                 
-                                // Set another timeout to remove the alert from the DOM after fading
                                 setTimeout(() => {
                                     if (alert.parentNode) {
                                         alert.parentNode.removeChild(alert);
@@ -257,7 +248,6 @@ function getProducts()
         $product_type = $rows['product_type'];
         $farmer_fk = $rows['farmer_fk'];
         
-        // Get farmer name
         $farmer_name_query = "select farmer_name from farmerregistration where farmer_id = $farmer_fk";
         $running_query_name = mysqli_query($con, $farmer_name_query);
         while ($names = mysqli_fetch_array($running_query_name)) {
@@ -299,10 +289,6 @@ function getProducts()
             $product_cat = $rows['product_cat'];
             $product_type = $rows['product_type'];
 
-            // echo "  <div class='veg'>
-            //             <a href='../BuyerPortal/BuyerProductDetails.php?id=$product_id'><img src='../Admin/product_images/$product_image' height='250px' width='300px' ></a>
-            //         </div>";
-
             echo "<div class='column kolum'>
                 <div class='img-thumbnail ''>
                      <a href='../BuyerPortal2/Categories.php?type=$product_type'>
@@ -335,59 +321,73 @@ function getProducts()
             </div>";
         }
     }
-    //function  which is link with FarmerProductDetails
-    // function getFarmerProductDetails()
-    // {
-    //     include("../Includes/db.php");
-    //     global $con;
-    //     if (isset($_GET['id'])) {
-    //         $prod_id = $_GET['id'];
-    //         $query = "select * from products where product_id=" . $prod_id;
-    //         $run_query = mysqli_query($con, $query);
-    //         $resultCheck = mysqli_num_rows($run_query);
-    //         if ($resultCheck > 0) {
-    //             while ($rows = mysqli_fetch_array($run_query)) {
-    //                 $product_title = $rows['product_title'];
-    //                 $product_image = $rows['product_image'];
-    //                 $product_type = $rows['product_type'];
-    //                 $product_stock = $rows['product_stock'];
-    //                 $product_description = $rows['product_desc'];
-    //                 $product_price = $rows['product_price'];
-    //                 $product_delivery = $rows['product_delivery'];
-    //                 $product_cat = $rows['product_cat'];
-    //                 echo "<div>
-    //                 <img src='../Admin/product_images/$product_image' height='250px' width='300px' ><br>"
-    //                     . " product title  :  " . $product_title . "<br>"
-    //                     . " product type  :  " . $product_type . "<br>"
-    //                     . " product stock  :  " . $product_stock . "<br>"
-    //                     . " product Description  :  " . $product_description . "<br>"
-    //                     . " product price  :  " . $product_price . "<br>"
-    //                     . " product Delivery  :  " . $product_delivery . "<br>"
-    //                     . " product category  :  " . $product_cat . "<br>"
-    //                     . "</div>";
-    //             }
-    //         }
-    //     } else {
-    //         echo "<br><br><hr><h1 align = center>Product Not Uploaded !</h1><br><br><hr>";
-    //     }
-    // }
+    
+    function getFarmerProductDetails()
+    {
+        include("../Includes/db.php");
+        global $con;
+        if (isset($_GET['id'])) {
+            $prod_id = $_GET['id'];
+            $query = "select * from products where product_id=" . $prod_id;
+            $run_query = mysqli_query($con, $query);
+            $resultCheck = mysqli_num_rows($run_query);
+            if ($resultCheck > 0) {
+                while ($rows = mysqli_fetch_array($run_query)) {
+                    $product_title = $rows['product_title'];
+                    $product_image = $rows['product_image'];
+                    $product_type = $rows['product_type'];
+                    $product_stock = $rows['product_stock'];
+                    $product_description = $rows['product_desc'];
+                    $product_price = $rows['product_price'];
+                    $product_delivery = $rows['product_delivery'];
+                    $product_cat = $rows['product_cat'];
+                    echo "<div>
+                        <img src='../Admin/product_images/$product_image' height='250px' width='300px' ><br>"
+                        . " product title  :  " . $product_title . "<br>"
+                        . " product type  :  " . $product_type . "<br>"
+                        . " product stock  :  " . $product_stock . "<br>"
+                        . " product Description  :  " . $product_description . "<br>"
+                        . " product price  :  " . $product_price . "<br>"
+                        . " product Delivery  :  " . $product_delivery . "<br>"
+                        . " product category  :  " . $product_cat . "<br>"
+                        . "<button href=''>ADD TO CART</button>"
+                        . "</div>";
 
-    // Checkout System Functions
+                    if (isset($_SESSION['phonenumber'])) {
+                        $query = "select * from products where product_id=" . $prod_id;
+                        $run = mysqli_query($con, $query);
+                        while ($row = mysqli_fetch_array($run)) {
+                            $farmerid = $row['farmer_fk'];
+                        }
 
-// UPDATED cart() FUNCTION
-// In functions.php, locate the cart() function and update it:
+                        $query = "select * from farmerregistration where farmer_id = $farmerid";
+                        $run = mysqli_query($con, $query);
+                        while ($row = mysqli_fetch_array($run)) {
+                            $farmer_name = $row['farmer_name'];
+                            $farmer_phone = $row['farmer_phone'];
+                            $farmer_address = $row['farmer_address'];
+                        }
+                        echo "farmer Name : " . $farmer_name . "<br>farmer Phone Number : " . $farmer_phone . "<br> Farmer Address" . $farmer_address;
+                    }
+                }
+            }
+        }
+    }
+
+
+// UPDATED cart() FUNCTION (from the request and previous fix)
 function cart()
 {
     if (isset($_SESSION['phonenumber'])) {
         if (isset($_GET['add_cart'])) {
 
             global $con;
-            $qty = 1; // Default quantity is 1 (no quantity input field)
+            $qty = 1; 
             
             $sess_phone_number = $_SESSION['phonenumber'];
             $product_id = $_GET['add_cart'];
 
-            // FIX: Added quotes around $sess_phone_number to ensure correct SQL syntax.
+            // FIX 1: Ensure quoting for session phone number.
             $check_pro = "select * from cart where phonenumber = '$sess_phone_number' and product_id='$product_id' ";
 
             $run_check = mysqli_query($con, $check_pro);
@@ -395,9 +395,9 @@ function cart()
             if (mysqli_num_rows($run_check) > 0) {
                 echo "";
             } else {
-                // FIX: Added 'subtotal' column to the INSERT statement, initialized to 0. 
-                // This ensures consistency, as the cart table has a NOT NULL constraint on subtotal.
-                $insert_pro = "insert into cart (product_id,phonenumber, qty, subtotal) values ('$product_id','$sess_phone_number', '$qty', 0)";
+                // FIX 2: Ensure all required columns (qty, subtotal) are included.
+                $insert_pro = "insert into cart (product_id,phonenumber, qty, subtotal) 
+                               values ('$product_id','$sess_phone_number', '$qty', 0)";
                 $run_insert_pro = mysqli_query($con, $insert_pro);
             }
 
@@ -408,13 +408,14 @@ function cart()
     }
 }
 
+
     //function which is link with FarmerHomePage
     function getFarmerProducts()
     {
         include("../Includes/db.php");
         global $con;
         $sess_phone_number = $_SESSION['phonenumber'];
-        $query = "select * from products where farmer_fk in (select farmer_id from farmerregistration where farmer_phone=$sess_phone_number) ";
+        $query = "select * from products where farmer_fk in (select farmer_id from farmerregistration where farmer_phone='$sess_phone_number') ";
         $run_query = mysqli_query($con, $query);
         $count = 0;
         if ($run_query) {
@@ -516,11 +517,12 @@ function cart()
     function emptyCart()
     {
         global $con;
-        $sess_phone_number = $_SESSION['phonenumber'];
+        if (isset($_SESSION['phonenumber'])) {
+            $sess_phone_number = $_SESSION['phonenumber'];
 
-        $get_items = "Delete from cart where phonenumber = '$sess_phone_number'";
-        $run_items =  mysqli_query($con, $get_items);
-        $count_items =  mysqli_num_rows($run_items);
+            $get_items = "Delete from cart where phonenumber = '$sess_phone_number'";
+            $run_items =  mysqli_query($con, $get_items);
+        }
     }
 
 
@@ -529,5 +531,3 @@ function cart()
         global $con;
     }
     ?>
-
-

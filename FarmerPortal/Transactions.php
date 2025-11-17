@@ -1,6 +1,28 @@
 <?php
-     include("../Functions/functions.php");
-     ?>
+include("../Functions/functions.php");
+
+// Ensure the database connection is available
+global $con;
+
+// --- Handle "Mark as Done" Deletion ---
+if (isset($_POST['mark_done'])) {
+    $order_id_to_delete = mysqli_real_escape_string($con, $_POST['order_id']);
+    
+    // SQL to delete the record from the orders table
+    $delete_query = "DELETE FROM orders WHERE order_id = '$order_id_to_delete'";
+    
+    if (mysqli_query($con, $delete_query)) {
+        // Success: Redirect to refresh the page without the deleted item
+        echo "<script>alert('Transaction marked as done and cleared.');</script>";
+        echo "<script>window.open('Transactions.php','_self')</script>";
+    } else {
+        // Error: Show error message
+        echo "<script>alert('Failed to mark transaction as done: " . mysqli_error($con) . "');</script>";
+        echo "<script>window.open('Transactions.php','_self')</script>";
+    }
+}
+// ----------------------------------------
+?>
 
 <!DOCTYPE html>
 
@@ -169,8 +191,8 @@
           .table {
                width: 100%;
                border-collapse: collapse;
-               border-radius: 15px; /* Added border radius to container */
-               overflow: hidden; /* Ensures border radius applies to headers */
+               border-radius: 15px; 
+               overflow: hidden; 
                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
           }
 
@@ -180,6 +202,7 @@
                border: 1px solid #ddd;
                text-align: center;
                font-size: 16px;
+               vertical-align: middle;
           }
 
           .table th {
@@ -196,6 +219,23 @@
           .table tbody tr:hover {
                background-color: #e9ecef;
                transition: background-color 0.3s ease;
+          }
+
+          /* Mark as Done Button */
+          .btn-done {
+              background: #dc3545; /* Red color for completion/deletion */
+              color: white;
+              font-weight: 700;
+              border: none;
+              padding: 8px 15px;
+              border-radius: 8px;
+              transition: all 0.3s ease;
+          }
+          
+          .btn-done:hover {
+              background: #c82333;
+              transform: translateY(-1px);
+              box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
           }
 
           /* Mobile Table Responsiveness */
@@ -222,7 +262,6 @@
                .table td {
                     text-align: right;
                     padding-left: 50%;
-                    text-align: right;
                     position: relative;
                     border: none;
                     border-bottom: 1px dashed #eee;
@@ -248,6 +287,8 @@
                .right { display: none; }
                .left { display: flex; }
                .moblogo { display: none; }
+               
+               .content_item label { font-size: 1.8rem; }
           }
           
           /* --- Footer --- */
@@ -255,7 +296,7 @@
                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
                color: #ffc107;
                padding: 40px 0 20px 0;
-               margin-top: 80px;
+               margin-top: auto;
           }
 
           .myfooter h5 {
@@ -338,16 +379,17 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <?php
                         if (isset($_SESSION['phonenumber'])) {
-                            echo "<a href='FarmerProfile2.php' class='dropdown-item'>Profile</a>"; 
-                            echo "<a href='Transactions.php' class='dropdown-item'>Orders</a>";
-                            echo "<a href='bid_insert.php' class='dropdown-item'>Post A Rare Book</a>";
-                            echo "<a href='online_class.php' class='dropdown-item'>Post Rare Book Exhibition</a>";
-                            echo "<a href='leaderboard.php' class='dropdown-item'>See Quiz Results</a>";
-                            echo "<a href='donate_book.php' class='dropdown-item'>Donation</a>";
-                            echo "<a href='../auth/FarmerLogin.php' class='dropdown-item'>Logout</a>";
-                        } else {
-                            echo "<a href='../auth/FarmerLogin.php' class='dropdown-item'>Login</a>";
-                        }
+                                echo "<a href='FarmerProfile2.php' class='dropdown-item'>Profile</a>";
+                                echo "<a href='Transactions.php' class='dropdown-item'>Orders</a>";
+                                echo "<a href='bid_insert.php' class='dropdown-item'>Post A Rare Book</a>";
+                                echo "<a href='online_class.php' class='dropdown-item'>Post Rare Book Exhibition</a>";
+                                echo "<a href='leaderboard.php' class='dropdown-item'>See Quiz Results</a>";
+                                echo "<a href='donate_book.php' class='dropdown-item'>Donation</a>";
+                                echo "<a href='reservelist.php' class='dropdown-item'>Rare Book Reservation List</a>";
+                                echo "<a href='../auth/FarmerLogin.php' class='dropdown-item'>Logout</a>";
+                            } else {
+                                echo "<a href='../auth/FarmerLogin.php' class='dropdown-item'>Login</a>";
+                            }
                         ?>
                     </div>
                 </div>
@@ -366,6 +408,9 @@
             </a>
             <a href="Transactions.php" class="main-nav-btn">
                 <i class="fa fa-exchange" aria-hidden="true"></i>My Transactions
+            </a>
+            <a href="borrowlist.php" class="main-nav-btn">
+                <i class="fa fa-list" aria-hidden="true"></i>Book Borrow List
             </a>
         </div>
     </div>
@@ -388,62 +433,75 @@
                 <th>Phone Number</th>
                 <th>Delivery Address</th>
                 <th>Quantity</th>
-                <th>Amount</th>
-            </thead>
+                <th>Action</th> </thead>
 
 
             <tbody>
                 <?php
 
                 global $con;
-                // db.php must be included before using $con
                 include("../Includes/db.php"); 
                 
                 if (isset($_SESSION['phonenumber'])) {
                     $sess_phone_number = $_SESSION['phonenumber'];
-                    $sel_price = "select * from orders where phonenumber = '$sess_phone_number'";
-                    $run_price = mysqli_query($con, $sel_price);
+                    
+                    // Fetch orders where the current librarian (farmer) is the recipient/seller
+                    $get_farmer_id_query = "SELECT farmer_id FROM farmerregistration WHERE farmer_phone = '$sess_phone_number'";
+                    $run_farmer_id = mysqli_query($con, $get_farmer_id_query);
+                    $farmer_row = mysqli_fetch_array($run_farmer_id);
+                    $current_farmer_id = $farmer_row['farmer_id'];
+                    
+                    // Select orders made to this farmer
+                    $sel_orders = "SELECT o.order_id, o.product_id, o.qty, o.address, o.buyer_phonenumber, p.product_title 
+                                   FROM orders o
+                                   JOIN products p ON o.product_id = p.product_id
+                                   WHERE p.farmer_fk = '$current_farmer_id'";
+                                   
+                    $run_orders = mysqli_query($con, $sel_orders);
                     $i = 0;
 
-                    while ($p_price = mysqli_fetch_array($run_price)) {
-                        $product_id = $p_price['product_id'];
-                        $qty = $p_price['qty'];
-                        $total = $p_price['total'];
-                        $address = $p_price['address'];
-                        $phone = $p_price['buyer_phonenumber'];
+                    while ($order_data = mysqli_fetch_array($run_orders)) {
+                        $order_id = $order_data['order_id'];
+                        $product_id = $order_data['product_id'];
+                        $qty = $order_data['qty'];
+                        $address = $order_data['address'];
+                        $buyer_phone = $order_data['buyer_phonenumber'];
+                        $product_title = $order_data['product_title'];
 
 
-                        $pro_price = "select * from products where product_id='$product_id'";
-                        $run_pro_price = mysqli_query($con, $pro_price);
-                        while ($pp_price = mysqli_fetch_array($run_pro_price)) {
-                            $product_title = $pp_price['product_title'];
-
-
-                            $query_name = "select * from buyerregistration where buyer_phone = $phone";
-                            $run_query_name = mysqli_query($con, $query_name);
-                            while ($names = mysqli_fetch_array($run_query_name)) {
-                                $buyer_name = $names['buyer_name'];
-
-
+                        // Get buyer name from buyerregistration
+                        $query_name = "select buyer_name from buyerregistration where buyer_phone = '$buyer_phone'";
+                        $run_query_name = mysqli_query($con, $query_name);
+                        $names = mysqli_fetch_array($run_query_name);
+                        $buyer_name = $names['buyer_name'];
+                        
+                        
                 ?>
                                     <tr>
-                                        <td data-label="Book Name"><?php echo $product_title; ?></td>
-                                        <td data-label="Name"><?php echo $buyer_name; ?></td>
-                                        <td data-label="Phone Number"><?php echo $phone; ?></td>
-                                        <td data-label="Delivery Address"><?php echo $address; ?></td>
-                                        <td data-label="Quantity"><?php echo $qty; ?></td>
-                                        <td data-label="Amount"><?php echo $total; ?></td>
+                                        <td data-label="Book Name"><?php echo htmlspecialchars($product_title); ?></td>
+                                        <td data-label="Name"><?php echo htmlspecialchars($buyer_name); ?></td>
+                                        <td data-label="Phone Number"><?php echo htmlspecialchars($buyer_phone); ?></td>
+                                        <td data-label="Delivery Address"><?php echo htmlspecialchars($address); ?></td>
+                                        <td data-label="Quantity"><?php echo htmlspecialchars($qty); ?></td>
+                                        <td data-label="Action">
+                                            <form method="post" action="Transactions.php" onsubmit="return confirm('Are you sure you want to mark this transaction as done? This action cannot be undone.');">
+                                                <input type="hidden" name="order_id" value="<?php echo htmlspecialchars($order_id); ?>">
+                                                <button type="submit" name="mark_done" class="btn-done">Mark as Done</button>
+                                            </form>
+                                        </td>
                                     </tr>
-
-
                 <?php
-                            }
-                        }
                         $i++;
                     }
                 } else {
                     echo "<tr><td colspan='6'><h4 align='center'>Please Login First!</h4></td></tr>";
-                } ?>
+                } 
+                
+                // If there are no results, but the user is logged in, show a message
+                if ($i == 0 && isset($_SESSION['phonenumber'])) {
+                    echo "<tr><td colspan='6'><h4 align='center'>You have no pending transactions.</h4></td></tr>";
+                }
+                ?>
             </tbody>
         </table>
     </div> 
