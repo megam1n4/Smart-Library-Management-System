@@ -106,7 +106,16 @@
         }
     }
 
+    /**
+     * Displays auto-disappearing alerts for borrowed items.
+     * Checks the 'cart' table for items with a borrow_date and return_date
+     * for the currently logged-in user.
+     * - Green Alert: Item is due in the future.
+     * - Yellow Alert: Item is due today.
+     * - Red Alert: Item is overdue.
+     */
     function borrowedBooksAlerts() {
+        // Only run if a user is logged in
         if (!isset($_SESSION['phonenumber'])) {
             return;
         }
@@ -120,11 +129,11 @@
                     p.product_title, 
                     c.return_date 
                 FROM 
-                    cart c
+                    orders c
                 JOIN 
                     products p ON c.product_id = p.product_id
                 WHERE 
-                    c.phonenumber = '$phonenumber' 
+                    c.buyer_phonenumber = '$phonenumber' 
                     AND c.borrow_date IS NOT NULL
                     AND c.return_date IS NOT NULL";
 
@@ -212,9 +221,9 @@
                                     if (alert.parentNode) {
                                         alert.parentNode.removeChild(alert);
                                     }
-                                }, 600);
+                                }, 600); // 0.6s (must be > transition duration)
 
-                            }, 5000 + (index * 1000));
+                            }, 5000 + (index * 1000)); // 5s base, +1s for each additional alert
                         });
                     });
                 </script>
@@ -392,7 +401,7 @@ function cart()
                 $run_insert_pro = mysqli_query($con, $insert_pro);
             }
 
-            echo "<script>window.open('bhome.php','_self')</script>";
+            echo "<script>window.open('bhome.php?added=$product_id','_self')</script>";
         }
     } else {
         // Optionally, you can add an alert here to notify the user to log in.
@@ -521,4 +530,66 @@ function cart()
     {
         global $con;
     }
+
+    /**
+     * Gets the total number of registered users (buyers).
+     * @return int The total count of users.
+     */
+    function getTotalUsers() {
+        global $con;
+        $count = 0;
+        $query_users = "SELECT COUNT(*) as total FROM buyerregistration";
+        $run_users = mysqli_query($con, $query_users);
+        if ($run_users) {
+            $count = mysqli_fetch_assoc($run_users)['total'];
+        }
+        return (int)$count;
+    }
+
+    /**
+     * Gets the total number of books (products).
+     * @return int The total count of books.
+     */
+    function getTotalBooks() {
+        global $con;
+        $count = 0;
+        $query_books = "SELECT COUNT(*) as total FROM products";
+        $run_books = mysqli_query($con, $query_books);
+        if ($run_books) {
+            $count = mysqli_fetch_assoc($run_books)['total'];
+        }
+        return (int)$count;
+    }
+
+    /**
+     * Gets the total number of rare books (bids).
+     * @return int The total count of rare books.
+     */
+    function getTotalRareBooks() {
+        global $con;
+        $count = 0;
+        $query_rare = "SELECT COUNT(*) as total FROM bid";
+        $run_rare = mysqli_query($con, $query_rare);
+        if ($run_rare) {
+            $count = mysqli_fetch_assoc($run_rare)['total'];
+        }
+        return (int)$count;
+    }
+
+    /**
+     * Gets the total number of borrowed books (completed loans in cart).
+     * @return int The total count of borrowed books.
+     */
+    function getTotalBorrowedBooks() {
+        global $con;
+        $count = 0;
+        $query_borrowed = "SELECT COUNT(*) as total FROM orders WHERE borrow_date IS NOT NULL AND return_date IS NOT NULL";
+        $run_borrowed = mysqli_query($con, $query_borrowed);
+        if ($run_borrowed) {
+            $count = mysqli_fetch_assoc($run_borrowed)['total'];
+        }
+        return (int)$count;
+    }
     ?>
+
+

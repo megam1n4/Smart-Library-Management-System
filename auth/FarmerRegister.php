@@ -321,8 +321,8 @@
                     </div>
                 </div>
 
-                <input type="hidden" name="account" value="N/A">
-                <input type="hidden" name="pan" value="N/A">
+                <input type="hidden" name="account" value="01234">
+                <input type="hidden" name="pan" value="ABCDE1234F">
 
 
                 <div class="form-row">
