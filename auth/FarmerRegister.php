@@ -348,7 +348,7 @@
                 </button>
 
                 <div class="login-link">
-                    Already have an account? <a href="FarmerLogin.php">Login here</a>
+                    Already have an account? <a href="LibrarianLogin.php">Login here</a>
                 </div>
             </form>
         </div>
@@ -429,7 +429,7 @@ if (isset($_POST['register'])) {
 
         $run_register_query = mysqli_query($con, $query);
         echo "<script>console.log('SucessFully Inserted');</script>";
-        echo "<script>window.open('FarmerLogin.php','_self')</script>";
+        echo "<script>window.open('LibrarianLogin.php','_self')</script>";
     } else if (strcmp($password, $confirmpassword) != 0) {
         echo "<script>
 				alert('Password and Confirm Password Should be same');

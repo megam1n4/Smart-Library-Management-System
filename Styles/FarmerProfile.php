@@ -119,7 +119,7 @@
             $run_query = mysqli_query($con,$update_query);
 
             echo "<script>alert('Password Updated Successfully');</script>";
-            echo "<script>window.open('FarmerLogin.php','_self')</script>";
+            echo "<script>window.open('LibrarianLogin.php','_self')</script>";
         }
         else if ($count_rows == 0) {
             echo "<script>alert('Please Enter Valid Details');</script>";

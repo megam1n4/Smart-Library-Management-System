@@ -979,7 +979,7 @@
 
                          <?php
                          if (!isset($_SESSION['phonenumber'])) {
-                              echo "<a href='../auth/FarmerLogin.php'> <div class='text-success  logins '></div></a>";
+                              echo "<a href='../auth/LibrarianLogin.php'> <div class='text-success  logins '></div></a>";
                          }
                          ?>
                     </div>
@@ -993,7 +993,7 @@
                               echo "<a href=Transactions.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Orders</a>";
                               echo "<a href='logout.php' class='list-group-item list-group-item-action ' style='background-color:#292b2c;text-align:center;color:goldenrod'>Logout</a>";
                          } else {
-                              echo "<a href='../auth/FarmerLogin.php'> <div class='text-success  logins '>Login</div></a>";
+                              echo "<a href='../auth/LibrarianLogin.php'> <div class='text-success  logins '>Login</div></a>";
                          }
                          ?>
                          <div class='loginz' style="text-align:center;">
@@ -1026,7 +1026,7 @@
                                    echo "<a href='Transactions.php' class='dropdown-item' style='padding-right:-20px;'>Orders</a>";
                                    echo "<a href='logout.php' class='dropdown-item' style='padding-right:-20px;'>Logout</a>";
                               } else {
-                                   echo "<a href='../auth/FarmerLogin.php'> <div class='dropdown-item' style='padding-right:-20px;'>Login</div></a>";
+                                   echo "<a href='../auth/LibrarianLogin.php'> <div class='dropdown-item' style='padding-right:-20px;'>Login</div></a>";
                               }
                               ?>
                          </div>

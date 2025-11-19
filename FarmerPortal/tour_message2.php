@@ -16,7 +16,7 @@ if (isset($_POST['login'])) {
         $_SESSION['phonenumber'] = $phonenumber;
     } else {
         echo "<script>alert('Please Enter Valid Details');</script>";
-        echo "<script>window.open('FarmerLogin.php','_self')</script>";
+        echo "<script>window.open('LibrarianLogin.php','_self')</script>";
     }
 }
 

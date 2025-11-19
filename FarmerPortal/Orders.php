@@ -756,7 +756,7 @@
                          echo "<li class='options'> <a href='Orders.php'><label class='makeitgreen'>Orders</label></a></li>";
                          echo "<li class='options'> <a href='logout.php'><label class='makeitgreen'>Logout</label></a></li>";
                     } else {
-                         echo "<li class='options'> <a href='../auth/FarmerLogin.php'><label class='makeitgreen'>Login</label></a></li>";
+                         echo "<li class='options'> <a href='../auth/LibrarianLogin.php'><label class='makeitgreen'>Login</label></a></li>";
                     }
                     ?>
                </ul>
@@ -766,7 +766,7 @@
 
                <?php
                if (!isset($_SESSION['phonenumber'])) {
-                    echo "<a href='../auth/FarmerLogin.php'> <i class='far fa-user-circle ' style='font-size:30px; color: white; padding-top:5px;'></i></a>";
+                    echo "<a href='../auth/LibrarianLogin.php'> <i class='far fa-user-circle ' style='font-size:30px; color: white; padding-top:5px;'></i></a>";
                } else {
                     echo "<a href='FarmerProfile.php'> <i class='far fa-user-circle' style='font-size:30px; color: white; padding-top:5px;'></i></a>";
                }

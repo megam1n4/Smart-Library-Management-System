@@ -47,7 +47,7 @@
                 }
             }
         } else {
-            echo "<label><a href = '../auth/FarmerLogin.php' style = 'color:white; padding-top:20px;' >Login/Sign up</a></label>";
+            echo "<label><a href = '../auth/LibrarianLogin.php' style = 'color:white; padding-top:20px;' >Login/Sign up</a></label>";
         }
     }
 

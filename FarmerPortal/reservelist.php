@@ -394,7 +394,7 @@
                     echo "<a href='viewclaim.php' class='list-group-item list-group-item-action'>Donation Message</a>";
                     echo "<a href='logout.php' class='list-group-item list-group-item-action '>Logout</a>";
                 } else {
-                    echo "<a href='../auth/FarmerLogin.php' class='list-group-item list-group-item-action'>Login</a>";
+                    echo "<a href='../auth/LibrarianLogin.php' class='list-group-item list-group-item-action'>Login</a>";
                 }
                 ?>
             </div>
@@ -415,9 +415,9 @@
                                 echo "<a href='leaderboard.php' class='dropdown-item'>See Quiz Results</a>";
                                 echo "<a href='donate_book.php' class='dropdown-item'>Donation</a>";
                                 echo "<a href='reservelist.php' class='dropdown-item'>Rare Book Reservation List</a>";
-                                echo "<a href='../auth/FarmerLogin.php' class='dropdown-item'>Logout</a>";
+                                echo "<a href='../auth/LibrarianLogin.php' class='dropdown-item'>Logout</a>";
                             } else {
-                                echo "<a href='../auth/FarmerLogin.php' class='dropdown-item'>Login</a>";
+                                echo "<a href='../auth/LibrarianLogin.php' class='dropdown-item'>Login</a>";
                             }
                         ?>
                     </div>
