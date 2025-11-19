@@ -393,7 +393,7 @@ if (isset($_POST['login'])) {
 	}
 
 	$_SESSION['phonenumber'] = $phonenumber;
-	echo "<script>window.open('../FarmerPortal/LibrarianHomepage.php','_self')</script>";
+	echo "<script>window.open('../LibrarianPortal/LibrarianHomepage.php','_self')</script>";
 }
 
 ?>

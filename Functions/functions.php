@@ -429,7 +429,7 @@ function cart()
 
                 echo "
                     <div class='productbox'>
-                        <a href='../FarmerPortal/FarmerProductDetails.php?id=$id'>
+                        <a href='../LibrarianPortal/FarmerProductDetails.php?id=$id'>
                         <img src='../Admin/product_images/$image' alt= 'Image Not Available' onerror=this.src='../Images/Website/noimage.jpg'>
                         </a>
 
