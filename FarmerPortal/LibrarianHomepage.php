@@ -405,7 +405,7 @@
                             echo "<a href='Transactions.php' class='list-group-item list-group-item-action'>My Transactions</a>";
                             echo "<a href='RarePost.php' class='list-group-item list-group-item-action'>Bid</a>";
                             echo "<a href='display_bids2.php' class='list-group-item list-group-item-action'>Bid Message</a>";
-                            echo "<a href='online_class.php' class='list-group-item list-group-item-action'>Post Meet & Greet</a>";
+                            echo "<a href='ExhibitionPost.php' class='list-group-item list-group-item-action'>Post Meet & Greet</a>";
                             echo "<a href='leaderboard.php' class='list-group-item list-group-item-action'>See Quiz Results</a>";
                             echo "<a href='donate_book.php' class='list-group-item list-group-item-action'>Donation</a>";
                             echo "<a href='viewclaim.php' class='list-group-item list-group-item-action'>Donation Message</a>";
@@ -428,7 +428,7 @@
                                 echo "<a href='LibrarianProfile.php' class='dropdown-item'>Profile</a>";
                                 echo "<a href='Transactions.php' class='dropdown-item'>Orders</a>";
                                 echo "<a href='RarePost.php' class='dropdown-item'>Post A Rare Book</a>";
-                                echo "<a href='online_class.php' class='dropdown-item'>Post Rare Book Exhibition</a>";
+                                echo "<a href='ExhibitionPost.php' class='dropdown-item'>Post Rare Book Exhibition</a>";
                                 echo "<a href='leaderboard.php' class='dropdown-item'>See Quiz Results</a>";
                                 echo "<a href='donate_book.php' class='dropdown-item'>Donation</a>";
                                 echo "<a href='reservelist.php' class='dropdown-item'>Rare Book Reservation List</a>";
