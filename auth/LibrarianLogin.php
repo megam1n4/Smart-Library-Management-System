@@ -386,7 +386,7 @@ if (isset($_POST['login'])) {
 	$count_rows = mysqli_num_rows($run_query);
 	if ($count_rows == 0) {
 		echo "<script>alert('Please Enter Valid Details');</script>";
-		echo "<script>window.open('FarmerLogin.php','_self')</script>";
+		echo "<script>window.open('LibrarianLogin.php','_self')</script>";
 	}
 	while ($row = mysqli_fetch_array($run_query)) {
 		$id = $row['farmer_id'];
