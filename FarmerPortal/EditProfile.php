@@ -279,7 +279,7 @@ while ($row = mysqli_fetch_array($run_query)) {
     <div class="main-content-wrapper">
         <div class="edit-card">
             
-            <a href="farmerprofile2.php" class="home-link" title="Back to Profile"> <i class="fa fa-arrow-left"></i></a>
+            <a href="LibrarianProfile.php" class="home-link" title="Back to Profile"> <i class="fa fa-arrow-left"></i></a>
 
             <div class="card-header-custom">
                 <h1>EDIT PROFILE</h1>
@@ -414,6 +414,6 @@ if (isset($_POST['confirm'])) {
     $run = mysqli_query($con, $query);
     
     $_SESSION['phonenumber'] = $phone;
-    echo "<script>window.open('FarmerProfile2.php','_self')</script>";
+    echo "<script>window.open('LibrarianProfile.php','_self')</script>";
 }
 ?>

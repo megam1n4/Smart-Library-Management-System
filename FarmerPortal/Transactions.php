@@ -354,7 +354,7 @@ if (isset($_POST['mark_done'])) {
             <div class="list-group moblists">
                 <?php
                 if (isset($_SESSION['phonenumber'])) {
-                    echo "<a href='FarmerProfile2.php' class='list-group-item list-group-item-action ' >Profile</a>"; 
+                    echo "<a href='LibrarianProfile.php' class='list-group-item list-group-item-action ' >Profile</a>"; 
                     echo "<a href='MyProducts.php' class='list-group-item list-group-item-action'>My Books</a>";
                     echo "<a href='Transactions.php' class='list-group-item list-group-item-action'>My Transactions (Orders)</a>";
                     echo "<a href='bid_insert.php' class='dropdown-item'>Bid</a>";
@@ -379,7 +379,7 @@ if (isset($_POST['mark_done'])) {
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <?php
                         if (isset($_SESSION['phonenumber'])) {
-                                echo "<a href='FarmerProfile2.php' class='dropdown-item'>Profile</a>";
+                                echo "<a href='LibrarianProfile.php' class='dropdown-item'>Profile</a>";
                                 echo "<a href='Transactions.php' class='dropdown-item'>Orders</a>";
                                 echo "<a href='bid_insert.php' class='dropdown-item'>Post A Rare Book</a>";
                                 echo "<a href='online_class.php' class='dropdown-item'>Post Rare Book Exhibition</a>";
