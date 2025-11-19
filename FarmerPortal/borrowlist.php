@@ -365,7 +365,7 @@
                     echo "<a href='MyProducts.php' class='list-group-item list-group-item-action'>My Books</a>";
                     echo "<a href='Transactions.php' class='list-group-item list-group-item-action'>My Transactions (Orders)</a>";
                     echo "<a href='borrowlist.php' class='list-group-item list-group-item-action'>Book Borrow List</a>";
-                    echo "<a href='bid_insert.php' class='dropdown-item'>Bid</a>";
+                    echo "<a href='RarePost.php' class='dropdown-item'>Bid</a>";
                     echo "<a href='display_bids2.php' class='dropdown-item'>Bid Message</a>";
                     echo "<a href='online_class.php' class='dropdown-item'>Post Meet & Greet</a>";
                     echo "<a href='leaderboard.php' class='dropdown-item'>See Quiz Results</a>";
@@ -389,7 +389,7 @@
                         if (isset($_SESSION['phonenumber'])) {
                                 echo "<a href='LibrarianProfile.php' class='dropdown-item'>Profile</a>";
                                 echo "<a href='Transactions.php' class='dropdown-item'>Orders</a>";
-                                echo "<a href='bid_insert.php' class='dropdown-item'>Post A Rare Book</a>";
+                                echo "<a href='RarePost.php' class='dropdown-item'>Post A Rare Book</a>";
                                 echo "<a href='online_class.php' class='dropdown-item'>Post Rare Book Exhibition</a>";
                                 echo "<a href='leaderboard.php' class='dropdown-item'>See Quiz Results</a>";
                                 echo "<a href='donate_book.php' class='dropdown-item'>Donation</a>";
