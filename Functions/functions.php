@@ -72,7 +72,7 @@
 
         while ($row_cat = mysqli_fetch_array($run_query)) {
             $product_type = $row_cat['product_type'];
-            echo "<a class='dropdown-item' href='../BuyerPortal2/Categories.php?type=$product_type'>$product_type</a>";
+            echo "<a class='dropdown-item' href='../UserPortal/Categories.php?type=$product_type'>$product_type</a>";
         }
     }
 
@@ -87,7 +87,7 @@
 
         while ($row_cat = mysqli_fetch_array($run_query)) {
             $product_type = $row_cat['product_type'];
-            echo "<a class='dropdown-item' href='../BuyerPortal2/Categories.php?type=$product_type'>$product_type</a>";
+            echo "<a class='dropdown-item' href='../UserPortal/Categories.php?type=$product_type'>$product_type</a>";
         }
     }
 
@@ -102,7 +102,7 @@
 
         while ($row_cat = mysqli_fetch_array($run_query)) {
             $product_type = $row_cat['product_type'];
-            echo "<a class='dropdown-item' href='../BuyerPortal2/Categories.php?type=$product_type'>$product_type</a>";
+            echo "<a class='dropdown-item' href='../UserPortal/Categories.php?type=$product_type'>$product_type</a>";
         }
     }
 
@@ -257,7 +257,7 @@ function getProducts()
         echo "
         <div class='col-md-4 col-sm-6 mb-4'>
             <div class='book-card'>
-                <a href='../BuyerPortal2/Categories.php?type=$product_type'>
+                <a href='../UserPortal/Categories.php?type=$product_type'>
                     <img src='../Admin/product_images/$product_image' alt='$product_title' class='img-fluid' style='width: 100%; height: 350px; object-fit: cover; border-radius: 10px; margin-bottom: 15px;'>
                 </a>
                 
@@ -265,7 +265,7 @@ function getProducts()
                     <h5 style='font-weight: 700; color: #1a1a2e; margin-bottom: 10px; font-size: 1.2rem;'>$product_title</h5>
                     <span class='badge' style='background: #ffc107; color: #000; padding: 5px 15px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; display: inline-block; margin-bottom: 15px;'>$product_type</span>
                     
-                    <a href='../BuyerPortal2/bhome.php?add_cart=$product_id' class='btn-add-cart' style='background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; width: 100%; display: block; text-align: center; text-decoration: none; transition: all 0.3s ease;'>
+                    <a href='../UserPortal/bhome.php?add_cart=$product_id' class='btn-add-cart' style='background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; width: 100%; display: block; text-align: center; text-decoration: none; transition: all 0.3s ease;'>
                         <i class='fas fa-shopping-cart'></i> Add to cart
                     </a>
                 </div>
@@ -291,7 +291,7 @@ function getProducts()
 
             echo "<div class='column kolum'>
                 <div class='img-thumbnail ''>
-                     <a href='../BuyerPortal2/Categories.php?type=$product_type'>
+                     <a href='../UserPortal/Categories.php?type=$product_type'>
                         <img class='rounded mx-auto d-block images' src='../Admin/product_images//$product_image' width='350px' height='200px' alt='image'>
                      </a>
                 </div>
@@ -314,7 +314,7 @@ function getProducts()
             $product_type = $rows['product_type'];
             echo "<div class='column kolum'>
                 <div class='img-thumbnail ''>
-                     <a href='../BuyerPortal2/Categories.php?type=$product_type'>
+                     <a href='../UserPortal/Categories.php?type=$product_type'>
                         <img class='rounded mx-auto d-block images' src='../Admin/product_images//$product_image' width='350px' height='200px' alt='image'>
                      </a>
                 </div>
