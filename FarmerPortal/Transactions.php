@@ -331,13 +331,13 @@ if (isset($_POST['mark_done'])) {
 
     <nav class="navbar navbar-expand-xl">
         <div class="d-flex align-items-center d-xl-none">
-            <a class="navbar-brand" href="farmerHomepage.php">
+            <a class="navbar-brand" href="LibrarianHomepage.php">
                 <h1 class="book-corner-logo">Smart Library Management System</h1>
             </a>
             <i class='far fa-user-circle user-icon ml-auto mr-3'></i>
         </div>
         
-        <a class="navbar-brand d-none d-xl-block" href="farmerHomepage.php">
+        <a class="navbar-brand d-none d-xl-block" href="LibrarianHomepage.php">
             <img src="logo2.jpg" alt="Smart Library Logo">
         </a>
 
@@ -400,7 +400,7 @@ if (isset($_POST['mark_done'])) {
 
     <div class="container main-nav-section">
         <div class="d-flex justify-content-center flex-wrap">
-            <a href="farmerHomepage.php" class="main-nav-btn">
+            <a href="LibrarianHomepage.php" class="main-nav-btn">
                 <i class="fa fa-home" aria-hidden="true"></i>Home
             </a>
             <a href="MyProducts.php" class="main-nav-btn">

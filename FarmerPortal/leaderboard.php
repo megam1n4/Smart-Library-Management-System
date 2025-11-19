@@ -124,7 +124,7 @@ $leaderboard_result = mysqli_query($con, $leaderboard_query);
         }
 
 
-        /* --- Footer Styling (From farmerHomepage.php) --- */
+        /* --- Footer Styling (From LibrarianHomepage.php) --- */
         .myfooter {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             color: #ffc107;
@@ -159,7 +159,7 @@ $leaderboard_result = mysqli_query($con, $leaderboard_query);
 <body class="bg-light">
 
     <div class="top-logo-bar">
-        <a href="farmerHomepage.php">
+        <a href="LibrarianHomepage.php">
             <img src="logo2.jpg" alt="Smart Library Logo">
         </a>
     </div>

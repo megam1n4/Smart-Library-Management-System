@@ -848,7 +848,7 @@
 		<button class="navbar-toggler" data-toggle="collapse" style="margin-left:-20px;" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"><i class="fas fa-bars p-1 " style="color:green;font-size:20px; "></i></span>
 		</button>
-		<a class="float-left" href="farmerHomepage.php">
+		<a class="float-left" href="LibrarianHomepage.php">
 			<img src="agro.png" class="float-left mr-2 moblogo" alt="Logo" style="height:50px;">
 		</a>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -918,7 +918,7 @@
 
 	<div class="row" style="text-align:center;">
 		  <div class="col-md-3 col-sm-12">
-			   <a href="farmerHomepage.php" id="navbar"><i class="fa fa-home" aria-hidden="true"></i><label>Home</label></a>
+			   <a href="LibrarianHomepage.php" id="navbar"><i class="fa fa-home" aria-hidden="true"></i><label>Home</label></a>
 		  </div>
 		  <div class="col-md-3 col-sm-12">
 			   <a href="MyProducts.php" id="navbar"><i class="fa fa-leaf" aria-hidden="true"></i><label>My Products</label></a>

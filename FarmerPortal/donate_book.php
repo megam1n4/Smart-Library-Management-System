@@ -196,7 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
     <div class="top-logo-bar">
-        <a href="farmerHomepage.php">
+        <a href="LibrarianHomepage.php">
             <img src="logo2.jpg" alt="Smart Library Logo">
         </a>
     </div>

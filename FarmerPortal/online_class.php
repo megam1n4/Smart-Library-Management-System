@@ -223,7 +223,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     <nav class="navbar navbar-expand-xl">
         <div class="container-fluid">
-            <a class="navbar-brand" href="farmerHomepage.php">
+            <a class="navbar-brand" href="LibrarianHomepage.php">
                 <img src="logo2.jpg" alt="Smart Library Logo">
             </a>
         </div>

@@ -198,7 +198,7 @@ while ($row = mysqli_fetch_array($run_query)) {
 <body>
 
     <div class="top-logo-bar">
-        <a href="farmerHomepage.php">
+        <a href="LibrarianHomepage.php">
             <img src="logo2.jpg" alt="Smart Library Logo">
         </a>
     </div>

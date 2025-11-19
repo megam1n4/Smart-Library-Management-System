@@ -125,7 +125,7 @@ $sessphonenumber = $_SESSION['phonenumber'];
 
 <body>
     <div class="top-logo-bar">
-        <a href="farmerHomepage.php">
+        <a href="LibrarianHomepage.php">
             <img src="logo2.jpg" alt="Smart Library Logo">
         </a>
     </div>
@@ -299,7 +299,7 @@ if (isset($_POST['insert_pro'])) {    // when button is clicked
         echo $insert_product;
         if ($insert_query) {
             echo "<script>alert('Product has been added')</script>";
-            echo "<script>window.open('farmerHomepage.php','_self')</script>";
+            echo "<script>window.open('LibrarianHomepage.php','_self')</script>";
         } else {
             echo "<script>alert('Error Uploading Data Please Check your Connections ')</script>";
         }

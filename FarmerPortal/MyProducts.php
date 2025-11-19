@@ -290,14 +290,14 @@
     <nav class="navbar navbar-expand-xl">
         <div class="flex-row-reverse d-xl-none left">
             <div class="p-2"></div>
-            <a class="float-left" href="farmerHomepage.php">
+            <a class="float-left" href="LibrarianHomepage.php">
                 <h1 class="book-corner-logo" style="font-size: 25px; margin: 0; padding: 0;">
                     Smart Library Management System 
                 </h1>
             </a>
         </div>
         
-        <a class="navbar-brand d-none d-xl-block" href="farmerHomepage.php">
+        <a class="navbar-brand d-none d-xl-block" href="LibrarianHomepage.php">
             <img src="logo2.jpg" alt="Smart Library Logo">
         </a>
 
@@ -306,7 +306,7 @@
             <span class="navbar-toggler-icon"><i class="fas fa-bars p-1" style="color:goldenrod;font-size:20px;"></i></span>
         </button>
         
-        <a class="navbar-brand d-xl-none moblogo" href="farmerHomepage.php">
+        <a class="navbar-brand d-xl-none moblogo" href="LibrarianHomepage.php">
             <img src="logo2.jpg" alt="Smart Library Logo" style="height: 35px;">
         </a>
 
@@ -374,7 +374,7 @@
 
     <div class="container main-nav-section">
         <div class="d-flex justify-content-center flex-wrap">
-            <a href="farmerHomepage.php" class="main-nav-btn">
+            <a href="LibrarianHomepage.php" class="main-nav-btn">
                 <i class="fa fa-home" aria-hidden="true"></i>Home
             </a>
             <a href="MyProducts.php" class="main-nav-btn">

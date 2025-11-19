@@ -57,7 +57,7 @@ if (isset($_SESSION['phonenumber'])) {
             padding: 0; 
         }
 
-        /* --- Navbar Styling (Simplified from farmerHomepage.php) --- */
+        /* --- Navbar Styling (Simplified from LibrarianHomepage.php) --- */
         nav.navbar {
             background: linear-gradient(135deg, #292b2c 0%, #1a1a2e 100%);
             padding: 15px 30px;
@@ -150,7 +150,7 @@ if (isset($_SESSION['phonenumber'])) {
             padding: 20px 0;
         }
         
-        /* --- Footer Styling (Copied from farmerHomepage.php) --- */
+        /* --- Footer Styling (Copied from LibrarianHomepage.php) --- */
         .myfooter {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             color: #ffc107;
@@ -183,7 +183,7 @@ if (isset($_SESSION['phonenumber'])) {
     
     <nav class="navbar navbar-expand-xl">
         <div class="container-fluid">
-            <a class="navbar-brand" href="farmerHomepage.php">
+            <a class="navbar-brand" href="LibrarianHomepage.php">
                 <img src="logo2.jpg" alt="Smart Library Logo">
             </a>
 

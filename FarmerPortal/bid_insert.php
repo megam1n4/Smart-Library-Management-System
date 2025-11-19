@@ -33,7 +33,7 @@ $sessphonenumber = $_SESSION['phonenumber'];
             padding: 0;
         }
         
-        /* --- Navbar Styling (Copied from farmerHomepage.php) --- */
+        /* --- Navbar Styling (Copied from LibrarianHomepage.php) --- */
         nav.navbar {
             background: linear-gradient(135deg, #292b2c 0%, #1a1a2e 100%);
             padding: 15px 30px;
@@ -225,7 +225,7 @@ $sessphonenumber = $_SESSION['phonenumber'];
             display: block;
         }
 
-        /* --- Footer Styling (Copied from farmerHomepage.php) --- */
+        /* --- Footer Styling (Copied from LibrarianHomepage.php) --- */
         .myfooter {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             color: #ffc107;
@@ -256,7 +256,7 @@ $sessphonenumber = $_SESSION['phonenumber'];
     
     <nav class="navbar navbar-expand-xl">
         <div class="container-fluid">
-            <a class="navbar-brand" href="farmerHomepage.php">
+            <a class="navbar-brand" href="LibrarianHomepage.php">
                 <img src="logo2.jpg" alt="Smart Library Logo">
             </a>
 
@@ -369,7 +369,7 @@ if (isset($_POST['insert_pro'])) {    // when button is clicked
 
         if ($insert_query) {
             echo "<script>alert('Product has been added successfully.')</script>";
-            echo "<script>window.open('farmerHomepage.php','_self')</script>";
+            echo "<script>window.open('LibrarianHomepage.php','_self')</script>";
         } else {
             echo "<script>alert('Error uploading data. Please check your connection and try again.')</script>";
         }
