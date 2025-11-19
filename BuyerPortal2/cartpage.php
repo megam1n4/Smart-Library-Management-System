@@ -537,9 +537,11 @@ global $con;
                 $error_message = "Database error fetching cart items: " . mysqli_error($con);
             } else {
                 $items_to_order = [];
-                $temp_run_cart = mysqli_query($con, $sel_cart); // Rerun query to keep the original for loop integrity if needed
+                // Rerun query for validation loop
+                $validation_run_cart = mysqli_query($con, $sel_cart); 
 
-                while ($cart_item = mysqli_fetch_array($temp_run_cart)) {
+                // --- First loop to perform stock and date validation ---
+                while ($cart_item = mysqli_fetch_array($validation_run_cart)) {
                     $product_id = $cart_item['product_id'];
                     $qty = $cart_item['qty'];
                     $product_price = $cart_item['product_price'];
@@ -552,39 +554,52 @@ global $con;
                         $borrow_date = mysqli_real_escape_string($con, $_POST[$borrow_date_field]);
                         $return_date = mysqli_real_escape_string($con, $_POST[$return_date_field]);
                         
-                        // Validate dates and update cart (Original Step: Update dates in cart)
-                        if (!empty($borrow_date) && !empty($return_date) && strtotime($return_date) >= strtotime($borrow_date)) {
-                            
-                            $items_to_order[] = [
-                                'product_id' => $product_id,
-                                'qty' => $qty,
-                                'total' => $product_price * $qty, // Simple total calculation
-                                'farmer_phone' => $farmer_fk, // Assuming farmer_fk is the farmer's ID
-                                'buyer_phone' => $sess_phone_number,
-                                'borrow_date' => $borrow_date,
-                                'return_date' => $return_date
-                            ];
-
-                            // Update cart with dates (required to keep the data temporarily consistent)
-                            $update_query = "UPDATE cart 
-                                             SET borrow_date = '$borrow_date', return_date = '$return_date' 
-                                             WHERE product_id = '$product_id' AND phonenumber = '$sess_phone_number'";
-                            mysqli_query($con, $update_query);
-
-                        } else {
+                        // 1. DATE VALIDATION
+                        if (empty($borrow_date) || empty($return_date) || strtotime($return_date) < strtotime($borrow_date)) {
                             $success = false;
-                            $error_message = "Invalid dates for book ID $product_id.";
+                            $error_message = "Invalid dates for book ID $product_id. Ensure return date is after borrow date.";
                             break;
                         }
+                        
+                        // 2. STOCK VALIDATION (CHECKING AVAILABILITY)
+                        $stock_query = "SELECT product_title, product_stock FROM products WHERE product_id = '$product_id'";
+                        $stock_result = mysqli_query($con, $stock_query);
+                        $stock_data = mysqli_fetch_assoc($stock_result);
+                        $available_stock = $stock_data['product_stock'];
+                        $book_title = $stock_data['product_title'];
+
+                        if ($qty > $available_stock) {
+                            $success = false;
+                            $error_message = "Not enough stock for **{$book_title}**. Requested: {$qty}, Available: {$available_stock}.";
+                            break; // Stop processing and show error
+                        }
+                        
+                        // If validation passed: prepare for order insertion and update cart dates
+                        $items_to_order[] = [
+                            'product_id' => $product_id,
+                            'qty' => $qty,
+                            'total' => $product_price * $qty, // Simple total calculation (0 in this system)
+                            'farmer_fk' => $farmer_fk, 
+                            'buyer_phone' => $sess_phone_number,
+                            'borrow_date' => $borrow_date,
+                            'return_date' => $return_date
+                        ];
+
+                        // Update cart with dates (required to keep the data temporarily consistent)
+                        $update_query = "UPDATE cart 
+                                         SET borrow_date = '$borrow_date', return_date = '$return_date' 
+                                         WHERE product_id = '$product_id' AND phonenumber = '$sess_phone_number'";
+                        mysqli_query($con, $update_query);
+
                     } else {
                         $success = false;
                         $error_message = "Missing dates for book ID $product_id.";
                         break;
                     }
-                }
+                } // End of validation loop
             }
             
-            // Step 2: Move items to orders table and clear cart
+            // Step 2: Move items to orders table and clear cart (Only proceeds if $success is true)
             if ($success && !empty($items_to_order)) {
                 $order_insert_success = true;
                 
@@ -601,13 +616,18 @@ global $con;
                 foreach ($items_to_order as $item) {
                     
                     // Fetch farmer's phone for the orders table
-                    $farmer_phone_query = "SELECT farmer_phone FROM farmerregistration WHERE farmer_id = '{$item['farmer_phone']}'";
+                    $farmer_phone_query = "SELECT farmer_phone FROM farmerregistration WHERE farmer_id = '{$item['farmer_fk']}'";
                     $farmer_phone_result = mysqli_query($con, $farmer_phone_query);
                     $farmer_row = mysqli_fetch_assoc($farmer_phone_result);
                     $farmer_phone = $farmer_row['farmer_phone'] ?? '0';
 
+                    // --- STOCK REDUCTION (Decreasing Inventory in Products table) ---
+                    $update_stock_query = "UPDATE products 
+                                           SET product_stock = product_stock - {$item['qty']} 
+                                           WHERE product_id = {$item['product_id']}";
+                    mysqli_query($con, $update_stock_query);
+                    // -----------------------------------------------------------------
 
-                    // FIXED: Now including borrow_date and return_date in the INSERT query
                     $insert_order = "INSERT INTO orders (product_id, qty, address, delivery, phonenumber, total, payment, buyer_phonenumber, borrow_date, return_date) 
                                      VALUES (
                                          '{$item['product_id']}', 
@@ -625,26 +645,33 @@ global $con;
                     if (!mysqli_query($con, $insert_order)) {
                         $order_insert_success = false;
                         $error_message = "Failed to finalize order for product ID {$item['product_id']}: " . mysqli_error($con);
+                        
+                        // Rollback: Re-increase stock if order insertion failed for this item
+                        $rollback_stock_query = "UPDATE products 
+                                                 SET product_stock = product_stock + {$item['qty']} 
+                                                 WHERE product_id = {$item['product_id']}";
+                        mysqli_query($con, $rollback_stock_query);
+                        
                         break;
                     }
                 }
 
                 if ($order_insert_success) {
-                    // Step 3: Clear cart
+                    // Step 3: Clear cart on successful order
                     emptyCart(); 
-                    echo "<script>alert('Borrow request submitted successfully! Your items are now being processed.');</script>";
-                    echo "<script>window.open('Transaction.php','_self')</script>"; // Redirect to transactions
+                    echo "<script>window.open('Transaction.php?borrowed=1','_self')</script>"; // Redirect to transactions
                 } else {
                     echo "<script>alert('Transaction failed: $error_message');</script>";
                     echo "<script>window.open('CartPage.php','_self')</script>"; 
                 }
 
             } else if ($success && empty($items_to_order)) {
-                // Should not happen if there are items in the cart, but a safety net
-                echo "<script>alert('Your cart is empty or no changes were made.');</script>";
+                // Safety net: Cart became empty during processing (unlikely with stock check)
+                echo "<script>alert('Your cart is empty or no valid items found to process.');</script>";
                 echo "<script>window.open('bhome.php','_self')</script>";
             } else {
-                // Dates were invalid or partial. Error already displayed in alert.
+                // Validation failed (dates or stock). Display error.
+                echo "<script>alert('Borrow Request Failed: $error_message');</script>";
                 echo "<script>window.open('CartPage.php','_self')</script>";
             }
         } else {
