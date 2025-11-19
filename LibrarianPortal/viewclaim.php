@@ -26,7 +26,7 @@ $query = "
     JOIN 
         book_donations bd ON bc.book_id = bd.id
     JOIN 
-        buyerregistration br ON bc.buyer_phone = br.buyer_phone
+        userregistration br ON bc.buyer_phone = br.buyer_phone
     WHERE 
         bd.farmer_phone = '$farmer_phone'
     ORDER BY 

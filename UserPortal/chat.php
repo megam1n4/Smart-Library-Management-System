@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $chat_query = "
     SELECT c.message, c.timestamp, c.file_path, c.file_type, IF(b.buyer_phone = '$phonenumber', 'You', b.buyer_name) AS name 
     FROM book_discussion_chat c
-    JOIN buyerregistration b ON c.buyer_phone = b.buyer_phone
+    JOIN userregistration b ON c.buyer_phone = b.buyer_phone
     ORDER BY c.timestamp ASC";
 $chat_result = mysqli_query($con, $chat_query);
 ?>

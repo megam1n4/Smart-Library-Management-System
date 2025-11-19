@@ -12,7 +12,7 @@ if (!isset($_SESSION['phonenumber'])) {
 $phonenumber = $_SESSION['phonenumber']; // Get the phone number of the logged-in reader
 
 // Fetch reader information (e.g., name) based on phone number
-$query = "SELECT buyer_name FROM buyerregistration WHERE buyer_phone = '$phonenumber'";
+$query = "SELECT buyer_name FROM userregistration WHERE buyer_phone = '$phonenumber'";
 $result = mysqli_query($con, $query);
 if (mysqli_num_rows($result) > 0) {
     $reader = mysqli_fetch_assoc($result);

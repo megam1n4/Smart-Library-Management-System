@@ -603,8 +603,8 @@ global $con;
             if ($success && !empty($items_to_order)) {
                 $order_insert_success = true;
                 
-                // Fetch buyer's address from buyerregistration table
-                $buyer_info_query = "SELECT buyer_addr FROM buyerregistration WHERE buyer_phone = '$sess_phone_number'";
+                // Fetch buyer's address from userregistration table
+                $buyer_info_query = "SELECT buyer_addr FROM userregistration WHERE buyer_phone = '$sess_phone_number'";
                 $buyer_info_result = mysqli_query($con, $buyer_info_query);
                 $buyer_info = mysqli_fetch_assoc($buyer_info_result);
                 $buyer_address = mysqli_real_escape_string($con, $buyer_info['buyer_addr'] ?? 'N/A');

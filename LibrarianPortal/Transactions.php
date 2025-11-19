@@ -469,8 +469,8 @@ if (isset($_POST['mark_done'])) {
                         $product_title = $order_data['product_title'];
 
 
-                        // Get buyer name from buyerregistration
-                        $query_name = "select buyer_name from buyerregistration where buyer_phone = '$buyer_phone'";
+                        // Get buyer name from userregistration
+                        $query_name = "select buyer_name from userregistration where buyer_phone = '$buyer_phone'";
                         $run_query_name = mysqli_query($con, $query_name);
                         $names = mysqli_fetch_array($run_query_name);
                         $buyer_name = $names['buyer_name'];

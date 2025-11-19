@@ -3,7 +3,7 @@
     include("../Includes/db.php");
     session_start();
     $sessphonenumber = $_SESSION['phonenumber'];
-    $sql="select * from buyerregistration where buyer_phone = '$sessphonenumber'";
+    $sql="select * from userregistration where buyer_phone = '$sessphonenumber'";
     $run_query = mysqli_query($con,$sql);
     while($row = mysqli_fetch_array($run_query))
     {

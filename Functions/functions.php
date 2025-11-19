@@ -14,7 +14,7 @@
             global $con;
 
             // FIX: Ensure quoting for phone number when retrieving username
-            $query = "select * from buyerregistration where buyer_phone = '$phonenumber'";
+            $query = "select * from userregistration where buyer_phone = '$phonenumber'";
             $run_query = mysqli_query($con, $query);
             if ($run_query) {
                 while ($row_cat = mysqli_fetch_array($run_query)) {
@@ -538,7 +538,7 @@ function cart()
     function getTotalUsers() {
         global $con;
         $count = 0;
-        $query_users = "SELECT COUNT(*) as total FROM buyerregistration";
+        $query_users = "SELECT COUNT(*) as total FROM userregistration";
         $run_users = mysqli_query($con, $query_users);
         if ($run_users) {
             $count = mysqli_fetch_assoc($run_users)['total'];

@@ -25,7 +25,7 @@ if (isset($_POST['login'])) {
     );
 
     // Query with encrypted password
-    $query = "SELECT * FROM buyerregistration WHERE buyer_phone = '$phonenumber' AND buyer_password = '$encrypted_password'";
+    $query = "SELECT * FROM userregistration WHERE buyer_phone = '$phonenumber' AND buyer_password = '$encrypted_password'";
     $run_query = mysqli_query($con, $query);
     
     if (mysqli_num_rows($run_query) > 0) {

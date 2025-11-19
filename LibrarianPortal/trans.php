@@ -1097,7 +1097,7 @@
                                         $product_title = $pp_price['product_title'];
 
 
-                                        $query_name = "select * from buyerregistration where buyer_phone = $phone";
+                                        $query_name = "select * from userregistration where buyer_phone = $phone";
                                         $run_query_name = mysqli_query($con, $query_name);
                                         while ($names = mysqli_fetch_array($run_query_name)) {
                                              $buyer_name = $names['buyer_name'];

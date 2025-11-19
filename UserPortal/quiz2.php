@@ -11,7 +11,7 @@ if (!isset($_SESSION['phonenumber'])) {
 $phonenumber = $_SESSION['phonenumber'];
 
 // Fetch buyer's name based on phone number
-$name_query = "SELECT buyer_name FROM buyerregistration WHERE buyer_phone = '$phonenumber'";
+$name_query = "SELECT buyer_name FROM userregistration WHERE buyer_phone = '$phonenumber'";
 $name_result = mysqli_query($con, $name_query);
 $buyer_data = mysqli_fetch_assoc($name_result);
 $buyer_name = $buyer_data['buyer_name'] ?? 'Unknown User';

@@ -32,14 +32,14 @@ if (isset($_GET['debate_id'])) {
 $side_a_query = "
     SELECT br.buyer_name 
     FROM debate_registrations dr
-    JOIN buyerregistration br ON dr.buyer_phone = br.buyer_phone
+    JOIN userregistration br ON dr.buyer_phone = br.buyer_phone
     WHERE dr.debate_id = $debate_id AND dr.side = 'A'";
 $side_a_result = mysqli_query($con, $side_a_query);
 
 $side_b_query = "
     SELECT br.buyer_name 
     FROM debate_registrations dr
-    JOIN buyerregistration br ON dr.buyer_phone = br.buyer_phone
+    JOIN userregistration br ON dr.buyer_phone = br.buyer_phone
     WHERE dr.debate_id = $debate_id AND dr.side = 'B'";
 $side_b_result = mysqli_query($con, $side_b_query);
 ?>

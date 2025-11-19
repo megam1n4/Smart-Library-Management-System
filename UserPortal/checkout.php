@@ -377,7 +377,7 @@ include("../Functions/functions.php");
     <form action="checkout.php" method="post">
         <?php
         $phonenumber = $_SESSION['phonenumber'];
-        $get_addr = "select buyer_addr from buyerregistration where buyer_phone=$phonenumber";
+        $get_addr = "select buyer_addr from userregistration where buyer_phone=$phonenumber";
         $run = mysqli_query($con, $get_addr);
         while ($row = mysqli_fetch_array($run)) {
             $buyer_addr = $row['buyer_addr'];
