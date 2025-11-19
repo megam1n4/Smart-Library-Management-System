@@ -282,7 +282,7 @@ if (isset($_POST['insert_pro'])) {    // when button is clicked
         $phone = $_SESSION['phonenumber'];
         
         // This query uses $sessphonenumber (from the top of the file) which is $_SESSION['phonenumber']
-        $getting_id = "select * from farmerregistration where farmer_phone = '$sessphonenumber'"; 
+        $getting_id = "select * from librarianregistration where farmer_phone = '$sessphonenumber'"; 
         $run = mysqli_query($con, $getting_id);
         $row = mysqli_fetch_array($run);
         $id = $row['farmer_id'];

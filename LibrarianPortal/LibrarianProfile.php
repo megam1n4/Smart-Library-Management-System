@@ -2,7 +2,7 @@
 include("../Includes/db.php");
 session_start();
 $sessphonenumber = $_SESSION['phonenumber'];
-$sql = "select * from farmerregistration where farmer_phone = '$sessphonenumber' ";
+$sql = "select * from librarianregistration where farmer_phone = '$sessphonenumber' ";
 $run_query = mysqli_query($con, $sql);
 while ($row = mysqli_fetch_array($run_query)) {
     $name = $row['farmer_name'];

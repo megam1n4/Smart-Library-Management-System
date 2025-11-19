@@ -443,7 +443,7 @@ include("../Functions/functions.php");
                             $product_title = $pp_price['product_title'];
                             $farmer_fk = $pp_price['farmer_fk'];
 
-                            $get_phone = "select * from farmerregistration where farmer_id = $farmer_fk";
+                            $get_phone = "select * from librarianregistration where farmer_id = $farmer_fk";
                             $run_get_phone = mysqli_query($con, $get_phone);
                             while ($phones = mysqli_fetch_array($run_get_phone)) {
                                 $phone = $phones['farmer_phone'];

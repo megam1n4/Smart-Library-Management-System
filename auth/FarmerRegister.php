@@ -420,7 +420,7 @@ if (isset($_POST['register'])) {
 
     if (strcmp($password, $confirmpassword) == 0) {
 
-        $query = "insert into farmerregistration (farmer_name,farmer_phone,
+        $query = "insert into librarianregistration (farmer_name,farmer_phone,
                 farmer_address, farmer_state, farmer_district,
                 farmer_pan,farmer_bank,farmer_password) 
                 values ('$name','$phonenumber','$address',

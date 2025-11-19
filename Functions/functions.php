@@ -37,7 +37,7 @@
             global $con;
 
             // FIX: Ensure quoting for phone number when retrieving farmer username
-            $query = "select * from farmerregistration where farmer_phone = '$phonenumber'";
+            $query = "select * from librarianregistration where farmer_phone = '$phonenumber'";
             $run_query = mysqli_query($con, $query);
             if ($run_query) {
                 while ($row_cat = mysqli_fetch_array($run_query)) {
@@ -248,7 +248,7 @@ function getProducts()
         $product_type = $rows['product_type'];
         $farmer_fk = $rows['farmer_fk'];
         
-        $farmer_name_query = "select farmer_name from farmerregistration where farmer_id = $farmer_fk";
+        $farmer_name_query = "select farmer_name from librarianregistration where farmer_id = $farmer_fk";
         $running_query_name = mysqli_query($con, $farmer_name_query);
         while ($names = mysqli_fetch_array($running_query_name)) {
             $name = $names['farmer_name'];
@@ -360,7 +360,7 @@ function getProducts()
                             $farmerid = $row['farmer_fk'];
                         }
 
-                        $query = "select * from farmerregistration where farmer_id = $farmerid";
+                        $query = "select * from librarianregistration where farmer_id = $farmerid";
                         $run = mysqli_query($con, $query);
                         while ($row = mysqli_fetch_array($run)) {
                             $farmer_name = $row['farmer_name'];
@@ -415,7 +415,7 @@ function cart()
         include("../Includes/db.php");
         global $con;
         $sess_phone_number = $_SESSION['phonenumber'];
-        $query = "select * from products where farmer_fk in (select farmer_id from farmerregistration where farmer_phone='$sess_phone_number') ";
+        $query = "select * from products where farmer_fk in (select farmer_id from librarianregistration where farmer_phone='$sess_phone_number') ";
         $run_query = mysqli_query($con, $query);
         $count = 0;
         if ($run_query) {
@@ -483,7 +483,7 @@ function cart()
                             $farmerid = $row['farmer_fk'];
                         }
 
-                        $query = "select * from farmerregistration where farmer_id = $farmerid";
+                        $query = "select * from librarianregistration where farmer_id = $farmerid";
                         $run = mysqli_query($con, $query);
                         while ($row = mysqli_fetch_array($run)) {
                             $farmer_name = $row['farmer_name'];

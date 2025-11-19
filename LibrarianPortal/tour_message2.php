@@ -28,7 +28,7 @@ if (isset($_SESSION['phonenumber'])) {
     $auth_phonenumber = $_SESSION['phonenumber'];
     $query = "SELECT v.vname, v.reason, v.noofvisitors, v.visitorinformation
               FROM visitor v
-              INNER JOIN farmerregistration f ON v.phone = f.farmer_phone
+              INNER JOIN librarianregistration f ON v.phone = f.farmer_phone
               WHERE f.farmer_phone = '$auth_phonenumber'";
 
     $run_query = mysqli_query($con, $query);

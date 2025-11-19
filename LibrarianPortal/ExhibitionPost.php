@@ -14,7 +14,7 @@ $phonenumber = $_SESSION['phonenumber']; // Using phone number from the session
 include("../Includes/db.php"); // Include the database connection
 
 // Retrieve farmer_id using phonenumber
-$query = "SELECT farmer_id FROM farmerregistration WHERE farmer_phone = '$phonenumber'";
+$query = "SELECT farmer_id FROM librarianregistration WHERE farmer_phone = '$phonenumber'";
 $result = mysqli_query($con, $query);
 
 if (mysqli_num_rows($result) > 0) {

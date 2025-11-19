@@ -60,9 +60,9 @@
         include("../Includes/db.php");
 
 
-        $query = "SELECT * FROM farmerregistration ORDER BY farmer_id DESC LIMIT 10";
+        $query = "SELECT * FROM librarianregistration ORDER BY farmer_id DESC LIMIT 10";
 
-        // $query = "SELECT * FROM farmerregistration LIMIT 15"; // Limit to 15 records
+        // $query = "SELECT * FROM librarianregistration LIMIT 15"; // Limit to 15 records
         $result = mysqli_query($con, $query);
 
         if ($result) {

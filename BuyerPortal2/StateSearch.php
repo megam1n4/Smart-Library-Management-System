@@ -687,7 +687,7 @@ margin-top:2%;
 
                if (isset($_GET['state'])) {
                     $state = $_GET['state'];
-                    $get_id = "select * from farmerregistration where farmer_state = '$state'";
+                    $get_id = "select * from librarianregistration where farmer_state = '$state'";
                     $run_id_query = mysqli_query($con, $get_id);
                     while ($ids = mysqli_fetch_array($run_id_query)) {
                          $farmer_id = $ids['farmer_id'];
@@ -704,7 +704,7 @@ margin-top:2%;
                                    $product_price = $rows['product_price'];
                                    $product_delivery = $rows['product_delivery'];
                                    $farmer_fk = $rows['farmer_fk'];
-                                   $farmer_name_query = "select farmer_name from farmerregistration where farmer_id = $farmer_fk";
+                                   $farmer_name_query = "select farmer_name from librarianregistration where farmer_id = $farmer_fk";
                                    $running_query_name = mysqli_query($con, $farmer_name_query);
                                    while ($names = mysqli_fetch_array($running_query_name)) {
                                         $name = $names['farmer_name'];

@@ -446,7 +446,7 @@ if (isset($_POST['mark_done'])) {
                     $sess_phone_number = $_SESSION['phonenumber'];
                     
                     // Fetch orders where the current librarian (farmer) is the recipient/seller
-                    $get_farmer_id_query = "SELECT farmer_id FROM farmerregistration WHERE farmer_phone = '$sess_phone_number'";
+                    $get_farmer_id_query = "SELECT farmer_id FROM librarianregistration WHERE farmer_phone = '$sess_phone_number'";
                     $run_farmer_id = mysqli_query($con, $get_farmer_id_query);
                     $farmer_row = mysqli_fetch_array($run_farmer_id);
                     $current_farmer_id = $farmer_row['farmer_id'];

@@ -164,7 +164,7 @@ if (isset($_POST['insert_post'])) {    // when button is clicked
         move_uploaded_file($product_image_tmp, "product_images/$product_image");
 
         $phone = $_SESSION['phonenumber'];
-        $getting_id = "select * from farmerregistration where farmer_phone = $phone";
+        $getting_id = "select * from librarianregistration where farmer_phone = $phone";
         $run = mysqli_query($con, $getting_id);
         $row = mysqli_fetch_array($run);
         $id = $row['farmer_id'];

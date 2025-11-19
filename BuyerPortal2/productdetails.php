@@ -437,7 +437,7 @@ include("../Functions/functions.php");
             } else {
                 $product_delivery = "Delivery by Farmer Not Available";
             }
-            $querya = "select * from farmerregistration where farmer_id = $farmer_fk";
+            $querya = "select * from librarianregistration where farmer_id = $farmer_fk";
             $runa_query = mysqli_query($con, $querya);
 
             while ($rows = mysqli_fetch_array($runa_query)) {

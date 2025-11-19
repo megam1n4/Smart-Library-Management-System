@@ -3,7 +3,7 @@
 include("../Includes/db.php");
 session_start();
 $sessphonenumber = $_SESSION['phonenumber'];
-$sql = "select * from farmerregistration where farmer_phone = '$sessphonenumber'"; // Ensure string quoting for phone number
+$sql = "select * from librarianregistration where farmer_phone = '$sessphonenumber'"; // Ensure string quoting for phone number
 $run_query = mysqli_query($con, $sql);
 while ($row = mysqli_fetch_array($run_query)) {
     $name = $row['farmer_name'];
@@ -404,12 +404,12 @@ if (isset($_POST['confirm'])) {
     $state = mysqli_real_escape_string( $con, $_POST['statevalue']);
     $account = mysqli_real_escape_string( $con, $_POST['bank']);
 
-    $query = "update farmerregistration 
+    $query = "update librarianregistration 
               set farmer_phone = '$phone', farmer_address = '$address',
               farmer_bank = '$account', farmer_state = '$state',
               farmer_district = '$district'
               where farmer_id 
-              in (select farmer_id from farmerregistration 
+              in (select farmer_id from librarianregistration 
               where farmer_phone='$sessphonenumber')";
     $run = mysqli_query($con, $query);
     

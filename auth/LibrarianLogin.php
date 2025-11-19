@@ -380,7 +380,7 @@ if (isset($_POST['login'])) {
 	);
 	// echo $encryption;
 
-	$query = "select * from farmerregistration where farmer_phone = '$phonenumber' and farmer_password = '$encryption'";
+	$query = "select * from librarianregistration where farmer_phone = '$phonenumber' and farmer_password = '$encryption'";
 	echo $query;
 	$run_query = mysqli_query($con, $query);
 	$count_rows = mysqli_num_rows($run_query);

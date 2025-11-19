@@ -370,7 +370,7 @@ if (isset($_POST['insert_pro'])) {    // when button is clicked
         move_uploaded_file($product_image_tmp, "../Admin/product_images/$product_image");
 
         $phone = $_SESSION['phonenumber'];
-        $getting_id = "select * from farmerregistration where farmer_phone = $sessphonenumber";
+        $getting_id = "select * from librarianregistration where farmer_phone = $sessphonenumber";
         $run = mysqli_query($con, $getting_id);
         $row = mysqli_fetch_array($run);
         $id = $row['farmer_id'];

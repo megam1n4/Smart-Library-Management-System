@@ -5,7 +5,7 @@ include("../Includes/db.php");
 // Query to fetch data from the 'bids' table that matches farmer_phone
 $query = "SELECT b.bid_id, b.product_id, b.bid_amount, b.farmer_phone, b.buyer_address
           FROM bids AS b
-          JOIN farmerregistration AS f ON b.farmer_phone = f.farmer_phone";
+          JOIN librarianregistration AS f ON b.farmer_phone = f.farmer_phone";
 $result = mysqli_query($con, $query);
 ?>
 

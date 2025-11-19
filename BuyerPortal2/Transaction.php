@@ -471,7 +471,7 @@ include("../Functions/functions.php");
                             $product_title = $pp_price['product_title'];
                             $farmer_id = $pp_price['farmer_fk'];
 
-                            $query_name = "select * from farmerregistration where farmer_id = $farmer_id";
+                            $query_name = "select * from librarianregistration where farmer_id = $farmer_id";
                             $run_query_name = mysqli_query($con, $query_name);
                             while ($names = mysqli_fetch_array($run_query_name)) {
                                 $farmer_name = $names['farmer_name'];

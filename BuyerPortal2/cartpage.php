@@ -616,7 +616,7 @@ global $con;
                 foreach ($items_to_order as $item) {
                     
                     // Fetch farmer's phone for the orders table
-                    $farmer_phone_query = "SELECT farmer_phone FROM farmerregistration WHERE farmer_id = '{$item['farmer_fk']}'";
+                    $farmer_phone_query = "SELECT farmer_phone FROM librarianregistration WHERE farmer_id = '{$item['farmer_fk']}'";
                     $farmer_phone_result = mysqli_query($con, $farmer_phone_query);
                     $farmer_row = mysqli_fetch_assoc($farmer_phone_result);
                     $farmer_phone = $farmer_row['farmer_phone'] ?? '0';

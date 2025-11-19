@@ -25,7 +25,7 @@ if (mysqli_num_rows($result) > 0) {
 // Fetch upcoming meet-and-greet sessions from the database
 $meet_and_greet_query = "SELECT mg.title, mg.description, mg.meet_link, mg.meet_date, mg.meet_time, f.farmer_name 
                          FROM meet_and_greet mg
-                         JOIN farmerregistration f ON mg.farmer_id = f.farmer_id
+                         JOIN librarianregistration f ON mg.farmer_id = f.farmer_id
                          WHERE mg.meet_date >= CURDATE()
                          ORDER BY mg.meet_date, mg.meet_time";
 $meet_and_greet_result = mysqli_query($con, $meet_and_greet_query);
