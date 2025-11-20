@@ -209,14 +209,14 @@ include("../Functions/functions.php");
         </div>
     </div>
     <div class="p-2 ml-5"><i class='far fa-user-circle' style='font-size:30px; color: green;margin-top:2px;'></i></div>
-    <a class="float-left" href="bhome.php">
+    <a class="float-left" href="UserHome.php">
         <img src="f4.png" class="float-left mr-5 ml-0 " alt="Logo" style="height:35px;">
     </a>
 </div>
 <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"><i class="fas fa-bars p-1 " style="color:green;margin-right:-9%;font-size:28px;"></i></span>
 </button>
-<a class="float-left" href="bhome.php">
+<a class="float-left" href="UserHome.php">
     <img src="f4.png" class="float-left mr-2 moblogo" alt="Logo" style="height:35px;">
 </a>
 <div class="collapse navbar-collapse" id="navbarSupportedContent">

@@ -20,7 +20,7 @@ include("../Functions/functions.php");
     <script src="https://kit.fontawesome.com/c587fc1763.js" crossorigin="anonymous"></script>
 
     <style>
-        /* --- Styles copied from bhome.php for consistent look --- */
+        /* --- Styles copied from UserHome.php for consistent look --- */
         * {
             margin: 0;
             padding: 0;
@@ -356,7 +356,7 @@ include("../Functions/functions.php");
 
     <nav class="navbar navbar-expand-xl navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="bhome.php">
+            <a class="navbar-brand" href="UserHome.php">
                 <img src="logo2.jpg" alt="Smart Library Logo">
             </a>
 
@@ -495,7 +495,7 @@ include("../Functions/functions.php");
         </div>
         
         <div class="text-left mt-3">
-            <a href="bhome.php" class="btn btn-shopping">
+            <a href="UserHome.php" class="btn btn-shopping">
                 Continue Browsing Books
                 <i class="fas fa-shopping-bag ml-2" aria-hidden="true"></i>
             </a>

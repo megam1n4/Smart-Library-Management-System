@@ -29,7 +29,7 @@ include("../Functions/functions.php");
             color: #333;
         }
 
-        /* Modern Navbar Styling - Same as bhome.php */
+        /* Modern Navbar Styling - Same as UserHome.php */
         nav.navbar {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             padding: 15px 30px;
@@ -364,7 +364,7 @@ include("../Functions/functions.php");
     <nav class="navbar navbar-expand-xl navbar-dark">
         <div class="container-fluid">
             <!-- Logo -->
-            <a class="navbar-brand" href="bhome.php">
+            <a class="navbar-brand" href="UserHome.php">
                 <img src="logo2.jpg" alt="Smart Library Logo">
             </a>
 

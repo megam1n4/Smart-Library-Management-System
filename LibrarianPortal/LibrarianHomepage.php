@@ -45,7 +45,7 @@
             z-index: 1000;
         }
         
-        /* ADDED: Logo styling from bhome.php */
+        /* ADDED: Logo styling from UserHome.php */
         .navbar-brand img {
             height: 50px;
             width: auto;

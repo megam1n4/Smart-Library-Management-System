@@ -426,7 +426,7 @@ global $con;
 
     <nav class="navbar navbar-expand-xl navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="bhome.php">
+            <a class="navbar-brand" href="UserHome.php">
                 <img src="logo2.jpg" alt="Smart Library Logo">
             </a>
 
@@ -668,7 +668,7 @@ global $con;
             } else if ($success && empty($items_to_order)) {
                 // Safety net: Cart became empty during processing (unlikely with stock check)
                 echo "<script>alert('Your cart is empty or no valid items found to process.');</script>";
-                echo "<script>window.open('bhome.php','_self')</script>";
+                echo "<script>window.open('UserHome.php','_self')</script>";
             } else {
                 // Validation failed (dates or stock). Display error.
                 echo "<script>alert('Borrow Request Failed: $error_message');</script>";
@@ -792,7 +792,7 @@ global $con;
                         </button>
                     </a>
                     
-                    <a href="bhome.php">
+                    <a href="UserHome.php">
                         <button type="button" class="action-btn">
                             <i class="fas fa-shopping-bag"></i> Continue Browsing Books
                         </button>
@@ -811,7 +811,7 @@ global $con;
                     <h2>Your Cart is Empty</h2>
                     <p>Add some books to your cart to get started!</p>
                     <br>
-                    <a href='bhome.php'>
+                    <a href='UserHome.php'>
                         <button class='action-btn'>
                             <i class='fas fa-book'></i> Browse Books
                         </button>

@@ -35,7 +35,7 @@ if (isset($_POST['login'])) {
         $_SESSION['buyer_id'] = $row['buyer_id'];
         
         // Redirect to buyer home page
-        header("Location: ../UserPortal/bhome.php");
+        header("Location: ../UserPortal/UserHome.php");
         exit();
     } else {
         // Login failed

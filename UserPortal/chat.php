@@ -468,7 +468,7 @@ $chat_result = mysqli_query($con, $chat_query);
     <nav class="navbar navbar-expand-xl navbar-dark">
         <div class="container-fluid">
             <!-- Logo -->
-            <a class="navbar-brand" href="bhome.php">
+            <a class="navbar-brand" href="UserHome.php">
                 <img src="logo2.jpg" alt="Smart Library Logo">
             </a>
 

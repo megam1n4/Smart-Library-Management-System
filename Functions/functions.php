@@ -265,7 +265,7 @@ function getProducts()
                     <h5 style='font-weight: 700; color: #1a1a2e; margin-bottom: 10px; font-size: 1.2rem;'>$product_title</h5>
                     <span class='badge' style='background: #ffc107; color: #000; padding: 5px 15px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; display: inline-block; margin-bottom: 15px;'>$product_type</span>
                     
-                    <a href='../UserPortal/bhome.php?add_cart=$product_id' class='btn-add-cart' style='background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; width: 100%; display: block; text-align: center; text-decoration: none; transition: all 0.3s ease;'>
+                    <a href='../UserPortal/UserHome.php?add_cart=$product_id' class='btn-add-cart' style='background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; width: 100%; display: block; text-align: center; text-decoration: none; transition: all 0.3s ease;'>
                         <i class='fas fa-shopping-cart'></i> Add to cart
                     </a>
                 </div>
@@ -401,7 +401,7 @@ function cart()
                 $run_insert_pro = mysqli_query($con, $insert_pro);
             }
 
-            echo "<script>window.open('bhome.php?added=$product_id','_self')</script>";
+            echo "<script>window.open('UserHome.php?added=$product_id','_self')</script>";
         }
     } else {
         // Optionally, you can add an alert here to notify the user to log in.
