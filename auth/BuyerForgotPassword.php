@@ -289,7 +289,7 @@ if (isset($_POST['register'])) {
     $password = mysqli_real_escape_string($con, $_POST['password']);
     $confirmpassword = mysqli_real_escape_string($con, $_POST['confirmpassword']);
 
-    $query = "select * from buyerregistration where buyer_phone = '$phonenumber' and buyer_pan = '$pan'";
+    $query = "select * from userregistration where buyer_phone = '$phonenumber' and buyer_pan = '$pan'";
     $run_query = mysqli_query($con, $query);
     $count_rows = mysqli_num_rows($run_query);
 
@@ -309,7 +309,7 @@ if (isset($_POST['register'])) {
 
     if (strcmp($password, $confirmpassword) == 0) {
         if ($count_rows != 0) {
-            $update_query = "update buyerregistration set buyer_password = '$encryption' 
+            $update_query = "update userregistration set buyer_password = '$encryption' 
                                     where buyer_phone = '$phonenumber' and buyer_pan = '$pan' ";
 
             $run_query = mysqli_query($con, $update_query);

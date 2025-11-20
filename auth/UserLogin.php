@@ -25,7 +25,7 @@ if (isset($_POST['login'])) {
     );
 
     // Query with encrypted password
-    $query = "SELECT * FROM buyerregistration WHERE buyer_phone = '$phonenumber' AND buyer_password = '$encrypted_password'";
+    $query = "SELECT * FROM userregistration WHERE buyer_phone = '$phonenumber' AND buyer_password = '$encrypted_password'";
     $run_query = mysqli_query($con, $query);
     
     if (mysqli_num_rows($run_query) > 0) {
@@ -35,7 +35,7 @@ if (isset($_POST['login'])) {
         $_SESSION['buyer_id'] = $row['buyer_id'];
         
         // Redirect to buyer home page
-        header("Location: ../BuyerPortal2/bhome.php");
+        header("Location: ../UserPortal/UserHome.php");
         exit();
     } else {
         // Login failed

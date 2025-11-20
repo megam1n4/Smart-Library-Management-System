@@ -363,7 +363,7 @@ if (isset($_POST['register'])) {
     $password = mysqli_real_escape_string($con, $_POST['password']);
     $confirmpassword = mysqli_real_escape_string($con, $_POST['confirmpassword']);
 
-    $query = "select * from farmerregistration where farmer_phone = '$phonenumber' and farmer_pan = '$pan'";
+    $query = "select * from librarianregistration where farmer_phone = '$phonenumber' and farmer_pan = '$pan'";
     $run_query = mysqli_query($con, $query);
     $count_rows = mysqli_num_rows($run_query);
 
@@ -383,13 +383,13 @@ if (isset($_POST['register'])) {
 
     if (strcmp($password, $confirmpassword) == 0) {
         if ($count_rows != 0) {
-            $update_query = "update farmerregistration set farmer_password = '$encryption' 
+            $update_query = "update librarianregistration set farmer_password = '$encryption' 
                                  where farmer_phone = '$phonenumber' and farmer_pan = '$pan' ";
 
             $run_query = mysqli_query($con, $update_query);
 
             echo "<script>alert('Password Updated Successfully');</script>";
-            echo "<script>window.open('FarmerLogin.php','_self')</script>";
+            echo "<script>window.open('LibrarianLogin.php','_self')</script>";
         } else if ($count_rows == 0) {
             echo "<script>alert('Please Enter Valid Details');</script>";
         }

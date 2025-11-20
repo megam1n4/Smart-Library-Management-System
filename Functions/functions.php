@@ -14,7 +14,7 @@
             global $con;
 
             // FIX: Ensure quoting for phone number when retrieving username
-            $query = "select * from buyerregistration where buyer_phone = '$phonenumber'";
+            $query = "select * from userregistration where buyer_phone = '$phonenumber'";
             $run_query = mysqli_query($con, $query);
             if ($run_query) {
                 while ($row_cat = mysqli_fetch_array($run_query)) {
@@ -37,7 +37,7 @@
             global $con;
 
             // FIX: Ensure quoting for phone number when retrieving farmer username
-            $query = "select * from farmerregistration where farmer_phone = '$phonenumber'";
+            $query = "select * from librarianregistration where farmer_phone = '$phonenumber'";
             $run_query = mysqli_query($con, $query);
             if ($run_query) {
                 while ($row_cat = mysqli_fetch_array($run_query)) {
@@ -47,7 +47,7 @@
                 }
             }
         } else {
-            echo "<label><a href = '../auth/FarmerLogin.php' style = 'color:white; padding-top:20px;' >Login/Sign up</a></label>";
+            echo "<label><a href = '../auth/LibrarianLogin.php' style = 'color:white; padding-top:20px;' >Login/Sign up</a></label>";
         }
     }
 
@@ -72,7 +72,7 @@
 
         while ($row_cat = mysqli_fetch_array($run_query)) {
             $product_type = $row_cat['product_type'];
-            echo "<a class='dropdown-item' href='../BuyerPortal2/Categories.php?type=$product_type'>$product_type</a>";
+            echo "<a class='dropdown-item' href='../UserPortal/Categories.php?type=$product_type'>$product_type</a>";
         }
     }
 
@@ -87,7 +87,7 @@
 
         while ($row_cat = mysqli_fetch_array($run_query)) {
             $product_type = $row_cat['product_type'];
-            echo "<a class='dropdown-item' href='../BuyerPortal2/Categories.php?type=$product_type'>$product_type</a>";
+            echo "<a class='dropdown-item' href='../UserPortal/Categories.php?type=$product_type'>$product_type</a>";
         }
     }
 
@@ -102,7 +102,7 @@
 
         while ($row_cat = mysqli_fetch_array($run_query)) {
             $product_type = $row_cat['product_type'];
-            echo "<a class='dropdown-item' href='../BuyerPortal2/Categories.php?type=$product_type'>$product_type</a>";
+            echo "<a class='dropdown-item' href='../UserPortal/Categories.php?type=$product_type'>$product_type</a>";
         }
     }
 
@@ -248,7 +248,7 @@ function getProducts()
         $product_type = $rows['product_type'];
         $farmer_fk = $rows['farmer_fk'];
         
-        $farmer_name_query = "select farmer_name from farmerregistration where farmer_id = $farmer_fk";
+        $farmer_name_query = "select farmer_name from librarianregistration where farmer_id = $farmer_fk";
         $running_query_name = mysqli_query($con, $farmer_name_query);
         while ($names = mysqli_fetch_array($running_query_name)) {
             $name = $names['farmer_name'];
@@ -257,7 +257,7 @@ function getProducts()
         echo "
         <div class='col-md-4 col-sm-6 mb-4'>
             <div class='book-card'>
-                <a href='../BuyerPortal2/Categories.php?type=$product_type'>
+                <a href='../UserPortal/Categories.php?type=$product_type'>
                     <img src='../Admin/product_images/$product_image' alt='$product_title' class='img-fluid' style='width: 100%; height: 350px; object-fit: cover; border-radius: 10px; margin-bottom: 15px;'>
                 </a>
                 
@@ -265,7 +265,7 @@ function getProducts()
                     <h5 style='font-weight: 700; color: #1a1a2e; margin-bottom: 10px; font-size: 1.2rem;'>$product_title</h5>
                     <span class='badge' style='background: #ffc107; color: #000; padding: 5px 15px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; display: inline-block; margin-bottom: 15px;'>$product_type</span>
                     
-                    <a href='../BuyerPortal2/bhome.php?add_cart=$product_id' class='btn-add-cart' style='background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; width: 100%; display: block; text-align: center; text-decoration: none; transition: all 0.3s ease;'>
+                    <a href='../UserPortal/UserHome.php?add_cart=$product_id' class='btn-add-cart' style='background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; width: 100%; display: block; text-align: center; text-decoration: none; transition: all 0.3s ease;'>
                         <i class='fas fa-shopping-cart'></i> Add to cart
                     </a>
                 </div>
@@ -291,7 +291,7 @@ function getProducts()
 
             echo "<div class='column kolum'>
                 <div class='img-thumbnail ''>
-                     <a href='../BuyerPortal2/Categories.php?type=$product_type'>
+                     <a href='../UserPortal/Categories.php?type=$product_type'>
                         <img class='rounded mx-auto d-block images' src='../Admin/product_images//$product_image' width='350px' height='200px' alt='image'>
                      </a>
                 </div>
@@ -314,7 +314,7 @@ function getProducts()
             $product_type = $rows['product_type'];
             echo "<div class='column kolum'>
                 <div class='img-thumbnail ''>
-                     <a href='../BuyerPortal2/Categories.php?type=$product_type'>
+                     <a href='../UserPortal/Categories.php?type=$product_type'>
                         <img class='rounded mx-auto d-block images' src='../Admin/product_images//$product_image' width='350px' height='200px' alt='image'>
                      </a>
                 </div>
@@ -360,7 +360,7 @@ function getProducts()
                             $farmerid = $row['farmer_fk'];
                         }
 
-                        $query = "select * from farmerregistration where farmer_id = $farmerid";
+                        $query = "select * from librarianregistration where farmer_id = $farmerid";
                         $run = mysqli_query($con, $query);
                         while ($row = mysqli_fetch_array($run)) {
                             $farmer_name = $row['farmer_name'];
@@ -401,7 +401,7 @@ function cart()
                 $run_insert_pro = mysqli_query($con, $insert_pro);
             }
 
-            echo "<script>window.open('bhome.php?added=$product_id','_self')</script>";
+            echo "<script>window.open('UserHome.php?added=$product_id','_self')</script>";
         }
     } else {
         // Optionally, you can add an alert here to notify the user to log in.
@@ -415,7 +415,7 @@ function cart()
         include("../Includes/db.php");
         global $con;
         $sess_phone_number = $_SESSION['phonenumber'];
-        $query = "select * from products where farmer_fk in (select farmer_id from farmerregistration where farmer_phone='$sess_phone_number') ";
+        $query = "select * from products where farmer_fk in (select farmer_id from librarianregistration where farmer_phone='$sess_phone_number') ";
         $run_query = mysqli_query($con, $query);
         $count = 0;
         if ($run_query) {
@@ -429,7 +429,7 @@ function cart()
 
                 echo "
                     <div class='productbox'>
-                        <a href='../FarmerPortal/FarmerProductDetails.php?id=$id'>
+                        <a href='../LibrarianPortal/FarmerProductDetails.php?id=$id'>
                         <img src='../Admin/product_images/$image' alt= 'Image Not Available' onerror=this.src='../Images/Website/noimage.jpg'>
                         </a>
 
@@ -483,7 +483,7 @@ function cart()
                             $farmerid = $row['farmer_fk'];
                         }
 
-                        $query = "select * from farmerregistration where farmer_id = $farmerid";
+                        $query = "select * from librarianregistration where farmer_id = $farmerid";
                         $run = mysqli_query($con, $query);
                         while ($row = mysqli_fetch_array($run)) {
                             $farmer_name = $row['farmer_name'];
@@ -538,7 +538,7 @@ function cart()
     function getTotalUsers() {
         global $con;
         $count = 0;
-        $query_users = "SELECT COUNT(*) as total FROM buyerregistration";
+        $query_users = "SELECT COUNT(*) as total FROM userregistration";
         $run_users = mysqli_query($con, $query_users);
         if ($run_users) {
             $count = mysqli_fetch_assoc($run_users)['total'];
