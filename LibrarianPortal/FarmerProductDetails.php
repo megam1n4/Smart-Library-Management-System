@@ -289,7 +289,6 @@ $sess_phone_number = $_SESSION['phonenumber']; // Moved this line down since ses
                                    </div>
 
                                    <div class='action-buttons'>
-                                        <a href='EditProduct.php?id=$prod_id' class='btn btn-warning'><b><i class='fas fa-edit'></i> Edit Book</b></a>
                                         <a href='Transactions.php' class='btn btn-warning'><b><i class='fas fa-receipt'></i> My Transactions</b></a>
                                    </div>
                               </div>         
