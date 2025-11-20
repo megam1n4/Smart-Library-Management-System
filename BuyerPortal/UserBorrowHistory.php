@@ -866,7 +866,7 @@
                          $title = $row['product_title'];
                     }
 
-                    $farmer_details = "select * from farmerregistration where farmer_id = $farmer_id ";
+                    $farmer_details = "select * from librarianregistration where farmer_id = $farmer_id ";
                     $details_run = mysqli_query($con, $farmer_details);
                     while ($detail = mysqli_fetch_array($details_run)) {
                          $farmer_name = $detail['farmer_name'];

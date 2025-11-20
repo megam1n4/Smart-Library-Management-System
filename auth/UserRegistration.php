@@ -386,7 +386,7 @@ if (isset($_POST['register'])) {
 
     if (strcmp($password, $confirmpassword) == 0) {
 
-        $query = "insert into buyerregistration (buyer_name,buyer_phone,buyer_addr,buyer_comp,
+        $query = "insert into userregistration (buyer_name,buyer_phone,buyer_addr,buyer_comp,
         buyer_license,buyer_bank,buyer_pan,buyer_mail,buyer_username,buyer_password) 
         values ('$name','$phonenumber','$address','$company_name','$license','$buyer_bank','$pan',
         '$mail','$username','$encryption')";
