@@ -464,7 +464,7 @@ global $con;
                         echo "<a href='BuyerProfile.php' class='list-group-item list-group-item-action'>Profile</a>";
                         echo "<a href='Transaction.php' class='list-group-item list-group-item-action'>Transactions</a>";
                         echo "<a href='claimbook.php' class='list-group-item list-group-item-action'>Claim Book</a>";
-                        echo "<a href='display.php' class='list-group-item list-group-item-action'>Bid Rare Book</a>";
+                        echo "<a href='rarereserve.php' class='list-group-item list-group-item-action'>Bid Rare Book</a>";
                         echo "<a href='chat.php' class='list-group-item list-group-item-action'>Group Chat</a>";
                         echo "<a href='debate.php' class='list-group-item list-group-item-action'>Join Debate</a>";
                         echo "<a href='genre.php' class='list-group-item list-group-item-action'>Join Quiz</a>";
@@ -490,7 +490,7 @@ global $con;
                             if (isset($_SESSION['phonenumber'])) {
                                 echo "<a href='UserProfile.php' class='dropdown-item'>Profile</a>";
                                 
-                                echo "<a href='display.php' class='dropdown-item'>Reserve Rare Book</a>";
+                                echo "<a href='rarereserve.php' class='dropdown-item'>Reserve Rare Book</a>";
                                 echo "<a href='chat.php' class='dropdown-item'>Group chat</a>";
                                 
                                 echo "<a href='genre.php' class='dropdown-item'>Join Quiz</a>";

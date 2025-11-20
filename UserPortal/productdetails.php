@@ -366,7 +366,7 @@ include("../Functions/functions.php");
                     echo "<a href='BuyerProfile.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Profile</a>";
                     echo "<a href= 'Transaction.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Transactions</a>";
                     echo "<a href='tour.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Live Farm Tour</a>";
-                    echo "<a href='display.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Bid Product</a>";
+                    echo "<a href='rarereserve.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Bid Product</a>";
                     echo "<a href='customersupport.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Customer Support</a>";
                     echo "<a href='../Includes/logout.php' class='list-group-item list-group-item-action ' style='background-color:#292b2c;text-align:center;color:goldenrod'>Logout</a>";
                 } else {
@@ -397,7 +397,7 @@ include("../Functions/functions.php");
                         echo "<a href='BuyerProfile2.php' class='dropdown-item  ' style='padding-right:-20px;'>Profile</a>";
                         echo "<a href='Transaction.php' class='dropdown-item ' style='padding-right:-20px;'>Transactions</a>";
                         echo "<a href='tour.php' class='dropdown-item'  style='padding-right:-20px;'>Bid Product</a>";
-                        echo "<a href='display.php' class='dropdown-item' style='padding-right:-20px;'>Live Farm Tour</a>";
+                        echo "<a href='rarereserve.php' class='dropdown-item' style='padding-right:-20px;'>Live Farm Tour</a>";
                         echo "<a href='customersupport.php' class='dropdown-item' style='padding-right:-20px;' >Support Center</a>";
                         echo "<a href='../Includes/logout.php' class='dropdown-item ' style='padding-right:-20px;'>Logout</a>";
                     } else {

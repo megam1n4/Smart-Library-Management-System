@@ -402,7 +402,7 @@ include("../Functions/functions.php");
                             if (isset($_SESSION['phonenumber'])) {
                                 echo "<a href='UserProfile.php' class='dropdown-item'>Profile</a>";
                                 
-                                echo "<a href='display.php' class='dropdown-item'>Reserve Rare Book</a>";
+                                echo "<a href='rarereserve.php' class='dropdown-item'>Reserve Rare Book</a>";
                                 echo "<a href='chat.php' class='dropdown-item'>Group chat</a>";
                                 
                                 echo "<a href='genre.php' class='dropdown-item'>Join Quiz</a>";
