@@ -3,7 +3,7 @@
     include("../Includes/db.php");
     session_start();
     $sessphonenumber = $_SESSION['phonenumber'];
-    $sql="select * from buyerregistration where buyer_phone = $sessphonenumber";
+    $sql="select * from userregistration where buyer_phone = $sessphonenumber";
     $run_query = mysqli_query($con,$sql);
     while($row = mysqli_fetch_array($run_query))
     {
@@ -314,11 +314,11 @@
         $account = mysqli_real_escape_string( $con,$_POST['bank']);   
         $user = mysqli_real_escape_string( $con,$_POST['username']);   
         
-        $query = "update buyerregistration 
+        $query = "update userregistration 
                   set buyer_phone = '$phone', buyer_username = '$user', 
                   buyer_addr = '$address', buyer_bank = '$account' 
                   where buyer_id in 
-                  (select buyer_id from buyerregistration 
+                  (select buyer_id from userregistration 
                   where buyer_phone='$sessphonenumber')"; 
         echo $query;
        

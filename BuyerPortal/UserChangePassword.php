@@ -3,7 +3,7 @@
 include("../Includes/db.php");
 session_start();
 $sessphonenumber = $_SESSION['phonenumber'];
-$sql = "select * from buyerregistration where buyer_phone = $sessphonenumber";
+$sql = "select * from userregistration where buyer_phone = $sessphonenumber";
 $run_query = mysqli_query($con, $sql);
 while ($row = mysqli_fetch_array($run_query)) {
     $password = $row['buyer_password'];
@@ -209,7 +209,7 @@ while ($row = mysqli_fetch_array($run_query)) {
         );
 
         if (strcmp($password, $encryption1) == 0 and strcmp($encryption2, $encryption3) == 0) {
-            $query = "update buyerregistration 
+            $query = "update userregistration 
                     set buyer_password = '$encryption2'
                     where buyer_phone = $sessphonenumber";
             $run = mysqli_query($con, $query);

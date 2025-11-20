@@ -420,7 +420,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <nav class="navbar navbar-expand-xl navbar-dark">
         <div class="container-fluid">
             <!-- Logo -->
-            <a class="navbar-brand" href="bhome.php">
+            <a class="navbar-brand" href="UserHome.php">
                 <img src="logo2.jpg" alt="Smart Library Logo">
             </a>
 
@@ -464,10 +464,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         echo "<a href='UserProfile.php' class='list-group-item list-group-item-action'>Profile</a>";
                         echo "<a href='Transaction.php' class='list-group-item list-group-item-action'>Transactions</a>";
                         echo "<a href='claimbook.php' class='list-group-item list-group-item-action'>Claim Book</a>";
-                        echo "<a href='display.php' class='list-group-item list-group-item-action'>Bid Rare Book</a>";
+                        echo "<a href='rarereserve.php' class='list-group-item list-group-item-action'>Bid Rare Book</a>";
                         echo "<a href='chat.php' class='list-group-item list-group-item-action'>Group Chat</a>";
                         echo "<a href='debate.php' class='list-group-item list-group-item-action'>Join Debate</a>";
-                        echo "<a href='genre.php' class='list-group-item list-group-item-action'>Join Quiz</a>";
+                        echo "<a href='quizgenre.php' class='list-group-item list-group-item-action'>Join Quiz</a>";
                         echo "<a href='customersupport.php' class='list-group-item list-group-item-action'>Join Meet & Greet</a>";
                         echo "<a href='../Includes/logout.php' class='list-group-item list-group-item-action'>Logout</a>";
                     } else {
@@ -492,10 +492,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <?php
                             if (isset($_SESSION['phonenumber'])) {
                                 echo "<a href='UserProfile.php' class='dropdown-item'>Profile</a>";
-                                echo "<a href='display.php' class='dropdown-item'>Reserve Rare Book</a>";
+                                echo "<a href='rarereserve.php' class='dropdown-item'>Reserve Rare Book</a>";
                                 echo "<a href='chat.php' class='dropdown-item'>Group chat</a>";
                                 echo "<a href='debate.php' class='dropdown-item'>Join Debate</a>";
-                                echo "<a href='genre.php' class='dropdown-item'>Join Quiz</a>";
+                                echo "<a href='quizgenre.php' class='dropdown-item'>Join Quiz</a>";
                                 echo "<a href='customersupport.php' class='dropdown-item'>Join Rare Book Exhibition</a>";
                                 echo "<a href='../Includes/logout.php' class='dropdown-item'>Logout</a>";
                             } else {
